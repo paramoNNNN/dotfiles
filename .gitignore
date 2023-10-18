@@ -5,7 +5,7 @@
 !.teamocil
 !.teamocil/**
 !alacritty
-!alacritty/**
+!alacritty/alacritty.yml
 !dunst
 !dunst/**
 !fish
