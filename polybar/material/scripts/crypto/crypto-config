@@ -1,0 +1,6 @@
+[general]
+base_currency = BTC
+display = price
+
+[bitcoin]
+icon = BTC

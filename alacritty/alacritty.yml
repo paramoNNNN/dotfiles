@@ -1,0 +1,30 @@
+import:
+  - ~/.config/alacritty/themes/themes/horizon-dark.yaml
+
+live_config_reload: true
+
+window:
+  opacity: 0.9
+  padding:
+    x: 10
+    y: 0
+  dynamic_title: true
+
+scrolling:
+  history: 10000
+
+font:
+  size: 15
+  normal:
+    family: CaskaydiaCove Nerd Font
+    style: Book
+  bold:
+    family: CaskaydiaCove Nerd Font
+    style: Book
+  italic:
+    family: CaskaydiaCove Nerd Font
+    style: Book
+
+cursor:
+  style: Block
+  unfocused_hollow: false
