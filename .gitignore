@@ -2,12 +2,15 @@
 *
 *.*
 
+!.teamocil
+!.teamocil/**
 !alacritty
 !alacritty/**
 !dunst
 !dunst/**
 !fish
-!fish/**
+!fish/config.fish
+!fish/fish_plugins
 !gitui
 !gitui/**
 !i3
@@ -16,4 +19,5 @@
 !polybar/**
 
 !.gitignore
+!.tmux.conf
 !picom.conf
