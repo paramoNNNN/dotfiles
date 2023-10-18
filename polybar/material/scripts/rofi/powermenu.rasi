@@ -66,9 +66,9 @@ inputbar {
     text-color:                     @bar;
     expand:                         false;
 	border:							0px;
-    border-radius:                  0px;
+    border-radius:                  10px;
 	border-color:					@ac;
-    margin:                         0px;
+    margin:                         0px 0px 10px 0px;
     padding:                        15px 0px 8px 25px;
 }
 
@@ -90,7 +90,7 @@ mainbox {
 	border-color:					@ac;
     children:                       [ inputbar, listview ];
     spacing:                       	0px;
-    padding:                        0px;
+    padding:                        10px;
 }
 
 element {
@@ -117,6 +117,6 @@ element selected {
     background-color:               @bga;
     text-color:                     @fg;
 	border:							0px;
-    border-radius:                  0px;
+    border-radius:                  10px;
     border-color:                  	@bg;
 }
