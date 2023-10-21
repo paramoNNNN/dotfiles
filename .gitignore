@@ -11,12 +11,14 @@
 !fish
 !fish/config.fish
 !fish/fish_plugins
-!gitui
-!gitui/**
 !i3
 !i3/**
 !polybar
 !polybar/**
+!nvim
+!nvim/**
+nvim/lazy-lock.json
+!lazygit/config.yml
 
 !.gitignore
 !.tmux.conf
