@@ -5,6 +5,8 @@ alias ls "exa --icons"
 alias go "git open"
 alias nano "vim"
 alias docker-rm-all "sudo docker rm -f (sudo docker ps -a -q)"
+alias nvim "nvim --listen /tmp/nvim-server-(tmux display-message -p '#S-#{window_index}').pipe"
+alias vim "nvim"
 
 fish_vi_key_bindings
 
