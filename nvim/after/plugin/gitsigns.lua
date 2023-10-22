@@ -1,4 +1,5 @@
 require("gitsigns").setup({
+	current_line_blame = true,
 	on_attach = function(bufnr)
 		local gs = package.loaded.gitsigns
 
@@ -33,6 +34,5 @@ require("gitsigns").setup({
 		map("n", "<leader>hb", function()
 			gs.blame_line({ full = true })
 		end)
-		map("n", "<leader>tb", gs.toggle_current_line_blame)
 	end,
 })
