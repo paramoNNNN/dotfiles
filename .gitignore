@@ -21,6 +21,8 @@ nvim/lazy-lock.json
 !lazygit/config.yml
 !kitty
 !kitty/**
+!tmux
+!tmux/**
 
 
 !.gitignore
