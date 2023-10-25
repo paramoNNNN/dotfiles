@@ -1,3 +1,9 @@
+require("ufo").setup()
+
+-- Using ufo provider need remap `zR` and `zM`.
+vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+
 local lsp_zero = require("lsp-zero")
 
 lsp_zero.on_attach(function(client, bufnr)
@@ -43,6 +49,17 @@ lsp_zero.set_sign_icons({
 	warn = "▲",
 	hint = "⚑",
 	info = "»",
+})
+
+lsp_zero.set_server_config({
+	capabilities = {
+		textDocument = {
+			foldingRange = {
+				dynamicRegistration = false,
+				lineFoldingOnly = true,
+			},
+		},
+	},
 })
 
 require("mason").setup({})
