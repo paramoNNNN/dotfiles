@@ -7,8 +7,8 @@ windows:
       - ssh -N ubuntu@***** -L 2224:*****:1055
       - cd ~/ovpn
       - cd ~/Downloads/Xray-linux-arm64-v8a
-  - name: gotop
+  - name: monitor
     root: ~/
     layout: tiled
     panes:
-      - gotop --color vice --rate 0.5s
+      - bpytop
