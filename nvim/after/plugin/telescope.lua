@@ -4,6 +4,7 @@ local builtin = require("telescope.builtin")
 
 telescope.load_extension("projects")
 telescope.load_extension("file_browser")
+telescope.load_extension("live_grep_args")
 
 local wk = require("which-key")
 wk.register({
@@ -11,7 +12,8 @@ wk.register({
 		name = "Telescope",
 		f = { builtin.find_files, "Find files" },
 		g = { builtin.live_grep, "Live grep" },
-		b = { builtin.buffer, "Buffers" },
+		l = { telescope.extensions.live_grep_args.live_grep_args, "Live grep args" },
+		b = { builtin.buffers, "Buffers" },
 		h = { builtin.help_tags, "Help tags" },
 	},
 })
