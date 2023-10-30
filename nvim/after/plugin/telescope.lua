@@ -13,9 +13,9 @@ wk.register({
 		f = { builtin.find_files, "Find files" },
 		g = { builtin.live_grep, "Live grep" },
 		l = { telescope.extensions.live_grep_args.live_grep_args, "Live grep args" },
-		b = { builtin.buffers, "Buffers" },
 		h = { builtin.help_tags, "Help tags" },
 	},
+	["<leader><leader>"] = { builtin.buffers, "Buffers" },
 })
 
 -- TODO: this is deprected, find an alternative
@@ -28,6 +28,11 @@ table.insert(vimgrep_arguments, "!**/.git/*")
 telescope.setup({
 	defaults = {
 		vimgrep_arguments = vimgrep_arguments,
+		mappings = {
+			i = {
+				["<C-d>"] = require("telescope.actions").delete_buffer,
+			},
+		},
 	},
 	pickers = {
 		find_files = {
