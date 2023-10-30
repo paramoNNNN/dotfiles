@@ -11,6 +11,8 @@
 !fish
 !fish/config.fish
 !fish/fish_plugins
+!fish/completions
+!fish/completions/**
 !i3
 !i3/**
 !polybar
