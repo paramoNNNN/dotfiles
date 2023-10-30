@@ -25,8 +25,8 @@ nvim/lazy-lock.json
 !kitty/**
 !tmux
 !tmux/tmux.conf
-!bpytop
-!bpytop/bpytop.conf
+!btop
+!btop/btop.conf
 
 
 !.gitignore
