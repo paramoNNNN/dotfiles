@@ -11,4 +11,4 @@ windows:
     root: ~/
     layout: tiled
     panes:
-      - bpytop
+      - btop
