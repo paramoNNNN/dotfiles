@@ -38,5 +38,9 @@ telescope.setup({
 		find_files = {
 			find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
 		},
+		buffers = {
+			sort_lastused = true,
+			sort_mru = true,
+		},
 	},
 })
