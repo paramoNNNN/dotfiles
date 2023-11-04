@@ -13,9 +13,3 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("plugins")
-
--- Set color schema
-vim.cmd("set termguicolors")
-vim.cmd("colorscheme carbonfox")
--- vim.cmd("colorscheme catppuccin")
--- require("catppuccin").setup({ flavour = "mocha" })
