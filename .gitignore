@@ -6,6 +6,8 @@
 !.teamocil/**
 !alacritty
 !alacritty/alacritty.yml
+!alacritty/themes
+!alacritty/themes/**
 !dunst
 !dunst/**
 !fish
@@ -13,6 +15,8 @@
 !fish/fish_plugins
 !fish/completions
 !fish/completions/**
+!fish/conf.d
+!fish/conf.d/set_theme.fish
 !i3
 !i3/**
 !polybar
@@ -25,8 +29,12 @@ nvim/lazy-lock.json
 !kitty/**
 !tmux
 !tmux/tmux.conf
+!tmux/themes
+!tmux/themes/**
 !btop
 !btop/btop.conf
+!scripts
+!scripts/**
 
 
 !.gitignore
