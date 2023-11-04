@@ -7,7 +7,6 @@ return {
 	"neovim/nvim-lspconfig",
 	"lewis6991/gitsigns.nvim",
 	"ahmedkhalf/project.nvim",
-	{ "freddiehaddad/feline.nvim" },
 	{ "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
 
 	-- Color Schemes
