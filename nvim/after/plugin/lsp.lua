@@ -65,6 +65,7 @@ require("mason-lspconfig").setup({
     "jsonls",
     "marksman",
     "yamlls",
+    "lua_ls",
   },
   handlers = {
     lsp_zero.default_setup,
@@ -72,26 +73,37 @@ require("mason-lspconfig").setup({
 })
 
 local cmp = require("cmp")
+local luasnip = require("luasnip")
 local cmp_action = require("lsp-zero").cmp_action()
+
+local has_words_before = function()
+  unpack = unpack or table.unpack
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
 cmp.setup({
   sources = {
     { name = "path" },
     { name = "nvim_lsp" },
     { name = "nvim_lua" },
+    { name = "luasnip" },
+  },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
   },
   formatting = lsp_zero.cmp_format(),
   mapping = cmp.mapping.preset.insert({
-    -- `Enter` key to confirm completion
     ["<CR>"] = cmp.mapping.confirm({ select = true }),
 
-    -- Ctrl+Space to trigger completion menu
+    ["<Tab>"] = cmp_action.luasnip_supertab(),
+    ["<S-Tab>"] = cmp_action.luasnip_shift_supertab(),
     ["<C-Space>"] = cmp.mapping.complete(),
 
-    -- Navigate between snippet placeholder
     ["<C-f>"] = cmp_action.luasnip_jump_forward(),
     ["<C-b>"] = cmp_action.luasnip_jump_backward(),
 
-    -- Scroll up and down in the completion documentation
     ["<C-u>"] = cmp.mapping.scroll_docs(-4),
     ["<C-d>"] = cmp.mapping.scroll_docs(4),
   }),
@@ -99,5 +111,21 @@ cmp.setup({
     expand = function(args)
       require("luasnip").lsp_expand(args.body)
     end,
+  },
+})
+
+local snip = luasnip.snippet
+local func = luasnip.function_node
+luasnip.add_snippets(nil, {
+  all = {
+    snip({
+      trig = "date",
+      namr = "Date",
+      dscr = "Date in the form of YYYY-MM-DD",
+    }, {
+      func(function()
+        return { os.date("%Y-%m-%d") }
+      end, {}),
+    }),
   },
 })
