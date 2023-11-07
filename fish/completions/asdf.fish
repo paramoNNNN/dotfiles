@@ -1,0 +1,1 @@
+/home/taha/.asdf/completions/asdf.fish
