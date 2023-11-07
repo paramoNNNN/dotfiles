@@ -6,6 +6,7 @@ alias cat "batcat --theme=base16"
 
 fish_vi_key_bindings
 
+source ~/.asdf/asdf.fish
 
 # pnpm
 set -gx PNPM_HOME "/Users/taha/Library/pnpm"
