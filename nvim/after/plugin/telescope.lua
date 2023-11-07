@@ -8,15 +8,15 @@ telescope.load_extension("live_grep_args")
 
 local wk = require("which-key")
 wk.register({
-	["<leader>f"] = {
-		name = "Telescope",
-		f = { builtin.find_files, "Find files" },
-		g = { builtin.live_grep, "Live grep" },
-		l = { telescope.extensions.live_grep_args.live_grep_args, "Live grep args" },
-		q = { builtin.quickfix, "Quickfix" },
-		h = { builtin.help_tags, "Help tags" },
-	},
-	["<leader><leader>"] = { builtin.buffers, "Buffers" },
+  ["<leader>f"] = {
+    name = "Telescope",
+    f = { builtin.find_files, "Find files" },
+    g = { builtin.live_grep, "Live grep" },
+    l = { telescope.extensions.live_grep_args.live_grep_args, "Live grep args" },
+    q = { builtin.quickfix, "Quickfix" },
+    h = { builtin.help_tags, "Help tags" },
+  },
+  ["<leader><leader>"] = { builtin.buffers, "Buffers" },
 })
 
 -- TODO: this is deprected, find an alternative
@@ -29,30 +29,30 @@ table.insert(vimgrep_arguments, "!**/.git/*")
 local actions = require("telescope.actions")
 
 local function send_to_quickfix_and_open(promtbufnr)
-	actions.smart_send_to_qflist(promtbufnr)
-	builtin.quickfix()
+  actions.smart_send_to_qflist(promtbufnr)
+  builtin.quickfix()
 end
 
 telescope.setup({
-	defaults = {
-		vimgrep_arguments = vimgrep_arguments,
-		mappings = {
-			n = {
-				["<C-q>"] = send_to_quickfix_and_open,
-			},
-			i = {
-				["<C-d>"] = actions.delete_buffer,
-				["<C-q>"] = send_to_quickfix_and_open,
-			},
-		},
-	},
-	pickers = {
-		find_files = {
-			find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
-		},
-		buffers = {
-			sort_lastused = true,
-			sort_mru = true,
-		},
-	},
+  defaults = {
+    vimgrep_arguments = vimgrep_arguments,
+    mappings = {
+      n = {
+        ["<C-q>"] = send_to_quickfix_and_open,
+      },
+      i = {
+        ["<C-d>"] = actions.delete_buffer,
+        ["<C-q>"] = send_to_quickfix_and_open,
+      },
+    },
+  },
+  pickers = {
+    find_files = {
+      find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+    },
+    buffers = {
+      sort_lastused = true,
+      sort_mru = true,
+    },
+  },
 })
