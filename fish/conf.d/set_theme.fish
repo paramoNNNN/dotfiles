@@ -66,6 +66,6 @@ function update_theme --on-variable theme
         set -g fish_pager_color_prefix ea76cb
         set -g fish_pager_color_completion 4c4f69
         set -g fish_pager_color_description 9ca0b0
-        set --universal pure_color_system_time pure_color_mute
+        set --universal pure_color_system_time black
     end
 end
