@@ -27,6 +27,10 @@ font:
   italic:
     family: CaskaydiaCove Nerd Font
     style: Book
+  offset:
+    y: 6
+  glyph_offset:
+    y: 5
 
 cursor:
   style: Block
