@@ -8,6 +8,7 @@ return {
   "lewis6991/gitsigns.nvim",
   "ahmedkhalf/project.nvim",
   "zaldih/themery.nvim",
+  "fladson/vim-kitty",
   { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
 
   -- Color Schemes
