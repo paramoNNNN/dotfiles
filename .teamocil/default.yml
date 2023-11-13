@@ -1,3 +1,4 @@
+name: default
 windows:
   - name: network
     root: ~/
