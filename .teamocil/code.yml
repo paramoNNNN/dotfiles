@@ -1,0 +1,6 @@
+name: code ><>
+windows:
+  - root: ~/projects
+    layout: tiled
+    panes:
+      - ls
