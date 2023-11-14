@@ -1,4 +1,4 @@
-name: code ><>
+name: code
 windows:
   - root: ~/projects
     layout: tiled
