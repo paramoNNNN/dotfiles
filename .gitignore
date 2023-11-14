@@ -23,7 +23,6 @@
 !polybar/**
 !nvim
 !nvim/**
-nvim/lazy-lock.json
 !lazygit
 !lazygit/config.yml
 !kitty
