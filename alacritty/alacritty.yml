@@ -20,13 +20,13 @@ font:
   size: 15
   normal:
     family: CaskaydiaCove Nerd Font
-    style: Book
+    style: Regular
   bold:
     family: CaskaydiaCove Nerd Font
-    style: Book
+    style: SemiBold
   italic:
     family: CaskaydiaCove Nerd Font
-    style: Book
+    style: Italic
   offset:
     y: 6
   glyph_offset:
