@@ -10,7 +10,6 @@ return {
   "zaldih/themery.nvim",
   "fladson/vim-kitty",
   "HiPhish/rainbow-delimiters.nvim",
-  { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
 
   -- Color Schemes
   { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
