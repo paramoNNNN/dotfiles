@@ -61,6 +61,10 @@ require("gitsigns").setup({
           "Reset hunk",
           { expr = true },
         },
+        ["s"] = {
+          "<Cmd>Telescope git_status<CR>",
+          "Status",
+        },
       },
     })
   end,
