@@ -40,6 +40,10 @@ require("gitsigns").setup({
           gs.preview_hunk,
           "Preview hunk",
         },
+        ["h"] = {
+          "<Cmd> Telescope git_signs<CR>",
+          "Preview hunks",
+        },
         ["i"] = {
           gs.preview_hunk_inline,
           "Preview hunk inline",

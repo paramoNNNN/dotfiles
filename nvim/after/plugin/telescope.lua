@@ -5,6 +5,7 @@ local builtin = require("telescope.builtin")
 telescope.load_extension("projects")
 telescope.load_extension("file_browser")
 telescope.load_extension("live_grep_args")
+telescope.load_extension("git_signs")
 
 local wk = require("which-key")
 wk.register({
