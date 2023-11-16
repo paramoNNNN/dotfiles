@@ -56,6 +56,11 @@ require("gitsigns").setup({
           "Diff this",
           { expr = true },
         },
+        ["r"] = {
+          gs.reset_hunk,
+          "Reset hunk",
+          { expr = true },
+        },
       },
     })
   end,
