@@ -4,4 +4,5 @@ return {
     build = ":TSUpdate",
   },
   "nvim-treesitter/playground",
+  "windwp/nvim-ts-autotag",
 }
