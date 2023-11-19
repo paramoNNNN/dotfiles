@@ -10,6 +10,7 @@ return {
   "zaldih/themery.nvim",
   "fladson/vim-kitty",
   "HiPhish/rainbow-delimiters.nvim",
+  "JoosepAlviste/nvim-ts-context-commentstring",
 
   -- Color Schemes
   { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
