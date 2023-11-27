@@ -1,6 +1,7 @@
 vim.cmd("set termguicolors")
 
 vim.opt.guicursor = "i:ver30-iCursor-blinkwait300-blinkon200-blinkoff150"
+vim.opt.cmdheight = 0
 
 vim.opt.nu = true
 vim.opt.relativenumber = true
