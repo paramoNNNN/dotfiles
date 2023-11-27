@@ -6,9 +6,7 @@ lsp_zero.on_attach(function(client, bufnr)
   -- to learn the available actions
 
   -- TODO: add description to these keymaps
-  vim.keymap.set("n", "gd", function()
-    vim.lsp.buf.definition()
-  end, opts)
+  vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<cr>", opts)
   vim.keymap.set("n", "K", function()
     vim.lsp.buf.hover()
   end, opts)
