@@ -12,6 +12,7 @@ wk.register({
   ["<leader>f"] = {
     name = "Telescope",
     f = { builtin.find_files, "Find files" },
+    b = { telescope.extensions.file_browser.file_browser, "File browser" },
     g = { builtin.live_grep, "Live grep" },
     l = { telescope.extensions.live_grep_args.live_grep_args, "Live grep args" },
     q = { builtin.quickfix, "Quickfix" },
