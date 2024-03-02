@@ -6,11 +6,13 @@ telescope.load_extension("projects")
 telescope.load_extension("file_browser")
 telescope.load_extension("live_grep_args")
 telescope.load_extension("git_signs")
+telescope.load_extension("advanced_git_search")
 
 local wk = require("which-key")
 wk.register({
   ["<leader>f"] = {
     name = "Telescope",
+    a = { "<Cmd>AdvancedGitSearch<CR>", "Git search" },
     f = { builtin.find_files, "Find files" },
     b = { telescope.extensions.file_browser.file_browser, "File browser" },
     g = { builtin.live_grep, "Live grep" },
