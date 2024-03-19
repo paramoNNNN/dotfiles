@@ -13,6 +13,7 @@ return {
   "JoosepAlviste/nvim-ts-context-commentstring",
   "stevearc/dressing.nvim",
   "andweeb/presence.nvim",
+  "rcarriga/nvim-notify",
 
   -- Color Schemes
   { "catppuccin/nvim", name = "catppuccin", priority = 1000 },

@@ -19,6 +19,7 @@ wk.register({
     l = { telescope.extensions.live_grep_args.live_grep_args, "Live grep args" },
     q = { builtin.quickfix, "Quickfix" },
     h = { builtin.help_tags, "Help tags" },
+    n = { "<Cmd>Telescope notify<CR>", "Notifications history" },
   },
   ["<leader><leader>"] = { builtin.buffers, "Buffers" },
 })
