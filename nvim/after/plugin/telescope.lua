@@ -13,13 +13,14 @@ wk.register({
   ["<leader>f"] = {
     name = "Telescope",
     a = { "<Cmd>AdvancedGitSearch<CR>", "Git search" },
-    f = { builtin.find_files, "Find files" },
     b = { telescope.extensions.file_browser.file_browser, "File browser" },
+    f = { builtin.find_files, "Find files" },
     g = { builtin.live_grep, "Live grep" },
-    l = { telescope.extensions.live_grep_args.live_grep_args, "Live grep args" },
-    q = { builtin.quickfix, "Quickfix" },
     h = { builtin.help_tags, "Help tags" },
+    l = { telescope.extensions.live_grep_args.live_grep_args, "Live grep args" },
     n = { "<Cmd>Telescope notify<CR>", "Notifications history" },
+    p = { "<Cmd>Telescope projects<CR>", "Projects" },
+    q = { builtin.quickfix, "Quickfix" },
   },
   ["<leader><leader>"] = { builtin.buffers, "Buffers" },
 })
