@@ -64,6 +64,7 @@ require("mason-lspconfig").setup({
     "marksman",
     "yamlls",
     "lua_ls",
+    "tailwindcss",
   },
   handlers = {
     lsp_zero.default_setup,
