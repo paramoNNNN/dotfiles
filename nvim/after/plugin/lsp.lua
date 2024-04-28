@@ -65,6 +65,7 @@ require("mason-lspconfig").setup({
     "yamlls",
     "lua_ls",
     "tailwindcss",
+    "biome",
   },
   handlers = {
     lsp_zero.default_setup,
