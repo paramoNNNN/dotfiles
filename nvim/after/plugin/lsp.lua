@@ -66,6 +66,7 @@ require("mason-lspconfig").setup({
     "lua_ls",
     "tailwindcss",
     "biome",
+    "prismals",
   },
   handlers = {
     lsp_zero.default_setup,
