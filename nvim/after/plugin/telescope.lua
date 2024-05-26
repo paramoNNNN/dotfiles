@@ -14,6 +14,7 @@ wk.register({
     name = "Telescope",
     a = { "<Cmd>AdvancedGitSearch<CR>", "Git search" },
     b = { telescope.extensions.file_browser.file_browser, "File browser" },
+    d = { vim.cmd.LazyDocker, "LazyDocker" },
     f = { builtin.find_files, "Find files" },
     g = { builtin.live_grep, "Live grep" },
     h = { builtin.help_tags, "Help tags" },
