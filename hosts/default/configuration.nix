@@ -18,6 +18,11 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # AMD
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  systemd.tmpfiles.rules =
+    [ "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}" ];
+
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -60,7 +65,14 @@ in {
   # fix https://github.com/ryan4yin/nix-config/issues/10
   security.pam.services.swaylock = { };
 
-  hardware = { opengl.enable = true; };
+  hardware = {
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+      extraPackages = with pkgs; [ rocmPackages.clr.icd ];
+    };
+  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
