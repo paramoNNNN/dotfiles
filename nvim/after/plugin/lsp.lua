@@ -67,6 +67,7 @@ require("mason-lspconfig").setup({
     "tailwindcss",
     "biome",
     "prismals",
+    "nginx_language_server",
   },
   handlers = {
     lsp_zero.default_setup,
