@@ -9,6 +9,7 @@ require("conform").setup({
     javascriptreact = { { "biome-check", "prettierd", "prettier", "eslint_d" } },
     fish = { { "fish_ident" } },
     sh = { { "shfmt" } },
+    css = { { "biome-check" } },
   },
   format_on_save = {
     timeout_ms = 2000,
