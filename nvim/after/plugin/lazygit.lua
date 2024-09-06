@@ -1,7 +1,5 @@
 local wk = require("which-key")
-wk.register({
-  ["<leader>g"] = {
-    name = "Git",
-    g = { vim.cmd.LazyGit, "Open LazyGit" },
-  },
+wk.add({
+  { "<leader>g", group = "Git" },
+  { "<leader>gg", vim.cmd.LazyGit, desc = "Open LazyGit" },
 })

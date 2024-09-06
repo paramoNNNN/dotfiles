@@ -1,10 +1,8 @@
 require("todo-comments").setup()
 
 local wk = require("which-key")
-wk.register({
-  ["<leader>t"] = {
-    name = "Todo",
-    q = { "<Cmd>TodoQuickFix<CR>", "QuickFix" },
-    l = { "<Cmd>TodoTelescope<CR>", "Telescope" },
-  },
+wk.add({
+  { "<leader>t", group = "Todo" },
+  { "<leader>tl", "<Cmd>TodoTelescope<CR>", desc = "Telescope" },
+  { "<leader>tq", "<Cmd>TodoQuickFix<CR>", desc = "QuickFix" },
 })

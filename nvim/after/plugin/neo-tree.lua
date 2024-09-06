@@ -52,9 +52,7 @@ require("neo-tree").setup({
 })
 
 local wk = require("which-key")
-wk.register({
-  ["<leader>d"] = {
-    name = "Neotree",
-    t = { "<Cmd>Neotree toggle<CR>", "Toggle" },
-  },
+wk.add({
+  { "<leader>d", group = "Neotree" },
+  { "<leader>dt", "<Cmd>Neotree toggle<CR>", desc = "Toggle" },
 })
