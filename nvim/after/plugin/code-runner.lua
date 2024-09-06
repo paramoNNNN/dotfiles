@@ -8,10 +8,8 @@ require("code_runner").setup({
 })
 
 local wk = require("which-key")
-wk.register({
-  ["<leader>r"] = {
-    "Code Runner",
-    c = { "<Cmd>RunClose<CR>", "Close runner" },
-    r = { "<Cmd>RunFile<CR>", "Run File" },
-  },
+wk.add({
+  { "<leader>r", group = "Code Runner" },
+  { "<leader>rc", "<Cmd>RunClose<CR>", desc = "Close runner" },
+  { "<leader>rr", "<Cmd>RunFile<CR>", desc = "Run File" },
 })

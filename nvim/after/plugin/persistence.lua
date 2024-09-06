@@ -1,8 +1,6 @@
 local wk = require("which-key")
-wk.register({
-  ["<leader>q"] = {
-    name = "Persistence",
-    s = { [[<cmd>lua require("persistence").load()<cr>]], "Restore session for current directory" },
-    l = { [[<cmd>lua require("persistence").load({ last = true })<cr>]], "Load last session" },
-  },
+wk.add({
+  { "<leader>q", group = "Persistence" },
+  { "<leader>ql", '<cmd>lua require("persistence").load({ last = true })<cr>', desc = "Load last session" },
+  { "<leader>qs", '<cmd>lua require("persistence").load()<cr>', desc = "Restore session for current directory" },
 })

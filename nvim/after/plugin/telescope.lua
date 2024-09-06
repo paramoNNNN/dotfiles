@@ -9,21 +9,19 @@ telescope.load_extension("git_signs")
 telescope.load_extension("advanced_git_search")
 
 local wk = require("which-key")
-wk.register({
-  ["<leader>f"] = {
-    name = "Telescope",
-    a = { "<Cmd>AdvancedGitSearch<CR>", "Git search" },
-    b = { telescope.extensions.file_browser.file_browser, "File browser" },
-    d = { vim.cmd.LazyDocker, "LazyDocker" },
-    f = { builtin.find_files, "Find files" },
-    g = { builtin.live_grep, "Live grep" },
-    h = { builtin.help_tags, "Help tags" },
-    l = { telescope.extensions.live_grep_args.live_grep_args, "Live grep args" },
-    n = { "<Cmd>Telescope notify<CR>", "Notifications history" },
-    p = { "<Cmd>Telescope projects<CR>", "Projects" },
-    q = { builtin.quickfix, "Quickfix" },
-  },
-  ["<leader><leader>"] = { builtin.buffers, "Buffers" },
+wk.add({
+  { "<leader>f", group = "Telescope" },
+  { "<leader>fa", "<Cmd>AdvancedGitSearch<CR>", desc = "Git search" },
+  { "<leader>fb", telescope.extensions.file_browser.file_browser, desc = "File browser" },
+  { "<leader>fd", vim.cmd.LazyDocker, desc = "LazyDocker" },
+  { "<leader>ff", builtin.find_files, desc = "Find files" },
+  { "<leader>fg", builtin.live_grep, desc = "Live grep" },
+  { "<leader>fh", builtin.help_tags, desc = "Help tags" },
+  { "<leader>fl", telescope.extensions.live_grep_args.live_grep_args, desc = "Live grep args" },
+  { "<leader>fn", "<Cmd>Telescope notify<CR>", desc = "Notifications history" },
+  { "<leader>fp", "<Cmd>Telescope projects<CR>", desc = "Projects" },
+  { "<leader>fq", builtin.quickfix, desc = "Quickfix" },
+  { "<leader><leader>", builtin.buffers, desc = "Buffers" },
 })
 
 -- TODO: this is deprected, find an alternative
