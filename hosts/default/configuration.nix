@@ -126,6 +126,7 @@ in {
     nixfmt-classic
     lazygit
     lazydocker
+    delta
 
     openvpn
     xray
