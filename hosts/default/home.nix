@@ -1,8 +1,7 @@
 { ... }:
 
 {
-  imports =
-    [ ../../modules/home-manager/sh.nix ../../modules/home-manager/wm.nix ];
+  imports = [ ../../modules/home-manager/default.nix ];
 
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
