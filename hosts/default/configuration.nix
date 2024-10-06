@@ -109,6 +109,7 @@ in {
 
   environment.systemPackages = with pkgs; [
     google-chrome
+    inputs.zen-browser.packages."${system}".specific
     telegram-desktop
     _1password-gui
     discord
@@ -137,6 +138,7 @@ in {
     fd
     ripgrep
     gotop
+    neofetch
 
     pipewire
     wireplumber
