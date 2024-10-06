@@ -66,10 +66,9 @@ in {
   security.pam.services.swaylock = { };
 
   hardware = {
-    opengl = {
+    graphics = {
       enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
+      enable32Bit = true;
       extraPackages = with pkgs; [ rocmPackages.clr.icd ];
     };
   };
@@ -124,7 +123,7 @@ in {
     zellij
     nil
     cargo
-    nixfmt
+    nixfmt-classic
     lazygit
     lazydocker
 
