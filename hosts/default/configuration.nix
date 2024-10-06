@@ -138,6 +138,7 @@ in {
     ripgrep
     gotop
     neofetch
+    bat
 
     pipewire
     wireplumber
@@ -146,6 +147,7 @@ in {
     gcc
     libgcc
     gnumake
+    nix-prefetch-github
   ];
 
   fonts.packages = with pkgs;
