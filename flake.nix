@@ -17,6 +17,8 @@
     zen-browser.url = "github:MarceColl/zen-browser-flake";
 
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+
+    catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {
@@ -36,10 +38,8 @@
 
         modules = [
           inputs.hyprland.homeManagerModules.default
-          {
-            wayland.windowManager.hyprland.enable = true;
-          }
-          # ...
+          { wayland.windowManager.hyprland.enable = true; }
+          inputs.catppuccin.homeManagerModules.catppuccin
         ];
       };
   };

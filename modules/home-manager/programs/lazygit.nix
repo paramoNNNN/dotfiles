@@ -1,11 +1,12 @@
 {
   programs.lazygit = {
     enable = true;
+    catppuccin.enable = true;
     settings = {
       git = {
         paging = {
           colorArg = "always";
-          pager = "delta --light --paging=never --24-bit-color=never";
+          pager = "delta --paging=never --24-bit-color=never";
         };
       };
       os = {
