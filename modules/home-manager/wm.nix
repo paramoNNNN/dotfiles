@@ -5,10 +5,12 @@
       mainBar = {
         layer = "top";
         position = "top";
-        height = 24;
+        height = 40;
 
         modules-left = [ "custom/nix" "hyprland/workspaces" ];
-        modules-right = [ "pulseaudio" "network" "clock" ];
+        modules-center = [ "hyprland/window" ];
+        modules-right =
+          [ "custom/mpris" "pulseaudio" "network" "clock" "tray" ];
 
         "custom/nix" = {
           "format" = "";
@@ -23,85 +25,104 @@
           "on-scroll-down" = "hyprctl dispatch workspace e-1";
         };
 
-        "hyprland/window" = { "separate-outputs" = true; };
+        "hyprland/window" = {
+          "separate-outputs" = true;
+          "max-length" = 64;
+        };
+
+        "tray" = {
+          "icon-size" = 22;
+          "spacing" = 6;
+        };
 
         "clock" = {
-          "interval" = 60;
-          "format" = "{:%a %d/%m %I:%M}";
+          "interval" = 1;
+          "format" = "{:%a %b %d  %H:%M:%S}";
         };
 
         "network" = {
-          "interface" = "wlp3s0";
+          "interface" = "wlo1";
           "format" = "{ifname}";
-          "format-wifi" = "<span color='#b4befe'> </span> {essid}";
+          "format-wifi" = "<span color='#7aa2f7'> </span> {essid}";
           "format-ethernet" = "{ipaddr}/{cidr} ";
-          "format-disconnected" = "<span color='#b4befe'>󰖪 </span> No Network";
+          "format-disconnected" = "<span color='#b4befe'>󰖪  </span> No Network";
           "tooltip" = false;
         };
 
         "pulseaudio" = {
-          "format" = "<span color='#b4befe'>{icon}</span> {volume}%";
-          "format-muted" = "";
-          "tooltip" = false;
-          "format-icons" = {
-            "headphone" = "";
-            "default" = [ "" "" "󰕾" "󰕾" "󰕾" "" "" "" ];
-          };
           "scroll-step" = 5;
+          "format" = ''<span color="#7aa2f7">{icon} </span>{volume}%'';
+          "format-muted" = ''<span color="#f7768e"> </span>Muted'';
+          "format-icons" = [ "" "" "" ];
           "on-click" = "pavucontrol";
+          "interval" = 4;
+        };
+
+        "custom/mpris" = {
+          "return-type" = "json";
+          "exec" = "waybar-mpris --interpolate --order 'ARTIST:TITLE'";
+          "on-click" = "waybar-mpris --send toggle";
+          "on-click-right" = "waybar-mpris --send player-next";
+          "escape" = true;
         };
       };
     };
 
     style = ''
-      * {
-        border: none;
-        font-family: 'Fira Code', 'Symbols Nerd Font Mono';
-        font-size: 16px;
-        font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
+      .module,
+      #clock,
+      #workspaces button {
+        background: transparent;
+        padding: 2px 10px;
+        font-family:
+          SpaceMono Nerd Font,
+          feather;
+        font-weight: 900;
+        font-size: 10pt;
+        color: #c0caf5;
       }
+
 
       window#waybar {
-        background: transparent;
+        background: rgba(26, 27, 38, 0.75);
+        border: 2px solid #414868;
       }
 
-      #custom-nix, 
       #workspaces {
-        border-radius: 10px;
-        background-color: #11111b;
-        color: #b4befe;
-        padding-left: 10px;
-        padding-right: 10px;
+        padding-right: 0;
       }
 
-      #custom-nix {
-        font-size: 20px;
-        margin-left: 15px;
-        color: #b4befe;
+      #workspaces button {
+        padding: 2px 4px;
       }
 
       #workspaces button.active {
+        border-bottom: 2px solid #7aa2f7;
+        border-radius: 0;
+        margin-top: 2px;
+        transition: none;
+      }
+
+      #workspaces button.focused {
+        color: #a6adc8;
+      }
+
+      #workspaces button.urgent {
+          color: #f7768e;
+      }
+
+      #workspaces button:hover {
         background: #11111b;
-        color: #b4befe;
-      }
-
-      #clock, #pulseaudio, #network {
-        border-radius: 10px;
-        background-color: #11111b;
         color: #cdd6f4;
-        padding-left: 10px;
-        padding-right: 10px;
-        margin-right: 15px;
       }
 
-      #pulseaudio, #network {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        padding-left: 5px;
+      tooltip {
+        background: #1e1e2e;
+        border-radius: 0;
       }
 
-      #clock {
-        margin-right: 0;
+      #tray {
+        margin-right: 4px;
       }
     '';
 

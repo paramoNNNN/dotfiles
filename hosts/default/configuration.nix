@@ -113,6 +113,7 @@ in {
     _1password-gui
     discord
     plexamp
+    pavucontrol
 
     nodejs_22
     neovim
@@ -140,6 +141,10 @@ in {
     gotop
     neofetch
     bat
+    unzip
+    unrar
+    playerctl
+    waybar-mpris
 
     pipewire
     wireplumber
@@ -152,7 +157,7 @@ in {
   ];
 
   fonts.packages = with pkgs;
-    [ (nerdfonts.override { fonts = [ "CascadiaCode" ]; }) ];
+    [ (nerdfonts.override { fonts = [ "CascadiaCode" "SpaceMono" ]; }) ];
 
   nixpkgs.config.allowUnfree = true;
 
