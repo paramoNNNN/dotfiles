@@ -23,9 +23,9 @@
       };
 
       window = {
-        opacity = 0.9;
+        opacity = 0.95;
         padding = {
-          x = 10;
+          x = 0;
           y = 0;
         };
       };
