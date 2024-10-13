@@ -19,8 +19,14 @@ in {
 
     plugins = with pkgs; [
       tmuxPlugins.better-mouse-mode
+      {
+        plugin = tmuxPlugins.tmux-floax;
+        extraConfig = ''
+          set -g @floax-bind '-n C-\'
+        '';
+      }
       tmux-sensible
-      { plugin = inputs.minimal-tmux.packages.${pkgs.system}.default; }
+      inputs.minimal-tmux.packages.${pkgs.system}.default
     ];
 
     extraConfig = ''
