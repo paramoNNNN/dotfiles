@@ -146,6 +146,7 @@ in {
     wget
     eza
     git
+    gnupg
     wofi
     fd
     ripgrep
@@ -157,6 +158,7 @@ in {
     playerctl
     waybar-mpris
     btop
+    xsel
 
     pipewire
     wireplumber
