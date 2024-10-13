@@ -64,6 +64,7 @@
           "on-click" = "waybar-mpris --send toggle";
           "on-click-right" = "waybar-mpris --send player-next";
           "escape" = true;
+          "max-length" = 32;
         };
       };
     };
