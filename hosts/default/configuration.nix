@@ -128,6 +128,7 @@ in {
     lazygit
     lazydocker
     delta
+    stylua
 
     openvpn
     xray
