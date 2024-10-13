@@ -15,6 +15,7 @@ in {
     enable = true;
     shell = "${pkgs.fish}/bin/fish";
     keyMode = "vi";
+    escapeTime = 10;
     historyLimit = 50000;
 
     plugins = with pkgs; [
