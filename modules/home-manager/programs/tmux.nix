@@ -23,6 +23,7 @@ in {
         plugin = tmuxPlugins.tmux-floax;
         extraConfig = ''
           set -g @floax-bind '-n C-\'
+          set -g @floax-change-path 'false'
         '';
       }
       tmux-sensible
