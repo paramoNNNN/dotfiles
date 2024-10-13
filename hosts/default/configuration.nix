@@ -158,7 +158,7 @@ in {
     playerctl
     waybar-mpris
     btop
-    xsel
+    clipse
 
     pipewire
     wireplumber
@@ -168,6 +168,7 @@ in {
     libgcc
     gnumake
     nix-prefetch-github
+    wl-clipboard
   ];
 
   fonts.packages = with pkgs;
