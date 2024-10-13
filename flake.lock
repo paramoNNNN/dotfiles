@@ -1263,6 +1263,26 @@
         "type": "github"
       }
     },
+    "minimal-tmux": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1728251980,
+        "narHash": "sha256-UfOpuc/gW42i95MztUj6mDbNCdtK/pbO0Lgvzv+b448=",
+        "owner": "niksingh710",
+        "repo": "minimal-tmux-status",
+        "rev": "3bcfbc350ce4c652c7d4b0f7aeb77400962f4bbc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "niksingh710",
+        "repo": "minimal-tmux-status",
+        "type": "github"
+      }
+    },
     "nix-gaming": {
       "inputs": {
         "flake-parts": [
@@ -1617,6 +1637,7 @@
         "fufexan-dotfiles": "fufexan-dotfiles",
         "home-manager": "home-manager_2",
         "hyprland": "hyprland_2",
+        "minimal-tmux": "minimal-tmux",
         "nixpkgs": "nixpkgs_8",
         "zen-browser": "zen-browser_2"
       }

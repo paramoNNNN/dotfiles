@@ -4,7 +4,7 @@
     ./programs/delta.nix
     ./programs/fish.nix
     ./programs/lazygit.nix
-    ./programs/zellij.nix
+    ./programs/tmux.nix
 
     ./wm.nix
     ./theme.nix

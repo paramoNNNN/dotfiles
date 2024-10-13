@@ -121,7 +121,7 @@ in {
     kitty
     alacritty
     tmux
-    zellij
+    teamocil
     nil
     cargo
     nixfmt-classic
@@ -146,6 +146,7 @@ in {
     unrar
     playerctl
     waybar-mpris
+    btop
 
     pipewire
     wireplumber

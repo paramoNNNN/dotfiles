@@ -19,6 +19,11 @@
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
 
     catppuccin.url = "github:catppuccin/nix";
+
+    minimal-tmux = {
+      url = "github:niksingh710/minimal-tmux-status";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {
