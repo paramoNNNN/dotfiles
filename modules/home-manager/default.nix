@@ -1,6 +1,7 @@
 { ... }: {
   imports = [
     ./programs/alacritty.nix
+    ./programs/btop.nix
     ./programs/delta.nix
     ./programs/fish.nix
     ./programs/lazygit.nix
