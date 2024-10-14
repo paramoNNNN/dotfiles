@@ -2,11 +2,11 @@ alias ls "exa --icons"
 alias go "git open"
 alias docker-rm-all "sudo docker rm -f (sudo docker ps -a -q)"
 alias nvim "nvim --listen /tmp/nvim-server-(tmux display-message -p '#S-#{window_index}').pipe"
-alias cat "batcat --theme=base16"
+alias cat "bat --theme=base16-256"
 
 fish_vi_key_bindings
 
-source ~/.asdf/asdf.fish
+source /opt/homebrew/opt/asdf/libexec/asdf.fish
 
 # pnpm
 set -gx PNPM_HOME "/Users/taha/Library/pnpm"
