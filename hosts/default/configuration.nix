@@ -105,7 +105,7 @@ in {
   users.users.taha = {
     isNormalUser = true;
     description = "Taha";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = [ ];
   };
 
@@ -113,8 +113,15 @@ in {
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
 
-  # Install firefox.
-  programs.firefox.enable = true;
+  virtualisation.containers.enable = true;
+
+  virtualisation.docker = {
+    enable = true;
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     google-chrome
@@ -125,6 +132,7 @@ in {
     plexamp
     pavucontrol
 
+    docker
     nodejs_22
     neovim
     vim
