@@ -53,7 +53,7 @@ lsp_zero.set_server_config({
 require("mason").setup({})
 require("mason-lspconfig").setup({
   ensure_installed = {
-    "tsserver",
+    "ts_ls",
     "eslint",
     "cssls",
     "cucumber_language_server",
