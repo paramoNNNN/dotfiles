@@ -34,8 +34,8 @@ history = 10000
 
 [window]
 dynamic_title = true
-opacity = 0.9
-decorations = "None"
+opacity = 1
+decorations = "Buttonless"
 
 [window.padding]
 x = 10
