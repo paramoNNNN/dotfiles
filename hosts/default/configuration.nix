@@ -167,6 +167,7 @@ in {
     waybar-mpris
     btop
     clipse
+    openssl
 
     pipewire
     wireplumber
