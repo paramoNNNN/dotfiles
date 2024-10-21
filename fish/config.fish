@@ -2,7 +2,7 @@ alias ls "exa --icons"
 alias go "git open"
 alias docker-rm-all "sudo docker rm -f (sudo docker ps -a -q)"
 alias nvim "nvim --listen /tmp/nvim-server-(tmux display-message -p '#S-#{window_index}').pipe"
-alias cat "bat --theme=base16-256"
+alias cat "bat --theme='Catppuccin Latte'"
 
 fish_vi_key_bindings
 
