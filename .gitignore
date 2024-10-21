@@ -35,6 +35,10 @@
 !btop/btop.conf
 !scripts
 !scripts/**
+!bat
+!bat/**
+!delta
+!delta/**
 
 
 !.gitignore
