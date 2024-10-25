@@ -1,33 +1,9 @@
 git:
   paging:
     colorArg: always
-    pager: delta --light --paging=never --24-bit-color=never
+    pager: delta --paging=never
 
 os:
-  edit: nvim --server /tmp/nvim-server-$(tmux display-message -p '#S-#{window_index}').pipe --remote-send "<cmd>lua require('scripts.lazygit-open-file')('{{filename}}', '{{line}}')<CR>"
-  open: nvim --server /tmp/nvim-server-$(tmux display-message -p '#S-#{window_index}').pipe --remote-send "<cmd>lua require('scripts.lazygit-open-file')('{{filename}}', '{{line}}')<CR>"
+  edit: nvim --server /tmp/nvim-server-$(tmux display-message -p '#S-#{window_index}').pipe --remote-send "<Cmd>lua require('scripts.lazygit-open-file')('{{filename}}', '{{line}}')<CR>"
+  open: nvim --server /tmp/nvim-server-$(tmux display-message -p '#S-#{window_index}').pipe --remote-send "<Cmd>lua require('scripts.lazygit-open-file')('{{filename}}', '{{line}}')<CR>"
 
-gui:
-  theme:
-    activeBorderColor:
-      - '#1e66f5'
-      - bold
-    inactiveBorderColor:
-      - '#6c6f85'
-    optionsTextColor:
-      - '#1e66f5'
-    selectedLineBgColor:
-      - '#ccd0da'
-    cherryPickedCommitBgColor:
-      - '#bcc0cc'
-    cherryPickedCommitFgColor:
-      - '#1e66f5'
-    unstagedChangesColor:
-      - '#d20f39'
-    defaultFgColor:
-      - '#4c4f69'
-    searchingActiveBorderColor:
-      - '#df8e1d'
-
-  authorColors:
-    '*': '#7287fd'
