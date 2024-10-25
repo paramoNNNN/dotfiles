@@ -1,5 +1,6 @@
-import = ["/Users/taha/.config/alacritty/themes/catppuccin-latte.toml"]
+[general]
 live_config_reload = true
+import = ["/Users/taha/.config/alacritty/themes/catppuccin-latte.toml"]
 
 [cursor]
 style = "Block"
@@ -11,23 +12,24 @@ TERM = "xterm-256color"
 [font]
 size = 18
 
-[font.bold]
+[font.normal]
 family = "CaskaydiaCove Nerd Font"
+style = "Regular"
+
+[font.bold]
 style = "SemiBold"
+
+[font.italic]
+style = "Italic"
+
+[font.bold_italic]
+style = "SemiBold Italic"
 
 [font.offset]
 y = 6
 
 [font.glyph_offset]
 y = 3
-
-[font.italic]
-family = "CaskaydiaCove Nerd Font"
-style = "Italic"
-
-[font.normal]
-family = "CaskaydiaCove Nerd Font"
-style = "Regular"
 
 [scrolling]
 history = 10000
