@@ -13,6 +13,7 @@ return {
     set_light_mode = function()
       require("catppuccin").setup({
         flavour = "latte",
+        transparent_background = true,
         integrations = {
           indent_blankline = {
             enabled = true,
