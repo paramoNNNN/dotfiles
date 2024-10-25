@@ -7,7 +7,7 @@ require("conform").setup({
     typescript = { "biome-check", "prettierd", "prettier", "eslint_d" },
     typescriptreact = { "biome-check", "prettierd", "prettier", "eslint_d" },
     javascriptreact = { "biome-check", "prettierd", "prettier", "eslint_d" },
-    fish = { "fish_ident" },
+    fish = { "fish_indent" },
     sh = { "shfmt" },
     css = { "biome-check" },
   },
