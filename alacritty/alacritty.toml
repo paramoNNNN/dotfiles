@@ -1,4 +1,4 @@
-import = ["/home/taha/.config/alacritty/themes/catppuccin-latte.toml"]
+import = ["/Users/taha/.config/alacritty/themes/catppuccin-latte.toml"]
 live_config_reload = true
 
 [cursor]
@@ -9,14 +9,17 @@ unfocused_hollow = false
 TERM = "xterm-256color"
 
 [font]
-size = 15
+size = 18
 
 [font.bold]
 family = "CaskaydiaCove Nerd Font"
 style = "SemiBold"
 
+[font.offset]
+y = 6
+
 [font.glyph_offset]
-y = 5
+y = 3
 
 [font.italic]
 family = "CaskaydiaCove Nerd Font"
@@ -26,17 +29,12 @@ style = "Italic"
 family = "CaskaydiaCove Nerd Font"
 style = "Regular"
 
-[font.offset]
-y = 6
-
 [scrolling]
 history = 10000
 
 [window]
 dynamic_title = true
-opacity = 1
+opacity = 0.95
+blur = true
 decorations = "Buttonless"
-
-[window.padding]
-x = 10
-y = 0
+dynamic_padding = true
