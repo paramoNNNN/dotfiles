@@ -15,6 +15,8 @@
 !fish/fish_plugins
 !fish/completions
 !fish/completions/**
+!fish/themes
+!fish/themes/**
 !fish/conf.d
 !fish/conf.d/set_theme.fish
 !i3
@@ -24,6 +26,8 @@
 !nvim
 !nvim/**
 !lazygit
+!lazygit/themes
+!lazygit/themes/**
 !lazygit/config.yml
 !kitty
 !kitty/**
@@ -42,6 +46,7 @@
 
 
 !.gitignore
+!.gitconfig
 !.tmux.conf
 !picom.conf
 !.Xresources

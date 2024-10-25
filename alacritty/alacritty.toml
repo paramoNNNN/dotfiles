@@ -1,6 +1,6 @@
 [general]
 live_config_reload = true
-import = ["/Users/taha/.config/alacritty/themes/catppuccin-latte.toml"]
+import = ["/Users/taha/.config/alacritty/themes/catppuccin-mocha.toml"]
 
 [cursor]
 style = "Block"
@@ -36,7 +36,7 @@ history = 10000
 
 [window]
 dynamic_title = true
-opacity = 0.95
+opacity = 0.9
 blur = true
 decorations = "Buttonless"
 dynamic_padding = true
