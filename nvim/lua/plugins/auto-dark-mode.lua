@@ -20,7 +20,7 @@ end
 
 return {
   "f-person/auto-dark-mode.nvim",
-  config = {
+  opts = {
     update_interval = 1000,
     set_dark_mode = function()
       vim.g.lazygit_config_file_path =
@@ -38,6 +38,13 @@ return {
       require("catppuccin").setup({
         flavour = "latte",
         transparent_background = true,
+        highlight_overrides = {
+          all = function(colors)
+            return {
+              LineNr = { fg = colors.overlay1 },
+            }
+          end,
+        },
         integrations = integrations,
       })
       set_defaults()
