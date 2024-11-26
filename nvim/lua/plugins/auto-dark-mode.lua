@@ -16,6 +16,7 @@ function set_defaults()
       theme = "catppuccin",
     },
   })
+  require("notify").setup({ background_colour = "#000000" })
 end
 
 return {
