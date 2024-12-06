@@ -66,8 +66,8 @@
     shellAliases = {
       ls = "exa --icons";
       go = "git open";
-      nvim =
-        "nvim --listen /tmp/nvim-server-(tmux display-message -p '#S-#{window_index}').pipe";
+      # nvim =
+      #   "nvim --listen /tmp/nvim-server-(tmux display-message -p '#S-#{window_index}').pipe";
       cat = "bat --theme=base16";
       nd = "nix develop --impure --command fish";
       nb = "sudo nixos-rebuild switch --flake ~/nixos#default";

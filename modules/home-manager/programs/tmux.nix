@@ -50,6 +50,8 @@ in {
       unbind C-b
       bind-key C-a send-prefix
       bind-key t set-option -g status
+      bind-key -T copy-mode-vi v send-keys -X begin-selection
+      bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel
     '';
   };
 

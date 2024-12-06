@@ -137,7 +137,6 @@ in {
     deno
     python311
     python311Packages.pip
-    neovim
     vim
     kitty
     alacritty
