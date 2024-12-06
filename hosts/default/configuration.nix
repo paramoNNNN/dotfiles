@@ -134,6 +134,9 @@ in {
 
     docker
     nodejs_22
+    deno
+    python311
+    python311Packages.pip
     neovim
     vim
     kitty
