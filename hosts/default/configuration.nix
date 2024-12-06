@@ -180,8 +180,10 @@ in {
     wl-clipboard
   ];
 
-  fonts.packages = with pkgs;
-    [ (nerdfonts.override { fonts = [ "CascadiaCode" "SpaceMono" ]; }) ];
+  fonts.packages = with pkgs; [ 
+    nerd-fonts.caskaydia-cove
+    nerd-fonts.space-mono
+  ];
 
   nixpkgs.config.allowUnfree = true;
 
