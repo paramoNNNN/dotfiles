@@ -137,7 +137,6 @@ in {
     deno
     python311
     python311Packages.pip
-    neovim
     vim
     kitty
     alacritty
@@ -150,6 +149,8 @@ in {
     lazydocker
     delta
     stylua
+    nixfmt-rfc-style
+    tailwindcss-language-server
 
     openvpn
     xray
@@ -183,7 +184,7 @@ in {
     wl-clipboard
   ];
 
-  fonts.packages = with pkgs; [ 
+  fonts.packages = with pkgs; [
     nerd-fonts.caskaydia-cove
     nerd-fonts.space-mono
   ];
