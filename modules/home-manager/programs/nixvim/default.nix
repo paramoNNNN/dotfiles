@@ -42,21 +42,32 @@
     colorschemes = {
       catppuccin = {
         enable = true;
+        luaConfig.post = ''
+          require("catppuccin").setup({
+            highlight_overrides = {
+              all = function(colors)
+                return {
+                  LineNr = { fg = colors.overlay1 },
+                }
+              end,
+            },
+          })
+        '';
         settings = {
           flavour = "mocha";
           transparent_background = true;
           integrations = {
             cmp = true;
             gitsigns = true;
-            # treesitter = true;
+            treesitter = true;
             notify = true;
             indent_blankline = {
               enabled = true;
               colored_indent_levels = true;
             };
             mini = { enabled = true; };
-            # neotree = true;
-            # rainbow_delimiters = true;
+            neotree = true;
+            rainbow_delimiters = true;
             telescope = { enabled = true; };
             ufo = true;
             which_key = true;
