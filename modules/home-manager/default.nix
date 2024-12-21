@@ -8,6 +8,7 @@
     ./programs/git.nix
     ./programs/lazygit.nix
     ./programs/tmux.nix
+    ./programs/nixvim
 
     ./wm.nix
     ./theme.nix
