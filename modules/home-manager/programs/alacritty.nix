@@ -2,7 +2,7 @@
   programs.alacritty = {
     enable = true;
     settings = {
-      shell.program = "fish";
+      terminal.shell.program = "fish";
       env.TERM = "xterm-256color";
       scrolling.history = 10000;
 
