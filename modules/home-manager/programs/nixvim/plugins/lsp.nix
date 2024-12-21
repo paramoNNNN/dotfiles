@@ -23,6 +23,11 @@
           desc = "View documentation";
         }
         {
+          __unkeyed-1 = "vd";
+          __unkeyed-2 = "<Cmd>Lspsaga show_line_diagnostics<CR>";
+          desc = "View line diagnostics";
+        }
+        {
           __unkeyed-1 = "vrr";
           __unkeyed-2 = "<Cmd>Telescope lsp_references<CR>";
           desc = "View references";
