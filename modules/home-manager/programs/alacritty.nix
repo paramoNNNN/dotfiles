@@ -1,4 +1,4 @@
-{
+{ lib, ... }: {
   programs.alacritty = {
     enable = true;
     settings = {
@@ -21,6 +21,8 @@
           style = "Regular";
         };
       };
+
+      colors.primary.background = lib.mkForce "#11111b";
 
       window = {
         opacity = 0.95;
