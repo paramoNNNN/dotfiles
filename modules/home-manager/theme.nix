@@ -6,9 +6,15 @@
     flavor = "mocha";
     accent = "blue";
 
-    bat = { enable = true; };
-
-    delta = { enable = true; };
+    btop.enable = true;
+    bat.enable = true;
+    delta.enable = true;
+    lazygit.enable = true;
+    gtk = {
+      enable = true;
+      icon.enable = true;
+      gnomeShellTheme = true;
+    };
   };
 
   home.pointerCursor = {
@@ -17,12 +23,5 @@
     package = pkgs.catppuccin-cursors.mochaDark;
   };
 
-  gtk = {
-    enable = true;
-    catppuccin = {
-      enable = true;
-      icon.enable = true;
-      gnomeShellTheme = true;
-    };
-  };
+  gtk = { enable = true; };
 }
