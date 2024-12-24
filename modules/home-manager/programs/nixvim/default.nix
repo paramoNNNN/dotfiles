@@ -44,6 +44,12 @@
         enable = true;
         luaConfig.post = ''
           require("catppuccin").setup({
+            transparent_background = true,
+            color_overrides = {
+              mocha = {
+                base = "#11111b",
+              },
+            },
             highlight_overrides = {
               all = function(colors)
                 return {
@@ -52,6 +58,7 @@
               end,
             },
           })
+          require("notify").setup({ background_colour = "#000000" })
         '';
         settings = {
           flavour = "mocha";

@@ -85,7 +85,7 @@
 
 
       window#waybar {
-        background: rgba(26, 27, 38, 0.75);
+        background: rgba(17, 17, 27, 0.95);
         border: 2px solid #414868;
       }
 
