@@ -4,8 +4,9 @@
     interactiveShellInit = ''
       set fish_greeting # Disable greeting;
       set fish_vi_key_bindings;
+      set pure_show_system_time
+      set pure_color_system_time white
       source ${pkgs.asdf-vm}/share/asdf-vm/asdf.fish;
-
     '';
     plugins = [
       {
