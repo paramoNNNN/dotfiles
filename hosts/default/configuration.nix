@@ -131,6 +131,7 @@ in {
     discord
     plexamp
     pavucontrol
+    hyprpaper
 
     docker
     nodejs_22
