@@ -5,6 +5,10 @@
     enable = true;
     flavor = "mocha";
     accent = "blue";
+
+    bat = { enable = true; };
+
+    delta = { enable = true; };
   };
 
   home.pointerCursor = {
