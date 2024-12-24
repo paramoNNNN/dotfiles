@@ -11,8 +11,5 @@
     };
   };
 
-  programs.git.delta = {
-    enable = true;
-    catppuccin = { enable = true; };
-  };
+  programs.git.delta = { enable = true; };
 }
