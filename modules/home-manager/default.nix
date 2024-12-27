@@ -9,6 +9,7 @@
     ./programs/lazygit.nix
     ./programs/tmux.nix
     ./programs/nixvim
+    ./programs/wofi.nix
 
     ./wm.nix
     ./theme.nix
