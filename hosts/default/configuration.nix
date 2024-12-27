@@ -72,6 +72,14 @@ in {
     };
   };
 
+  services.blueman.enable = true;
+  systemd.user.services.mpris-proxy = {
+    description = "Mpris proxy";
+    after = [ "network.target" "sound.target" ];
+    wantedBy = [ "default.target" ];
+    serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
+  };
+
   # fix https://github.com/ryan4yin/nix-config/issues/10
   security.pam.services.swaylock = { };
 
@@ -80,6 +88,11 @@ in {
       enable = true;
       enable32Bit = true;
       extraPackages = with pkgs; [ rocmPackages.clr.icd ];
+    };
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+      settings = { General = { Experimental = true; }; };
     };
   };
 
