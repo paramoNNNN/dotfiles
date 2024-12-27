@@ -1,4 +1,4 @@
-{
+{ lib, pkgs, ... }: {
   programs.nixvim.plugins.conform-nvim = {
     enable = true;
     settings = {
@@ -21,6 +21,7 @@
         lsp_fallback = true;
         stop_after_first = true;
       };
+      formatters = { biome-check = { command = lib.getExe pkgs.biome; }; };
     };
   };
 }
