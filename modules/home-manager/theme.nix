@@ -10,11 +10,6 @@
     bat.enable = true;
     delta.enable = true;
     lazygit.enable = true;
-    gtk = {
-      enable = true;
-      icon.enable = true;
-      gnomeShellTheme = true;
-    };
   };
 
   home.pointerCursor = {
