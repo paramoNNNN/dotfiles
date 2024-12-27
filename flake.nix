@@ -29,9 +29,11 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    ghostty.url = "github:ghostty-org/ghostty";
   };
 
-  outputs = { self, nixpkgs, ... }@inputs: {
+  outputs = { nixpkgs, ... }@inputs: {
     nixosConfigurations = {
       default = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };

@@ -131,6 +131,7 @@ in {
     discord
     plexamp
     pavucontrol
+    inputs.ghostty.packages."${system}".default
 
     docker
     nodejs_22
