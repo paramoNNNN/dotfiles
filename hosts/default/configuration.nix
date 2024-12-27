@@ -131,7 +131,6 @@ in {
     discord
     plexamp
     pavucontrol
-    hyprpaper
 
     docker
     nodejs_22
@@ -173,6 +172,9 @@ in {
     btop
     clipse
     openssl
+    hyprpaper
+    hyprshot
+    hyprpicker
 
     pipewire
     wireplumber
