@@ -22,10 +22,10 @@
         };
       };
 
-      colors.primary.background = lib.mkForce "#11111b";
+      colors.primary.background = lib.mkForce "#000000";
 
       window = {
-        opacity = 0.95;
+        opacity = 0.9;
         padding = {
           x = 0;
           y = 0;
