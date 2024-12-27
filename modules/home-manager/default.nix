@@ -7,8 +7,9 @@
     ./programs/fish.nix
     ./programs/git.nix
     ./programs/lazygit.nix
-    ./programs/tmux.nix
     ./programs/nixvim
+    ./programs/swaync.nix
+    ./programs/tmux.nix
     ./programs/wofi.nix
 
     ./wm.nix
