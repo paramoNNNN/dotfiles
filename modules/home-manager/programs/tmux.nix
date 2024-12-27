@@ -67,11 +67,6 @@ in {
             - ping 1.1.1.1 -i 0.5
             - cd ~/ovpn
             - cd ~/xray
-        - name: monitor
-          root: ~/
-          layout: tiled
-          panes:
-            - btop
     '';
   };
 
