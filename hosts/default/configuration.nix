@@ -149,6 +149,7 @@ in {
     docker
     nodejs_22
     deno
+    bun
     python311
     python311Packages.pip
     vim
