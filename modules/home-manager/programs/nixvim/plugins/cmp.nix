@@ -26,11 +26,6 @@
             name = "path";
             keywordLength = 3;
           }
-          {
-            name = "buffer";
-            option.get_bufnrs.__raw = "vim.api.nvim_list_bufs";
-            keywordLength = 5;
-          }
           { name = "nvim_lsp"; }
           { name = "nvim_lua"; }
           {
@@ -80,15 +75,11 @@
     cmp-nvim-lsp = {
       enable = true; # LSP
     };
-    cmp-buffer = { enable = true; };
     cmp-path = {
       enable = true; # file system paths
     };
     cmp_luasnip = {
       enable = true; # snippets
-    };
-    cmp-cmdline = {
-      enable = true; # autocomplete for cmdline
     };
   };
 }
