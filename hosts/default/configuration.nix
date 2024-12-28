@@ -138,7 +138,7 @@ in {
 
   environment.systemPackages = with pkgs; [
     google-chrome
-    inputs.zen-browser.packages."${system}".specific
+    inputs.zen-browser.packages."${system}".default
     telegram-desktop
     _1password-gui
     discord
