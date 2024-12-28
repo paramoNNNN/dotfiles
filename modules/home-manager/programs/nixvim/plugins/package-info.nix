@@ -14,7 +14,7 @@
         }
         {
           __unkeyed-1 = "<leader>pd";
-          __unkeyed-2 = "Cmd>lua require('package-info').delete()<CR>";
+          __unkeyed-2 = "<Cmd>lua require('package-info').delete()<CR>";
           desc = "Delete dependency";
         }
         {
