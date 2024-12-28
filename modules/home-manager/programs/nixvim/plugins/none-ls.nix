@@ -31,7 +31,6 @@
               extra_args = { "--fast" },
             }
           '';
-
         };
         biome = { enable = true; };
       };

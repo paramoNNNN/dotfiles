@@ -52,15 +52,14 @@
           # 	"<C-q": send to quick fix and open;
           # 	"<C-d": delete buffer;
           # };
-          pickers = {
-            find_files = {
-              find_command =
-                [ "rg" "--files" "--hidden" "--glob" "!**/.git/*" ];
-            };
-            buffers = {
-              sort_lastused = true;
-              sort_mru = true;
-            };
+        };
+        pickers = {
+          find_files = {
+            find_command = [ "rg" "--files" "--hidden" "--glob" "!**/.git/*" ];
+          };
+          buffers = {
+            sort_lastused = true;
+            sort_mru = true;
           };
         };
       };
