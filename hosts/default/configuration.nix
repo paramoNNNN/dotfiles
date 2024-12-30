@@ -166,6 +166,7 @@ in {
     stylua
     nixfmt-rfc-style
     tailwindcss-language-server
+    ngrok
 
     openvpn
     xray
