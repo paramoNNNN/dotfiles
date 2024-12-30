@@ -19,6 +19,7 @@
     ./persisted.nix
     ./presence.nix
     ./rainbow-delimiters.nix
+    ./tailwind-tools.nix
     ./telescope.nix
     ./todo-comments.nix
     ./toggleterm.nix
