@@ -15,6 +15,7 @@
         sh = [ "shfmt" ];
         css = [ "biome-check" ];
         vue = [ "prettierd" "prettier" ];
+        astro = [ "prettierd" "prettier" ];
       };
       format_on_save = {
         timeout_ms = 2000;
