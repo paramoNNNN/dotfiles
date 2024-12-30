@@ -23,7 +23,7 @@
           desc = "View documentation";
         }
         {
-          __unkeyed-1 = "<leader>vd";
+          __unkeyed-1 = "<leader>ve";
           __unkeyed-2 = "<Cmd>Lspsaga show_line_diagnostics<CR>";
           desc = "View line diagnostics";
         }
