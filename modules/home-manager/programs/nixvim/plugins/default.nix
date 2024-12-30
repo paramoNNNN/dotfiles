@@ -4,6 +4,7 @@
     ./cmp.nix
     ./conform.nix
     ./dressing.nix
+    ./gitpad.nix
     ./gitsigns.nix
     ./icons.nix
     ./indent-blankline.nix
