@@ -33,17 +33,17 @@
           desc = "View references";
         }
         {
-          __unkeyed-1 = "<leader>gd";
+          __unkeyed-1 = "<leader>vd";
           __unkeyed-2 = "<Cmd>Telescope lsp_definitions<CR>";
           desc = "View definitions";
         }
         {
-          __unkeyed-1 = "<leader>gi";
+          __unkeyed-1 = "<leader>vi";
           __unkeyed-2 = "<Cmd>Telescope lsp_implementations<CR>";
           desc = "View implementations";
         }
         {
-          __unkeyed-1 = "<leader>gt";
+          __unkeyed-1 = "<leader>vt";
           __unkeyed-2 = "<Cmd>Telescope lsp_type_definitions<CR>";
           desc = "View type definitions";
         }
