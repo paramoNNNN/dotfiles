@@ -7,7 +7,7 @@
         position = "top";
         height = 40;
 
-        modules-left = [ "custom/nix" "hyprland/workspaces" ];
+        modules-left = [ "custom/nix" "hyprland/workspaces" "memory" ];
         modules-center = [ "hyprland/window" ];
         modules-right =
           [ "custom/mpris" "pulseaudio" "network" "clock" "tray" ];
@@ -28,6 +28,11 @@
         "hyprland/window" = {
           "separate-outputs" = true;
           "max-length" = 64;
+        };
+
+        "memory" = {
+          "format" = "{used}GiB";
+          "interval" = 2;
         };
 
         "tray" = {
