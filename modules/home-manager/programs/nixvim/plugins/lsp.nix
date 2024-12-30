@@ -66,8 +66,7 @@
       servers = {
         ts_ls.enable = true;
         cssls.enable = true;
-        # TODO:
-        # tailwindcss.enable = true;
+        tailwindcss.enable = true;
         html.enable = true;
         astro.enable = true;
         svelte.enable = false;
