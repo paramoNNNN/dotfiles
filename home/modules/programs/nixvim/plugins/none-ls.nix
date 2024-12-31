@@ -7,11 +7,9 @@
     };
     sources = {
       code_actions = {
-        statix.enable = true;
         gitsigns.enable = true;
       };
       diagnostics = {
-        statix.enable = true;
         deadnix.enable = true;
         pylint.enable = true;
         checkstyle.enable = true;
@@ -33,10 +31,6 @@
           '';
         };
         biome = { enable = true; };
-      };
-      completion = {
-        luasnip.enable = true;
-        spell.enable = true;
       };
     };
   };

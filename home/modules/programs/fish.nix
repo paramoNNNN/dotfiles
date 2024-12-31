@@ -64,13 +64,16 @@
       }
     ];
     shellAliases = {
-      ls = "exa --icons";
+      ls = "eza --icons";
       go = "git open";
       nvim =
         "nvim --listen /tmp/nvim-server-(tmux display-message -p '#S-#{window_index}').pipe";
-      cat = "bat --theme=base16";
-      nd = "nix develop --impure --command fish";
+      cat = "bat --theme='Catppuccin Mocha'";
       nb = "sudo nixos-rebuild switch --flake ~/nixos#default";
+      ovpn_lt =
+        "sudo /opt/homebrew/opt/openvpn/sbin/openvpn --config /Users/taha/ovpn/client.ovpn";
+      ovpn_de =
+        "sudo /opt/homebrew/opt/openvpn/sbin/openvpn --config /Users/taha/ovpn/taha-mac.ovpn";
     };
   };
 }

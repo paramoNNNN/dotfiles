@@ -8,8 +8,10 @@ let
   hyprland-session = "${
       inputs.hyprland.packages.${pkgs.system}.hyprland
     }/share/wayland-sessions";
-in {
-  imports = [ # Include the results of the hardware scan.
+in
+{
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
     inputs.home-manager.nixosModules.default
   ];

@@ -8,6 +8,7 @@
     ./gitsigns.nix
     ./icons.nix
     ./indent-blankline.nix
+    ./lazydocker.nix
     ./lazygit.nix
     ./lsp.nix
     ./lualine.nix
