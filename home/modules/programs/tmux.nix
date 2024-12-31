@@ -10,7 +10,8 @@ let
       "hash" = "sha256-sw9g1Yzmv2fdZFLJSGhx1tatQ+TtjDYNZI5uny0+5Hg=";
     };
   };
-in {
+in
+{
   programs.tmux = {
     enable = true;
     shell = "${pkgs.fish}/bin/fish";

@@ -7,7 +7,9 @@
       scrolling.history = 10000;
 
       font = {
-        size = 16;
+        size = 18;
+        offset.y = 6;
+        glyph_offset.y = 3;
         bold = {
           family = "CaskaydiaCove Nerd Font";
           style = "SemiBold";
@@ -22,16 +24,18 @@
         };
       };
 
-      colors.primary.background = lib.mkForce "#000000";
+      colors.primary.background = lib.mkForce "#ffffff";
 
       window = {
         opacity = 0.9;
+        blur = true;
+        decorations = "Buttonless";
         padding = {
           x = 0;
           y = 0;
         };
+        dynamic_padding = true;
       };
     };
   };
 }
-

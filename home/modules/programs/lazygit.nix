@@ -5,7 +5,7 @@
       git = {
         paging = {
           colorArg = "always";
-          pager = "delta --paging=never --24-bit-color=never";
+          pager = "delta --paging=never";
         };
       };
       os = {

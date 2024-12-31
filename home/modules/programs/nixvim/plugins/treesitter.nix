@@ -3,7 +3,7 @@
     enable = true;
     settings = {
       ensure_installed =
-        [ "javascript" "typescript" "tsx" "c" "lua" "vim" "vimdoc" "query" ];
+        [ "javascript" "typescript" "tsx" "c" "lua" "vim" "vimdoc" "query" "astro" ];
       sync_install = false;
       auto_install = true;
       highlight = {
