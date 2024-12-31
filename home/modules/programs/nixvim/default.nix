@@ -58,10 +58,10 @@
               end,
             },
           })
-          require("notify").setup({ background_colour = "#000000" })
+          require("notify").setup({ background_colour = "#ffffff" })
         '';
         settings = {
-          flavour = "mocha";
+          flavour = "latte";
           transparent_background = true;
           integrations = {
             cmp = true;
@@ -116,7 +116,7 @@
 
       updatetime = 50;
 
-      foldcolumn = "1";
+      foldcolumn = "0";
       foldlevel = 99;
       foldlevelstart = 99;
       foldenable = true;

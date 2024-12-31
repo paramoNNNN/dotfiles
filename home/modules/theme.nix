@@ -1,22 +1,15 @@
-{ pkgs, inputs, ... }: {
+{ inputs, ... }: {
   imports = [ inputs.catppuccin.homeManagerModules.catppuccin ];
 
   catppuccin = {
     enable = true;
-    flavor = "mocha";
+    flavor = "latte";
     accent = "blue";
 
     btop.enable = true;
     bat.enable = true;
     delta.enable = true;
+    tmux.enable = false;
     lazygit.enable = true;
   };
-
-  home.pointerCursor = {
-    gtk.enable = true;
-    name = "catppuccin-mocha-dark-cursors";
-    package = pkgs.catppuccin-cursors.mochaDark;
-  };
-
-  gtk = { enable = true; };
 }
