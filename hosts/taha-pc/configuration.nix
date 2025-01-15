@@ -197,6 +197,11 @@ in {
     wl-clipboard
   ];
 
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+  };
+
   fonts.packages = with pkgs; [
     nerd-fonts.caskaydia-cove
     nerd-fonts.space-mono
