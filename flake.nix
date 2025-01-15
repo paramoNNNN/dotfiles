@@ -37,16 +37,13 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
+
+    ghostty.url = "github:ghostty-org/ghostty";
   };
 
-  outputs =
-    { self
-    , darwin
-    , home-manager
-    , nix-homebrew
-    , nixpkgs
-    , ...
-    } @ inputs:
+  outputs = { self, darwin, home-manager, nix-homebrew, nixpkgs, ... }@inputs:
     let
       inherit (self) outputs;
 
@@ -63,6 +60,7 @@
       # Function for NixOS system configuration
       mkNixosConfiguration = hostname: username:
         nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
           specialArgs = {
             inherit inputs outputs hostname;
             userConfig = users.${username};
@@ -93,22 +91,18 @@
             inherit inputs outputs;
             userConfig = users.${username};
           };
-          modules = [
-            ./home/${username}/${hostname}.nix
-          ];
+          modules = [ ./home/${username}/${hostname}.nix ];
         };
-    in
-    {
-      nixosConfigurations = {
-        taha = mkNixosConfiguration "taha-pc" "taha";
-      };
+    in {
+      nixosConfigurations = { taha = mkNixosConfiguration "taha-pc" "taha"; };
 
       darwinConfigurations = {
         "taha-mac" = mkDarwinConfiguration "taha-mac" "taha";
       };
 
       homeConfigurations = {
-        "taha@taha-mac" = mkHomeConfiguration "aarch64-darwin" "taha" "taha-mac";
+        "taha@taha-mac" =
+          mkHomeConfiguration "aarch64-darwin" "taha" "taha-mac";
         "taha@taha-pc" = mkHomeConfiguration "x86_64-linux" "taha" "taha-pc";
       };
 
