@@ -139,6 +139,7 @@ in {
     plexamp
     pavucontrol
     inputs.ghostty.packages."${system}".default
+    thunderbird
 
     docker
     nodejs_22
