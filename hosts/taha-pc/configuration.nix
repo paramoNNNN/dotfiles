@@ -140,6 +140,8 @@ in {
     pavucontrol
     inputs.ghostty.packages."${system}".default
     thunderbird
+    soulseekqt
+    spek
 
     docker
     nodejs_22
