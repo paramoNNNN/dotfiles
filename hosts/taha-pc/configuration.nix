@@ -188,6 +188,7 @@ in {
     hyprpaper
     hyprshot
     hyprpicker
+    mkcert
 
     pipewire
     wireplumber
