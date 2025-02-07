@@ -11,8 +11,10 @@
 
     notify = {
       enable = true;
-      render = "compact";
-      stages = "fade";
+      settings = {
+        render = "compact";
+        stages = "fade";
+      };
     };
   };
 }
