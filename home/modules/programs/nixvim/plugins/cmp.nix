@@ -13,11 +13,17 @@
         completion = {
           menu = {
             border = "rounded";
+            auto_show = {
+              __raw = ''
+                function(ctx)
+                  return ctx.mode ~= "cmdline" or not vim.tbl_contains({ '/', '?', ':' }, vim.fn.getcmdtype())
+                end
+              '';
+            };
           };
           documentation = { window = { border = "rounded"; }; };
         };
         sources = {
-          cmdline = { __raw = ''{}''; };
           providers = {
             buffer = {
               score_offset = -7;

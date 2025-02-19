@@ -30,9 +30,6 @@
 
   nix.package = pkgs.nix;
 
-  # Enable Nix daemon
-  services.nix-daemon.enable = true;
-
   # User configuration
   users.users.${userConfig.name} = {
     name = "${userConfig.name}";
