@@ -13,6 +13,9 @@ in {
     inputs.home-manager.nixosModules.default
   ];
 
+  # NTFS
+  boot.supportedFilesystems = [ "ntfs" ];
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -138,7 +141,6 @@ in {
     discord
     plexamp
     pavucontrol
-    inputs.ghostty.packages."${system}".default
     thunderbird
     soulseekqt
     spek
@@ -164,9 +166,12 @@ in {
     nixfmt-rfc-style
     tailwindcss-language-server
     ngrok
+    prettierd
+    eslint_d
 
     openvpn
     xray
+    proxychains
 
     wget
     eza
@@ -189,6 +194,8 @@ in {
     hyprshot
     hyprpicker
     mkcert
+    wl-clipboard
+    wl-screenrec
 
     pipewire
     wireplumber
@@ -198,7 +205,7 @@ in {
     libgcc
     gnumake
     nix-prefetch-github
-    wl-clipboard
+    ntfs3g
   ];
 
   programs.steam = {
