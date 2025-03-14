@@ -196,6 +196,7 @@ in {
     mkcert
     wl-clipboard
     wl-screenrec
+    ncdu
 
     pipewire
     wireplumber
