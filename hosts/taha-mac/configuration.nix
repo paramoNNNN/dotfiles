@@ -109,6 +109,7 @@
     lazygit
     ripgrep
     teamocil
+    xray
   ];
 
   # Shell configuration
