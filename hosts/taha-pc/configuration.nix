@@ -6,7 +6,8 @@
 let
   tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
   hyprland-session = "${pkgs.hyprland}/share/wayland-sessions";
-in {
+in
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -144,6 +145,7 @@ in {
     thunderbird
     soulseekqt
     spek
+    inputs.ghostty.packages."${system}".default
 
     docker
     nodejs_22
