@@ -3,7 +3,7 @@
     enable = true;
     interactiveShellInit = ''
       set fish_greeting # Disable greeting;
-      set fish_vi_key_bindings;
+      set fish_key_bindings fish_vi_key_bindings;
       set pure_show_system_time
       set pure_color_system_time white
     '';
@@ -68,7 +68,7 @@
       go = "git open";
       nvim =
         "nvim --listen /tmp/nvim-server-(tmux display-message -p '#S-#{window_index}').pipe";
-      cat = "bat --theme='Catppuccin Mocha'";
+      cat = "bat";
       nb = "sudo nixos-rebuild switch --flake ~/nixos#default";
       ovpn_lt =
         "sudo /opt/homebrew/opt/openvpn/sbin/openvpn --config /Users/taha/ovpn/client.ovpn";
