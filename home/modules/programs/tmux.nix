@@ -1,16 +1,4 @@
 { pkgs, inputs, ... }:
-let
-  tmux-sensible = pkgs.tmuxPlugins.mkTmuxPlugin {
-    pluginName = "tmux-sensible";
-    version = "v3.0.0";
-    src = pkgs.fetchFromGitHub {
-      "owner" = "tmux-plugins";
-      "repo" = "tmux-sensible";
-      "rev" = "25cb91f42d020f675bb0a2ce3fbd3a5d96119efa";
-      "hash" = "sha256-sw9g1Yzmv2fdZFLJSGhx1tatQ+TtjDYNZI5uny0+5Hg=";
-    };
-  };
-in
 {
   programs.tmux = {
     enable = true;
@@ -21,7 +9,7 @@ in
 
     plugins = with pkgs; [
       tmuxPlugins.better-mouse-mode
-      tmux-sensible
+      tmuxPlugins.sensible
       inputs.minimal-tmux.packages.${pkgs.system}.default
     ];
 
