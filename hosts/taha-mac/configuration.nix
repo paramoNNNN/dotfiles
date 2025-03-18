@@ -127,6 +127,7 @@
     casks = [
       "dozer"
       "raycast"
+      "ghostty"
     ];
   };
 
