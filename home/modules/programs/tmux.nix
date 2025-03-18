@@ -14,6 +14,7 @@
     ];
 
     extraConfig = ''
+      set -g default-command fish
       set-option -g mouse on
       set -g renumber-windows on
 
