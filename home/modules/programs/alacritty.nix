@@ -1,8 +1,8 @@
-{ lib, ... }: {
+{ pkgs, lib, ... }: {
   programs.alacritty = {
     enable = true;
     settings = {
-      terminal.shell.program = "fish";
+      terminal.shell.program = "${pkgs.fish}/bin/fish";
       env.TERM = "xterm-256color";
       scrolling.history = 10000;
 
