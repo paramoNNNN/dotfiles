@@ -47,11 +47,25 @@
       enabledExtensions = [ "advanced_git_search" ];
       settings = {
         defaults = {
-          # TODO:
-          # mappings = {
-          # 	"<C-q": send to quick fix and open;
-          # 	"<C-d": delete buffer;
-          # };
+          mappings = {
+            n = {
+              "<C-q>" = {
+                __raw = ''
+                  require("telescope.actions").send_selected_to_qflist + require("telescope.actions").open_qflist'';
+              };
+            };
+            i = {
+              "<C-d>" = {
+                __raw = ''
+                  require("telescope.actions").delete_buffer
+                '';
+              };
+              "<C-q>" = {
+                __raw = ''
+                  require("telescope.actions").send_selected_to_qflist + require("telescope.actions").open_qflist'';
+              };
+            };
+          };
         };
         pickers = {
           find_files = {
