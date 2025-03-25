@@ -18,6 +18,30 @@
         }
 
         {
+          __unkeyed-1 = "[d";
+          __unkeyed-2 =
+            {
+              __raw = ''
+                function()
+                  require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+                end
+              '';
+            };
+          desc = "Previous diagnostic";
+        }
+        {
+          __unkeyed-1 = "]d";
+          __unkeyed-2 =
+            {
+              __raw = ''
+                function()
+                  require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+                end
+              '';
+            };
+          desc = "Previous diagnostic";
+        }
+        {
           __unkeyed-1 = "K";
           __unkeyed-2 = "<Cmd>Lspsaga hover_doc<CR>";
           desc = "View documentation";
@@ -51,6 +75,11 @@
           __unkeyed-1 = "<leader>vca";
           __unkeyed-2 = "<Cmd>Lspsaga code_action<CR>";
           desc = "View code actions";
+        }
+        {
+          __unkeyed-1 = "<leader>vcc";
+          __unkeyed-2 = "<Cmd>Lspsaga incoming_calls<CR>";
+          desc = "View incoming calls";
         }
         {
           __unkeyed-1 = "<leader>vrn";

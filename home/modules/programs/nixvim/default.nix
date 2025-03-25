@@ -87,6 +87,11 @@
 
     globals = { mapleader = " "; };
 
+
+    diagnostics = {
+      severity_sort = true;
+    };
+
     opts = {
       guicursor = "i:ver30-iCursor-blinkwait300-blinkon200-blinkoff150";
       cmdheight = 0;
