@@ -93,9 +93,10 @@
     lsp = {
       enable = true;
       servers = {
-        ts_ls.enable = true;
+        ts_ls.enable = false;
         cssls.enable = true;
         tailwindcss.enable = true;
+        jsonls.enable = true;
         html.enable = true;
         astro.enable = true;
         svelte.enable = false;
@@ -117,6 +118,10 @@
       lightbulb.enable = false;
       codeAction = { showServerName = true; };
       symbolInWinbar.enable = false;
+    };
+
+    typescript-tools = {
+      enable = true;
     };
   };
 }
