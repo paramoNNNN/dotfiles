@@ -124,6 +124,9 @@
 
   homebrew = {
     enable = true;
+    brews = [
+      "cloudflared"
+    ];
     casks = [
       "dozer"
       "raycast"
