@@ -7,7 +7,7 @@
       height = 500;
       always_parse_args = true;
       show_all = false;
-      term = "alacritty";
+      term = "ghostty";
       hide_scroll = true;
       print_command = true;
       insensitive = true;

@@ -1,6 +1,7 @@
-{outputs, ...}: {
+{ outputs, ... }: {
   imports = [
     ./programs/alacritty.nix
+    ./programs/ghostty.nix
     ./programs/bat.nix
     ./programs/btop.nix
     ./programs/direnv.nix
@@ -15,12 +16,8 @@
 
   # Nixpkgs configuration
   nixpkgs = {
-    overlays = [
-      outputs.overlays.stable-packages
-    ];
+    overlays = [ outputs.overlays.stable-packages ];
 
-    config = {
-      allowUnfree = true;
-    };
+    config = { allowUnfree = true; };
   };
 }
