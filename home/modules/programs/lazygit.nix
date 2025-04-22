@@ -10,9 +10,9 @@
       };
       os = {
         edit = ''
-          nvim --server /tmp/nvim-server-$(tmux display-message -p '#S-#{window_index}').pipe --remote-send "<cmd>lua require('scripts.lazygit-open-file')('{{filename}}', '{{line}}')<CR>"'';
+          nvim --server /tmp/nvim-server-$(tmux display-message -p '#S-#{window_index}').pipe --remote-send "<cmd>lua lazygitOpenFile('{{filename}}', '{{line}}')<CR>"'';
         open = ''
-          nvim --server /tmp/nvim-server-$(tmux display-message -p '#S-#{window_index}').pipe --remote-send "<cmd>lua require('scripts.lazygit-open-file')('{{filename}}', '{{line}}')<CR>"'';
+          nvim --server /tmp/nvim-server-$(tmux display-message -p '#S-#{window_index}').pipe --remote-send "<cmd>lua lazygitOpenFile('{{filename}}', '{{line}}')<CR>"'';
       };
     };
   };
