@@ -1,7 +1,7 @@
-{
+{ lib, ... }: {
   services.swaync = {
     enable = true;
-    style = ''
+    style = lib.mkForce ''
       * {
         all: unset;
         font-size: 16px;
