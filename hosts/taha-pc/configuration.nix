@@ -145,7 +145,7 @@ in
     thunderbird
     soulseekqt
     spek
-    inputs.ghostty.packages."${system}".default
+    ghostty
 
     docker
     nodejs_22
