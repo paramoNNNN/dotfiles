@@ -5,8 +5,8 @@
     installBatSyntax = true;
     installVimSyntax = true;
     settings = {
-      theme = "catppuccin-mocha";
-      background = "#000000";
+      theme = "catppuccin-latte";
+      background = "#FFFFFF";
       background-opacity = 0.9;
       background-blur = true;
 
