@@ -13,6 +13,7 @@
     ./lsp.nix
     ./lualine.nix
     ./mini.nix
+    ./multicursor.nix
     ./neo-tree.nix
     ./none-ls.nix
     ./notify.nix
