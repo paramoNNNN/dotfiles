@@ -12,6 +12,7 @@
     ./lazygit.nix
     ./lsp.nix
     ./lualine.nix
+    ./luasnip.nix
     ./mini.nix
     ./multicursor.nix
     ./neo-tree.nix
@@ -27,6 +28,7 @@
     ./todo-comments.nix
     ./toggleterm.nix
     ./treesitter.nix
+    ./ts-autotag.nix
     ./ufo.nix
     ./undotree.nix
     ./which-key.nix
