@@ -110,6 +110,7 @@
     ripgrep
     teamocil
     xray
+    nix-prefetch-github
   ];
 
   # Shell configuration
