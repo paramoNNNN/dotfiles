@@ -20,21 +20,15 @@
         options = { desc = "Move selected line down"; };
       }
 
-      {
-        key = "<leader>p";
-        action = "[['_dP]]";
-        options = { desc = "Paste without yanking"; };
-      }
-
       # TODO:
       {
         key = "<leader>s";
-        action = "[[:%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>]]";
+        action = ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>";
         options = { desc = "Replace"; };
       }
       {
         key = "<leader>S";
-        action = "[[:s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>]]";
+        action = ":s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>";
         options = { desc = "Replace on current line"; };
       }
     ];
