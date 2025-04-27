@@ -25,11 +25,6 @@
         };
         sources = {
           default = [ "lsp" "path" "buffer" "snippets" ];
-          providers = {
-            buffer = {
-              score_offset = -7;
-            };
-          };
         };
         snippets = {
           preset = "luasnip";
