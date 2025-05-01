@@ -19,8 +19,6 @@
         action = ":m '>-2<CR>gv=gv";
         options = { desc = "Move selected line down"; };
       }
-
-      # TODO:
       {
         key = "<leader>s";
         action = ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>";
@@ -82,7 +80,7 @@
     globals = { mapleader = " "; };
 
 
-    diagnostics = {
+    diagnostic.settings = {
       severity_sort = true;
     };
 
