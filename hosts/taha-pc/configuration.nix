@@ -6,8 +6,7 @@
 let
   tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
   hyprland-session = "${pkgs.hyprland}/share/wayland-sessions";
-in
-{
+in {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -138,7 +137,6 @@ in
     google-chrome
     inputs.zen-browser.packages."${system}".default
     telegram-desktop
-    _1password-gui
     discord
     plexamp
     pavucontrol
@@ -210,6 +208,23 @@ in
     nix-prefetch-github
     ntfs3g
   ];
+
+  programs._1password.enable = true;
+  programs._1password-gui = {
+    enable = true;
+    polkitPolicyOwners = [ "taha" ];
+  };
+  environment.etc = {
+    "1password/custom_allowed_browsers" = {
+      text = ''
+        .zen-wrapped
+        zen
+        zen-bin
+        zen-beta-bin
+      '';
+      mode = "0755";
+    };
+  };
 
   programs.steam = {
     enable = true;
