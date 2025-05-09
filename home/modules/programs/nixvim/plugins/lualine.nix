@@ -1,5 +1,4 @@
 {
-
   programs.nixvim = {
     plugins.lualine = {
       enable = true;
@@ -89,12 +88,12 @@
 
       ins_left {
         function()
-          return '▊'
+          return ''
         end,
         color = function()
           return { fg = mode_color[vim.fn.mode()] }
         end,
-        padding = { left = 0, right = 0 },
+        padding = { left = 1, right = 0 },
       }
 
       ins_left {
@@ -122,23 +121,8 @@
       }
 
       ins_right {
-        'location',
-        padding = { right = 0 }
-      }
-
-      ins_right {
         'filetype',
         colored = true;
-      }
-
-      ins_right {
-        function()
-          return '▊'
-        end,
-        color = function()
-          return { fg = mode_color[vim.fn.mode()] }
-        end,
-        padding = { left = 0, right = 0 },
       }
 
       lualine.setup(config)
