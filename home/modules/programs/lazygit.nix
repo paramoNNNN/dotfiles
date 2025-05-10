@@ -7,6 +7,7 @@
           colorArg = "always";
           pager = "delta --paging=never";
         };
+        overrideGpg = true;
       };
       os = {
         edit = ''
