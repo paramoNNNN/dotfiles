@@ -197,6 +197,8 @@ in {
     wl-clipboard
     wl-screenrec
     ncdu
+    fzf
+    tree-sitter
 
     pipewire
     wireplumber

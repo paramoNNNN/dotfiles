@@ -3,11 +3,8 @@
   imports = [
     ./cmp.nix
     ./conform.nix
-    ./dressing.nix
-    ./gitpad.nix
     ./gitsigns.nix
     ./icons.nix
-    ./indent-blankline.nix
     ./lazydocker.nix
     ./lazygit.nix
     ./lsp.nix
@@ -20,8 +17,6 @@
     ./notify.nix
     ./nui.nix
     ./package-info.nix
-    ./persisted.nix
-    ./presence.nix
     ./rainbow-delimiters.nix
     ./tailwind-tools.nix
     ./telescope.nix
