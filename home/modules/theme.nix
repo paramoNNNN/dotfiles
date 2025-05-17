@@ -4,12 +4,13 @@
   catppuccin = {
     enable = true;
     flavor = "latte";
-    accent = "blue";
+    accent = "sapphire";
 
     btop.enable = true;
     bat.enable = true;
     delta.enable = true;
     tmux.enable = false;
     lazygit.enable = true;
+    waybar.enable = true;
   };
 }
