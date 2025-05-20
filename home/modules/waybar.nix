@@ -9,7 +9,7 @@
         margin-left = 10;
         margin-right = 10;
         spacing = 7;
-        height = 42;
+        height = 45;
 
         modules-left = [ "hyprland/workspaces" ];
         modules-center = [ "custom/nowplaying" ];
@@ -58,22 +58,22 @@
         };
 
         clock = {
-          format = "{:%a %b %d %H:%M:%S}";
+          format = "{:%H:%M:%S}";
           format-alt = "{:%Y/%m/%d}";
-          tooltip-format = "{:%a %B %d %H:%M}";
+          tooltip-format = "{:%a %B %d}";
           interval = 1;
         };
 
         network = {
           tooltip = true;
-          format-wifi = "  {essid}";
+          format-wifi = "";
           format-ethernet = "{cidr} ";
           format-disconnected = "Disconnected ⚠";
         };
         pulseaudio = {
-          format = "{icon}  {volume}%";
+          format = "{icon} {volume}%";
           tooltip = true;
-          format-muted = "󰖁  {format_source}";
+          format-muted = "󰖁 ";
           format-icons = {
             headphone = "";
             hands-free = "";
@@ -92,7 +92,7 @@
     style = ''
       * {
         font-family: "monospace";
-        font-size: 15px;
+        font-size: 16px;
       }
 
       window#waybar {
@@ -114,7 +114,7 @@
       }
 
       #network {
-        padding: 0 7px;
+        padding: 0 9px 0 7px;
         color: @text;
       }
 
@@ -131,7 +131,7 @@
       }
 
       #clock {
-        padding: 0 7px;
+        padding: 0 0px;
         color: @text;
       }
 
@@ -141,7 +141,7 @@
         color: @blue;
       }
       #workspaces button.urgent {
-        background-color: @red;
+        color: @red;
       }
 
       .modules-right,
