@@ -12,5 +12,6 @@
     tmux.enable = false;
     lazygit.enable = true;
     waybar.enable = true;
+    swaync.enable = true;
   };
 }
