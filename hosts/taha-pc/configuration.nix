@@ -201,6 +201,7 @@ in {
     ncdu
     fzf
     tree-sitter
+    imagemagick
 
     pipewire
     wireplumber
