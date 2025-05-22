@@ -166,6 +166,7 @@ in {
     nixfmt-rfc-style
     tailwindcss-language-server
     ngrok
+    cloudflared
     prettierd
     eslint_d
 
@@ -196,6 +197,7 @@ in {
     mkcert
     wl-clipboard
     wl-screenrec
+    slurp
     ncdu
     fzf
     tree-sitter
@@ -236,6 +238,7 @@ in {
   fonts.packages = with pkgs; [
     nerd-fonts.caskaydia-cove
     nerd-fonts.space-mono
+    nerd-fonts.fantasque-sans-mono
   ];
 
   nixpkgs.config.allowUnfree = true;
