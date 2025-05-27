@@ -62,6 +62,15 @@
           sha256 = "sha256-+FUBM7CodtZrYKqU542fQD+ZDGrd2438trKM0tIESs0=";
         };
       }
+      {
+        name = "puffer-fish";
+        src = pkgs.fetchFromGitHub {
+          "owner" = "nickeb96";
+          "repo" = "puffer-fish";
+          "rev" = "12d062eae0ad24f4ec20593be845ac30cd4b5923";
+          "hash" = "sha256-2niYj0NLfmVIQguuGTA7RrPIcorJEPkxhH6Dhcy+6Bk=";
+        };
+      }
     ];
     shellAliases = {
       ls = "eza --icons";
