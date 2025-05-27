@@ -55,7 +55,7 @@
   home.file.teamocil = {
     target = ".teamocil/default.yml";
     text = ''
-      name: 📟
+      name: 
       windows:
         - name: network
           root: ~/
