@@ -80,7 +80,6 @@ in {
     };
   };
 
-  services.blueman.enable = true;
   systemd.user.services.mpris-proxy = {
     description = "Mpris proxy";
     after = [ "network.target" "sound.target" ];
@@ -91,6 +90,7 @@ in {
   security.polkit.enable = true;
   security.pam.services.hyprlock = { };
 
+  services.blueman.enable = true;
   hardware = {
     graphics = {
       enable = true;
@@ -100,9 +100,18 @@ in {
     bluetooth = {
       enable = true;
       powerOnBoot = true;
-      settings = { General = { Experimental = true; }; };
+      settings = {
+        General = {
+          Experimental = true;
+          ClassicBoundedOnly = true;
+          UserspaceHID = false;
+        };
+      };
     };
   };
+
+  services.libinput.enable = true;
+  services.touchegg.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -225,6 +234,7 @@ in {
     gnumake
     nix-prefetch-github
     ntfs3g
+    libinput
   ];
 
   programs._1password.enable = true;
