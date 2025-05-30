@@ -49,6 +49,12 @@ in {
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
+
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
