@@ -81,7 +81,7 @@
             phone = "";
             portable = "";
             car = "";
-            default = [ "" "" "" ];
+            default = "󰓃";
           };
           scroll-step = 5;
           on-click = "pavucontrol";

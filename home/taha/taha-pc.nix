@@ -1,6 +1,9 @@
 { ... }: {
-  imports =
-    [ ../modules/common.nix ../modules/swaync.nix ../modules/hyprland.nix ];
+  imports = [
+    ../modules/common.nix
+    ../modules/swaync.nix
+    ../modules/hyprland/hyprland.nix
+  ];
 
   # Enable home-manager
   programs.home-manager.enable = true;
