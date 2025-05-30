@@ -1,8 +1,4 @@
-{ pkgs
-, outputs
-, userConfig
-, ...
-}: {
+{ pkgs, outputs, userConfig, ... }: {
   # Add nix-homebrew configuration
   nix-homebrew = {
     enable = true;
@@ -13,22 +9,26 @@
 
   # Nixpkgs configuration
   nixpkgs = {
-    overlays = [
-      outputs.overlays.stable-packages
-    ];
+    overlays = [ outputs.overlays.stable-packages ];
 
-    config = {
-      allowUnfree = true;
-    };
+    config = { allowUnfree = true; };
   };
 
   # Nix settings
-  nix.settings = {
-    experimental-features = "nix-command flakes";
-  };
+  nix.settings = { experimental-features = "nix-command flakes"; };
   nix.optimise.automatic = true;
 
   nix.package = pkgs.nix;
+
+  nix.gc = {
+    automatic = true;
+    interval = {
+      Weekday = 0;
+      Hour = 0;
+      Minute = 0;
+    };
+    options = "--delete-older-than 7d";
+  };
 
   # User configuration
   users.users.${userConfig.name} = {
@@ -125,14 +125,8 @@
 
   homebrew = {
     enable = true;
-    brews = [
-      "cloudflared"
-    ];
-    casks = [
-      "dozer"
-      "raycast"
-      "ghostty"
-    ];
+    brews = [ "cloudflared" ];
+    casks = [ "dozer" "raycast" "ghostty" ];
   };
 
   # Used for backwards compatibility, please read the changelog before changing.
