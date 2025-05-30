@@ -67,7 +67,7 @@
         network = {
           tooltip = true;
           format-wifi = "";
-          format-ethernet = "{cidr} ";
+          format-ethernet = "";
           format-disconnected = "Disconnected ⚠";
         };
         pulseaudio = {
