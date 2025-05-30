@@ -88,8 +88,8 @@ in {
     serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
   };
 
-  # fix https://github.com/ryan4yin/nix-config/issues/10
-  security.pam.services.swaylock = { };
+  security.polkit.enable = true;
+  security.pam.services.hyprlock = { };
 
   hardware = {
     graphics = {
@@ -150,6 +150,7 @@ in {
     soulseekqt
     spek
     ghostty
+    nautilus
 
     docker
     nodejs_22
@@ -200,6 +201,8 @@ in {
     hyprpaper
     hyprshot
     hyprpicker
+    hypridle
+    hyprlock
     mkcert
     wl-clipboard
     wl-screenrec
