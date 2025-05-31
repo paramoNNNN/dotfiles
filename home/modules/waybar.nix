@@ -41,7 +41,8 @@
 
         "custom/nowplaying" = {
           return-type = "json";
-          exec = "waybar-mpris --interpolate --order 'ARTIST:TITLE'";
+          exec =
+            "waybar-mpris --autofocus --interpolate --order 'ARTIST:TITLE'";
           on-click = "playerctl play-pause";
           on-double-click = "playerctl next";
           on-triple-click = "playerctl previous";
@@ -54,7 +55,6 @@
           on-click = "activate";
           format-icons = { "active" = " "; };
           sort-by-number = true;
-          persistent-workspaces = { "*" = 5; };
         };
 
         clock = {
