@@ -17,8 +17,8 @@
     "hypr/hyprland.conf" = { source = ./hyprland.conf; };
 
     "hypr/hyprpaper.conf".text = ''
-      preload = /home/taha/Pictures/wallpaper-light-2.png
-      wallpaper = /home/taha/Pictures/wallpaper-light-2.png
+      preload = $HOME/Pictures/wallpaper-light-2.png
+      wallpaper = , $HOME/Pictures/wallpaper-light-2.png
     '';
 
     "hypr/hypridle.conf".text = ''
