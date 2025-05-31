@@ -235,6 +235,7 @@ in {
     nix-prefetch-github
     ntfs3g
     libinput
+    libnotify
   ];
 
   programs._1password.enable = true;
