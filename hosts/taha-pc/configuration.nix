@@ -130,7 +130,7 @@ in {
   users.users.taha = {
     isNormalUser = true;
     description = "Taha";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "input" ];
     packages = [ ];
   };
 
@@ -235,6 +235,7 @@ in {
     nix-prefetch-github
     ntfs3g
     libinput
+    libinput-gestures
     libnotify
   ];
 
