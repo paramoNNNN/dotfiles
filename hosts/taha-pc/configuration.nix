@@ -160,6 +160,7 @@ in {
     spek
     ghostty
     nautilus
+    haruna
 
     docker
     nodejs_22
