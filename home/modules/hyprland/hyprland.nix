@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   imports =
-    [ ../cliphist.nix ../gtk.nix ../swaync.nix ../waybar.nix ../wofi.nix ];
+    [ ../cliphist.nix ../gtk.nix ../swaync.nix ../waybar.nix ../fuzzel.nix ];
 
   # Consistent cursor theme across all applications.
   home.pointerCursor = {
