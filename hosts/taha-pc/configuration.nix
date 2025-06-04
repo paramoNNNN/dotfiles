@@ -161,6 +161,7 @@ in {
     ghostty
     nautilus
     haruna
+    qalculate-gtk
 
     docker
     nodejs_22
@@ -195,7 +196,7 @@ in {
     eza
     git
     gnupg
-    wofi
+    fuzzel
     fd
     ripgrep
     gotop
@@ -238,6 +239,7 @@ in {
     libinput
     libinput-gestures
     libnotify
+    libqalculate
   ];
 
   programs._1password.enable = true;
