@@ -11,7 +11,7 @@
         spacing = 7;
         height = 45;
 
-        modules-left = [ "hyprland/workspaces" ];
+        modules-left = [ "hyprland/workspaces" "memory" ];
         modules-center = [ "custom/nowplaying" ];
         modules-right =
           [ "network" "pulseaudio" "clock" "custom/notifications" ];
@@ -86,6 +86,10 @@
           scroll-step = 5;
           on-click = "pavucontrol";
         };
+        memory = {
+          interval = 1;
+          format = "  {used:0.2f}";
+        };
       };
     };
 
@@ -135,6 +139,18 @@
         color: @text;
       }
 
+      #workspaces,
+      #memory {
+        border: 1px solid @overlay0;
+        border-radius: 15px;
+        background-color: @crust;
+        padding: 0 7px;
+      }
+
+      #memory {
+        padding: 0 9px;
+      }
+
       #workspaces button {
         padding: 0 5px;
         background-color: transparent;
@@ -144,8 +160,11 @@
         color: @red;
       }
 
+      .modules-left {
+        background: transparent;
+        border: none;
+      }
       .modules-right,
-      .modules-left,
       .modules-center {
         border: 1px solid @overlay0;
         border-radius: 15px;
