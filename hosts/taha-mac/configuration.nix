@@ -1,4 +1,6 @@
 { pkgs, outputs, userConfig, ... }: {
+  system.primaryUser = "taha";
+
   # Add nix-homebrew configuration
   nix-homebrew = {
     enable = true;
@@ -111,6 +113,7 @@
     teamocil
     xray
     nix-prefetch-github
+    bun
   ];
 
   # Shell configuration
