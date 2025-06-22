@@ -10,6 +10,9 @@
     inputs.home-manager.nixosModules.default
   ];
 
+  # NTFS
+  boot.supportedFilesystems = [ "ntfs" ];
+
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sdc";
