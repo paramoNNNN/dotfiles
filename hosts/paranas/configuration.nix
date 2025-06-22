@@ -28,6 +28,12 @@
   # Set your time zone.
   time.timeZone = "Asia/Tehran";
 
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
+
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
