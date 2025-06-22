@@ -53,6 +53,12 @@
           gitKey = "asd";
           name = "taha";
         };
+        paranas = {
+          email = "paramonnnnnn@gmail.com";
+          fullName = "Taha Ojari";
+          gitKey = "asd";
+          name = "paranas";
+        };
       };
 
       # Function for NixOS system configuration
