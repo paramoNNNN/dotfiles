@@ -91,9 +91,11 @@
           };
           modules = [ ./home/${username}/${hostname}.nix ];
         };
-    in
-    {
-      nixosConfigurations = { taha = mkNixosConfiguration "taha-pc" "taha"; };
+    in {
+      nixosConfigurations = {
+        taha = mkNixosConfiguration "taha-pc" "taha";
+        paranas = mkNixosConfiguration "paranas" "paranas";
+      };
 
       darwinConfigurations = {
         "taha-mac" = mkDarwinConfiguration "taha-mac" "taha";
@@ -103,6 +105,8 @@
         "taha@taha-mac" =
           mkHomeConfiguration "aarch64-darwin" "taha" "taha-mac";
         "taha@taha-pc" = mkHomeConfiguration "x86_64-linux" "taha" "taha-pc";
+        "paranas@paranas" =
+          mkHomeConfiguration "x86_64-linux" "paranas" "paranas";
       };
 
       overlays = import ./overlays { inherit inputs; };
