@@ -155,7 +155,7 @@ in {
     plexamp
     pavucontrol
     thunderbird
-    soulseekqt
+    nicotine-plus
     spek
     ghostty
     nautilus
