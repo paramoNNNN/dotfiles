@@ -207,6 +207,7 @@ in {
     playerctl
     waybar-mpris
     btop
+    nvtopPackages.amd
     clipse
     openssl
     hyprpaper
@@ -225,6 +226,10 @@ in {
 
     protonup
     mangohud
+    vulkan-tools
+    lact
+    gamescope
+    gamescope-wsi
 
     pipewire
     pamixer
@@ -262,11 +267,43 @@ in {
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+    protontricks = {
+      enable = true;
+      package = pkgs.protontricks;
+    };
+    extraCompatPackages = [ pkgs.proton-ge-bin ];
   };
-  programs.gamemode.enable = true;
   environment.sessionVariables = {
     STEAM_EXTRA_COMPAT_TOOLS_PATHS =
       "/home/taha/.steam/root/compatibilitytools.d";
+  };
+  programs.gamemode = {
+    enable = true;
+    settings = {
+      general = {
+        softrealtime = "auto";
+        inhibit_screensaver = 1;
+        renice = 15;
+      };
+      gpu = {
+        apply_gpu_optimisations = "accept-responsibility";
+        gpu_device =
+          1; # The DRM device number on the system (usually 0), ie. the number in /sys/class/drm/card0/
+        amd_performance_level = "high";
+      };
+      custom = {
+        start = "${pkgs.libnotify}/bin/notify-send 'GameMode started'";
+        end = "${pkgs.libnotify}/bin/notify-send 'GameMode ended'";
+      };
+    };
+  };
+  systemd.services.lact = {
+    description = "AMDGPU Control Daemon";
+    after = [ "multi-user.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = { ExecStart = "${pkgs.lact}/bin/lact daemon"; };
+    enable = true;
   };
 
   fonts.packages = with pkgs; [
