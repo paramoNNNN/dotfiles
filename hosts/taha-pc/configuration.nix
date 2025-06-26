@@ -189,6 +189,7 @@ in {
 
     openvpn
     xray
+    tinyproxy
     proxychains
 
     wget
