@@ -5,6 +5,8 @@
     installBatSyntax = true;
     installVimSyntax = true;
     settings = {
+      command = "fish";
+
       theme = "catppuccin-latte";
       background = "#FFFFFF";
       background-opacity = 0.9;
