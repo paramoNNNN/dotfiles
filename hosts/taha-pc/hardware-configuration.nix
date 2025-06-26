@@ -17,6 +17,12 @@
     fsType = "ext4";
   };
 
+  fileSystems."/mnt/nvme" = {
+    device = "/dev/disk/by-uuid/C22464E02464D8C5";
+    fsType = "ntfs-3g";
+    options = [ "rw" "uid=1000" "gid=100" ];
+  };
+
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/249C-D3B0";
     fsType = "vfat";
