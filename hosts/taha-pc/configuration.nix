@@ -107,6 +107,7 @@ in {
         };
       };
     };
+    i2c.enable = true;
   };
 
   services.libinput.enable = true;
@@ -129,7 +130,7 @@ in {
   users.users.taha = {
     isNormalUser = true;
     description = "Taha";
-    extraGroups = [ "networkmanager" "wheel" "docker" "input" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "input" "i2c" ];
     packages = [ ];
   };
 
@@ -230,6 +231,9 @@ in {
     lact
     gamescope
     gamescope-wsi
+
+    ddcui
+    ddcutil
 
     pipewire
     pamixer
