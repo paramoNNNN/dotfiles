@@ -9,8 +9,8 @@
   boot.initrd.availableKernelModules =
     [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = [ "kvm-intel" "i2c-dev" "ddcci_backlight" ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.ddcci-driver ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/481e23db-19f5-4db7-8776-bb99a2472ec9";
