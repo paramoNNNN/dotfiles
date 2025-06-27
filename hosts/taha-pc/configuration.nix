@@ -30,6 +30,8 @@ in {
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  nix.settings.trusted-users = [ "root" "taha" ];
+
   # Enable networking
   networking.networkmanager.enable = true;
   networking.nameservers = [ "192.168.1.1" ];
