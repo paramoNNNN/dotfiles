@@ -19,26 +19,46 @@
 
         {
           __unkeyed-1 = "[d";
-          __unkeyed-2 =
-            {
-              __raw = ''
-                function()
-                  require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
-                end
-              '';
-            };
+          __unkeyed-2 = {
+            __raw = ''
+              function()
+                require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+              end
+            '';
+          };
           desc = "Previous diagnostic";
         }
         {
           __unkeyed-1 = "]d";
-          __unkeyed-2 =
-            {
-              __raw = ''
-                function()
-                  require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
-                end
-              '';
-            };
+          __unkeyed-2 = {
+            __raw = ''
+              function()
+                require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+              end
+            '';
+          };
+          desc = "Previous diagnostic";
+        }
+        {
+          __unkeyed-1 = "[w";
+          __unkeyed-2 = {
+            __raw = ''
+              function()
+                require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.WARN })
+              end
+            '';
+          };
+          desc = "Previous diagnostic";
+        }
+        {
+          __unkeyed-1 = "]w";
+          __unkeyed-2 = {
+            __raw = ''
+              function()
+                require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.WARN })
+              end
+            '';
+          };
           desc = "Previous diagnostic";
         }
         {
@@ -120,8 +140,6 @@
       symbolInWinbar.enable = false;
     };
 
-    typescript-tools = {
-      enable = true;
-    };
+    typescript-tools = { enable = true; };
   };
 }
