@@ -164,6 +164,7 @@ in {
     nautilus
     haruna
     qalculate-gtk
+    libreoffice
 
     docker
     nodejs_22
@@ -226,6 +227,7 @@ in {
     fzf
     tree-sitter
     imagemagick
+    ffmpeg
 
     protonup
     mangohud
