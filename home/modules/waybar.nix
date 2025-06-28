@@ -44,8 +44,8 @@
           exec =
             "waybar-mpris --autofocus --interpolate --order 'ARTIST:TITLE'";
           on-click = "playerctl play-pause";
-          on-double-click = "playerctl next";
-          on-triple-click = "playerctl previous";
+          on-click-right = "playerctl next";
+          on-double-click = "playerctl previous";
           escape = true;
           max-length = 64;
         };
