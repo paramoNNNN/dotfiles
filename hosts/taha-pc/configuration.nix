@@ -151,7 +151,7 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
-    google-chrome
+    ungoogled-chromium
     inputs.zen-browser.packages."${system}".default
     telegram-desktop
     discord
