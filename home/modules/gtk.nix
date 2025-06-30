@@ -1,8 +1,4 @@
-{
-  userConfig,
-  pkgs,
-  ...
-}: {
+{ userConfig, pkgs, ... }: {
   # GTK theme configuration
   gtk = {
     enable = true;
@@ -15,10 +11,6 @@
       package = pkgs.yaru-theme;
       size = 24;
     };
-    font = {
-      name = "Roboto";
-      size = 11;
-    };
     gtk3 = {
       bookmarks = [
         "file:///home/${userConfig.name}/Documents"
@@ -28,14 +20,6 @@
         "file:///home/${userConfig.name}/Downloads/temp"
         "file:///home/${userConfig.name}/Documents/repositories"
       ];
-    };
-  };
-
-  # Enable catppuccin theming for GTK apps.
-  catppuccin = {
-    gtk = {
-      enable = true;
-      gnomeShellTheme = true;
     };
   };
 }

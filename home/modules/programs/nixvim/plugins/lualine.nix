@@ -1,19 +1,12 @@
-{
+{ config, ... }: {
   programs.nixvim = {
     plugins.lualine = {
       enable = true;
-      settings = {
-        options = {
-          theme = "catppuccin";
-          globalstatus = true;
-        };
-      };
+      settings = { options = { globalstatus = true; }; };
     };
 
     extraConfigLuaPost = ''
       local lualine = require('lualine')
-      local colors = require("catppuccin.palettes").get_palette('latte')
-
       local conditions = {
         buffer_not_empty = function()
           return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
@@ -33,8 +26,8 @@
           component_separators = "",
           section_separators = "",
           theme = {
-            normal = { c = { fg = colors.fg, bg = colors.bg } },
-            inactive = { c = { fg = colors.fg, bg = colors.bg } },
+            normal = { c = { bg = "${config.lib.stylix.colors.base00}" } },
+            inactive = { c = { bg = "${config.lib.stylix.colors.base00}" } },
           },
         },
         sections = {
@@ -56,26 +49,26 @@
       }
 
       local mode_color = {
-        n = colors.blue,
-        i = colors.green,
-        v = colors.pink,
-        [''] = colors.pink,
-        V = colors.pink,
-        c = colors.flamingo,
-        no = colors.red,
-        s = colors.peach,
-        S = colors.peach,
-        [''] = colors.peach,
-        ic = colors.yellow,
-        R = colors.mauve,
-        Rv = colors.mauve,
-        cv = colors.red,
-        ce = colors.red,
-        r = colors.sky,
-        rm = colors.sky,
-        ['r?'] = colors.sky,
-        ['!'] = colors.red,
-        t = colors.sapphire,
+        n = "${config.lib.stylix.colors.base0D}",
+        i = "${config.lib.stylix.colors.base0B}",
+        v = "${config.lib.stylix.colors.base0E}",
+        [''] = "${config.lib.stylix.colors.base0E}",
+        V = "${config.lib.stylix.colors.base0E}",
+        c = "${config.lib.stylix.colors.base0E}",
+        no = "${config.lib.stylix.colors.base08}",
+        s = "${config.lib.stylix.colors.base09}",
+        S = "${config.lib.stylix.colors.base09}",
+        [''] = "${config.lib.stylix.colors.base09}",
+        ic = "${config.lib.stylix.colors.base0A}",
+        R = "${config.lib.stylix.colors.base0E}",
+        Rv = "${config.lib.stylix.colors.base0E}",
+        cv = "${config.lib.stylix.colors.base08}",
+        ce = "${config.lib.stylix.colors.base08}",
+        r = "${config.lib.stylix.colors.base0D}",
+        rm = "${config.lib.stylix.colors.base0D}",
+        ['r?'] = "${config.lib.stylix.colors.base0D}",
+        ['!'] = "${config.lib.stylix.colors.base08}",
+        t = "${config.lib.stylix.colors.base0C}",
       }
 
       local function ins_left(component)
@@ -100,7 +93,7 @@
         'filename',
         path = 4,
         cond = conditions.buffer_not_empty,
-        color = { fg = colors.text, gui = 'bold' },
+        color = { fg = "${config.lib.stylix.colors.base04}" , gui = 'bold' },
       }
 
       ins_left {
@@ -108,9 +101,9 @@
         sources = { 'nvim_diagnostic' },
         symbols = { error = ' ', warn = ' ', info = ' ' },
         diagnostics_color = {
-          error = { fg = colors.red },
-          warn = { fg = colors.yellow },
-          info = { fg = colors.sky },
+          error = { fg = "${config.lib.stylix.colors.base08}"  },
+          warn = { fg = "${config.lib.stylix.colors.base0A}"  },
+          info = { fg = "${config.lib.stylix.colors.base0C}"  },
         },
       }
 

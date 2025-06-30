@@ -16,9 +16,6 @@
     # NixOS profiles to optimize settings for different hardware
     hardware.url = "github:nixos/nixos-hardware";
 
-    # Global catppuccin theme
-    catppuccin.url = "github:catppuccin/nix";
-
     # Nix Darwin (for MacOS machines)
     darwin = {
       url = "github:LnL7/nix-darwin";
@@ -39,6 +36,12 @@
     };
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
+
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs = { self, darwin, home-manager, nix-homebrew, nixpkgs, ... }@inputs:
@@ -95,7 +98,10 @@
             inherit inputs outputs;
             userConfig = users.${username};
           };
-          modules = [ ./home/${username}/${hostname}.nix ];
+          modules = [
+            inputs.stylix.homeModules.stylix
+            ./home/${username}/${hostname}.nix
+          ];
         };
     in {
       nixosConfigurations = {

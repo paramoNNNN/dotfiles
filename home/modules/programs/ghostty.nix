@@ -7,17 +7,10 @@
     settings = {
       command = "fish";
 
-      theme = "catppuccin-latte";
-      background = "#FFFFFF";
-      background-opacity = 0.9;
-      background-blur = true;
-
       clipboard-paste-bracketed-safe = true;
       clipboard-paste-protection = true;
       clipboard-trim-trailing-spaces = true;
 
-      font-family = "CaskaydiaCove Nerd Font";
-      font-family-bold = "CaskaydiaCove NF SemiBold";
       font-size = 14;
       font-feature = [ "ss02" "ss03" "ss04" "liga" ];
       font-thicken = true;

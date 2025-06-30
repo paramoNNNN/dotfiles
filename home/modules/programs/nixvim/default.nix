@@ -31,58 +31,11 @@
       }
     ];
 
-    colorschemes = {
-      catppuccin = {
-        enable = true;
-        luaConfig.post = ''
-          require("catppuccin").setup({
-            transparent_background = true,
-            color_overrides = {
-              mocha = {
-                base = "#11111b",
-              },
-            },
-            highlight_overrides = {
-              all = function(colors)
-                return {
-                  LineNr = { fg = colors.overlay1 },
-                }
-              end,
-            },
-          })
-          require("notify").setup({ background_colour = "#ffffff" })
-        '';
-        settings = {
-          flavour = "latte";
-          transparent_background = true;
-          integrations = {
-            cmp = true;
-            gitsigns = true;
-            treesitter = true;
-            notify = true;
-            indent_blankline = {
-              enabled = true;
-              colored_indent_levels = true;
-            };
-            mini = { enabled = true; };
-            neotree = true;
-            rainbow_delimiters = true;
-            telescope = { enabled = true; };
-            ufo = true;
-            which_key = true;
-          };
-        };
-      };
-    };
-
     clipboard.register = "unnamedplus";
 
     globals = { mapleader = " "; };
 
-
-    diagnostic.settings = {
-      severity_sort = true;
-    };
+    diagnostic.settings = { severity_sort = true; };
 
     opts = {
       guicursor = "i:ver30-iCursor-blinkwait300-blinkon200-blinkoff150";
