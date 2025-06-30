@@ -1,18 +1,32 @@
-{ inputs, ... }: {
-  imports = [ inputs.catppuccin.homeModules.catppuccin ];
-
-  catppuccin = {
+{ inputs, pkgs, ... }: {
+  stylix = {
     enable = true;
-    flavor = "latte";
-    accent = "sapphire";
+    base16Scheme =
+      "${pkgs.base16-schemes}/share/themes/gruvbox-light-hard.yaml";
 
-    btop.enable = true;
-    bat.enable = true;
-    delta.enable = true;
-    tmux.enable = false;
-    lazygit.enable = true;
-    waybar.enable = true;
-    swaync.enable = true;
-    fuzzel.enable = true;
+    targets = {
+      nixvim = {
+        transparentBackground = {
+          main = true;
+          numberLine = true;
+          signColumn = true;
+        };
+      };
+    };
+
+    fonts = {
+      serif = {
+        name = "CaskaydiaCove Nerd Font";
+        package = pkgs.nerd-fonts.caskaydia-cove;
+      };
+      sansSerif = {
+        name = "CaskaydiaCove Nerd Font";
+        package = pkgs.nerd-fonts.caskaydia-cove;
+      };
+      monospace = {
+        name = "CaskaydiaCove Nerd Font";
+        package = pkgs.nerd-fonts.caskaydia-cove;
+      };
+    };
   };
 }

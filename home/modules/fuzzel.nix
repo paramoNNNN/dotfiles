@@ -4,7 +4,6 @@
     settings = {
       main = {
         dpi-aware = "yes";
-        font = "monospace:size=9";
         prompt = ''"❯ "'';
         terminal = "ghostty";
         width = 40;
@@ -19,33 +18,6 @@
       border = {
         width = 2;
         radius = 15;
-      };
-      colors = {
-        # latte
-        background = "eff1f5cc";
-        text = "4c4f69ff";
-        prompt = "5c5f77ff";
-        placeholder = "8c8fa1ff";
-        input = "4c4f69ff";
-        match = "209fb5ff";
-        selection = "acb0beff";
-        selection-text = "4c4f69ff";
-        selection-match = "209fb5ff";
-        counter = "8c8fa1ff";
-        border = "209fb5ff";
-
-        # mocha
-        # background = "1e1e2edd";
-        # text = "cdd6f4ff";
-        # prompt = "bac2deff";
-        # placeholder = "7f849cff";
-        # input = "cdd6f4ff";
-        # match = "74c7ecff";
-        # selection = "585b70ff";
-        # selection-text = "cdd6f4ff";
-        # selection-match = "74c7ecff";
-        # counter = "7f849cff";
-        # border = "74c7ecff";
       };
     };
   };

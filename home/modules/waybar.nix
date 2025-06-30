@@ -99,51 +99,56 @@
         font-size: 16px;
       }
 
+      tooltip label {
+        color: @base05;
+        text-shadow: none;
+      }
+
       window#waybar {
         background-color: transparent;
       }
 
       #window {
         padding: 0 7px;
-        color: @text;
+        color: @base05;
       }
 
       #pulseaudio {
         padding: 0 7px;
-        color: @text;
+        color: @base05;
       }
       #pulseaudio.muted {
         padding: 0 7px;
-        color: @red;
+        color: @base08;
       }
 
       #network {
         padding: 0 9px 0 7px;
-        color: @text;
+        color: @base05;
       }
 
       #custom-nowplaying {
         padding: 0 7px;
         padding-right: 0px;
-        color: @text;
+        color: @base05;
       }
 
       #custom-notifications {
         padding: 0 7px;
         padding-right: 10px;
-        color: @text;
+        color: @base05;
       }
 
       #clock {
         padding: 0 0px;
-        color: @text;
+        color: @base05;
       }
 
       #workspaces,
       #memory {
         border: 1px solid @overlay0;
         border-radius: 15px;
-        background-color: @crust;
+        background-color: @base00;
         padding: 0 7px;
       }
 
@@ -154,10 +159,11 @@
       #workspaces button {
         padding: 0 5px;
         background-color: transparent;
-        color: @blue;
+        color: @base06;
+        border-color: transparent;
       }
       #workspaces button.urgent {
-        color: @red;
+        color: @base08;
       }
 
       .modules-left {
@@ -166,9 +172,9 @@
       }
       .modules-right,
       .modules-center {
-        border: 1px solid @overlay0;
+        border: 1px solid @base02;
         border-radius: 15px;
-        background-color: @crust;
+        background-color: @base00;
         padding: 0 7px;
       }
     '';

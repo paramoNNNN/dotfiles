@@ -35,6 +35,7 @@ in {
   # Enable networking
   networking.networkmanager.enable = true;
   networking.nameservers = [ "192.168.1.1" ];
+  networking.firewall.allowedTCPPorts = [ 5173 8040 10810 ];
 
   services.resolved = {
     enable = true;
@@ -174,7 +175,6 @@ in {
     python311Packages.pip
     vim
     kitty
-    alacritty
     tmux
     teamocil
     nil

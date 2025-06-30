@@ -1,5 +1,4 @@
-{ pkgs, inputs, ... }:
-{
+{ pkgs, inputs, config, ... }: {
   programs.tmux = {
     enable = true;
     shell = "${pkgs.fish}/bin/fish";
@@ -43,12 +42,9 @@
       bind-key -T copy-mode-vi v send-keys -X begin-selection
       bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel
 
-      # latte
-      set -g @minimal-tmux-fg "#eff1f5"
-      set -g @minimal-tmux-bg "#1e66f5"
-      # mocha
-      # set -g @minimal-tmux-fg "#8aadf4"
-      # set -g @minimal-tmux-bg "#24273a"
+      set -g @minimal-tmux-fg "#${config.lib.stylix.colors.base09}"
+      set -g @minimal-tmux-bg "#${config.lib.stylix.colors.base02}"
+      set -g status-style bg=default
     '';
   };
 
