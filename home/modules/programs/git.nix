@@ -11,5 +11,8 @@
     };
   };
 
-  programs.git.delta = { enable = true; };
+  programs.git.delta = {
+    enable = true;
+    options = { syntax-theme = "gruvbox-light"; };
+  };
 }
