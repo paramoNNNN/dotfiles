@@ -3,6 +3,7 @@
     ../modules/common.nix
     ../modules/swaync.nix
     ../modules/hyprland/hyprland.nix
+    ../modules/gammastep.nix
   ];
 
   # Enable home-manager
