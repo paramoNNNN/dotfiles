@@ -116,8 +116,12 @@ in {
   services.libinput.enable = true;
   services.touchegg.enable = true;
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
+  programs.ssh = {
+    extraConfig = ''
+      ServerAliveInterval 15
+      ServerAliveCountMax 200
+    '';
+  };
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
