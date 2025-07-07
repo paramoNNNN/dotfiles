@@ -170,6 +170,8 @@ in {
     haruna
     qalculate-gtk
     libreoffice
+    slack
+    qbittorrent
 
     docker
     nodejs_22
