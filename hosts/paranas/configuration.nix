@@ -121,6 +121,8 @@
     shntool
     cuetools
     flac
+    wavpack
+    rsync
 
     gcc
     libgcc
