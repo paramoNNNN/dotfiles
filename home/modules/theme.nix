@@ -1,6 +1,7 @@
-{ inputs, pkgs, ... }: {
+{ pkgs, ... }: {
   stylix = {
     enable = true;
+    polarity = "light";
     base16Scheme =
       "${pkgs.base16-schemes}/share/themes/gruvbox-light-hard.yaml";
 
