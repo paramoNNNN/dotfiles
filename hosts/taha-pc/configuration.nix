@@ -320,6 +320,8 @@ in {
     enable = true;
   };
 
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
   fonts.packages = with pkgs; [
     nerd-fonts.caskaydia-cove
     nerd-fonts.space-mono
