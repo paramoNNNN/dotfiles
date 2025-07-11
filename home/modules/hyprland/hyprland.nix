@@ -7,6 +7,7 @@
     ../fuzzel.nix
     ./hyprlock.nix
     ./hypridle.nix
+    ./hyprpaper.nix
   ];
 
   # Consistent cursor theme across all applications.
