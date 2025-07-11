@@ -6,6 +6,7 @@
     ../waybar.nix
     ../fuzzel.nix
     ./hyprlock.nix
+    ./hypridle.nix
   ];
 
   # Consistent cursor theme across all applications.
@@ -21,12 +22,6 @@
 
   xdg.configFile = {
     "hypr/hyprland.conf" = { source = ./hyprland.conf; };
-
-    "hypr/hypridle.conf".text = ''
-      general {
-        lock_cmd = pidof hyprlock || hyprlock
-      }
-    '';
 
     "hypr/gamemode.sh" = {
       text = ''
