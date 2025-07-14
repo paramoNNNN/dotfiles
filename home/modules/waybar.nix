@@ -88,15 +88,15 @@
         };
         memory = {
           interval = 1;
-          format = "  {used:0.2f}";
+          format = "   {used:0.2f}";
         };
       };
     };
 
     style = ''
       * {
-        font-family: "monospace";
-        font-size: 16px;
+        font-family: "SF Pro Rounded";
+        font-size: 16.5px;
       }
 
       tooltip label {
@@ -164,6 +164,10 @@
       }
       #workspaces button.urgent {
         color: @base08;
+      }      
+      .modules-left #workspaces button.focused,
+      .modules-left #workspaces button.active {
+        border-bottom: 0;
       }
 
       .modules-left {
