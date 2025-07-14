@@ -182,6 +182,7 @@ in {
     libreoffice
     slack
     qbittorrent
+    droidcam
 
     docker
     nodejs_22
