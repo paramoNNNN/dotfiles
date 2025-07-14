@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   stylix = {
     enable = true;
     polarity = "light";
@@ -19,16 +19,20 @@
 
     fonts = {
       serif = {
-        name = "CaskaydiaCove Nerd Font";
-        package = pkgs.nerd-fonts.caskaydia-cove;
+        name = "SF Compact Rounded";
+        package = inputs.apple-fonts.packages.${pkgs.system}.sf-compact;
       };
       sansSerif = {
-        name = "CaskaydiaCove Nerd Font";
-        package = pkgs.nerd-fonts.caskaydia-cove;
+        name = "SF Compact Rounded";
+        package = inputs.apple-fonts.packages.${pkgs.system}.sf-compact;
       };
       monospace = {
         name = "CaskaydiaCove Nerd Font";
         package = pkgs.nerd-fonts.caskaydia-cove;
+      };
+      emoji = {
+        name = "Apple Color Emoji";
+        package = inputs.apple-emoji.packages.${pkgs.system}.apple-emoji-linux;
       };
     };
   };
