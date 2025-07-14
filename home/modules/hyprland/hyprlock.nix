@@ -13,16 +13,18 @@
         {
           text = "$TIME";
           color = "rgb(${config.lib.stylix.colors.base00})";
-          font_size = "90";
+          font_size = "144";
           position = "0, -50";
           halign = "center";
           valign = "top";
+          shadow_passes = "10";
+          shadow_size = "3";
         }
         {
           text = ''cmd[update:43200000] date +"%A, %d %B %Y"'';
           color = "rgb(${config.lib.stylix.colors.base00})";
-          font_size = "25";
-          position = "0, -200";
+          font_size = "32";
+          position = "0, -270";
           halign = "center";
           valign = "top";
         }
