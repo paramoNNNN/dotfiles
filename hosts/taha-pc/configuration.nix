@@ -76,10 +76,20 @@ in {
           user = "taha";
           # command = "$HOME/.wayland-session"; # start a wayland session directly without a login manager
           command =
-            "${tuigreet} --time --remember --remember-session --sessions ${hyprland-session} --cmd 'Hyprland && waybar'";
+            "${tuigreet} --time --remember --remember-session --sessions ${hyprland-session} --cmd 'uwsm start select'";
         };
       };
     };
+  };
+  systemd.services.greetd.serviceConfig = {
+    Type = "idle";
+    StandardInput = "tty";
+    StandardOutput = "tty";
+    StandardError = "journal"; # Without this errors will spam on screen
+    # Without these bootlogs will spam on screen
+    TTYReset = true;
+    TTYVHangup = true;
+    TTYVTDisallocate = true;
   };
 
   systemd.user.services.mpris-proxy = {
@@ -332,5 +342,8 @@ in {
 
   system.stateVersion = "24.11";
 
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+  };
 }
