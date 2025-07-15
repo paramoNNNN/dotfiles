@@ -183,6 +183,7 @@ in {
     slack
     qbittorrent
     droidcam
+    flacon
 
     docker
     nodejs_22
