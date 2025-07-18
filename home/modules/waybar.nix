@@ -71,9 +71,9 @@
           format-disconnected = "Disconnected ⚠";
         };
         pulseaudio = {
-          format = "{icon} {volume}%";
+          format = "{icon}  {volume}%";
           tooltip = true;
-          format-muted = "󰖁 ";
+          format-muted = "󰖁";
           format-icons = {
             headphone = "";
             hands-free = "";
