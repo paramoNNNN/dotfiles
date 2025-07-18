@@ -12,10 +12,10 @@
       label = [
         {
           text = "$TIME";
-          color = "rgb(${config.lib.stylix.colors.base00})";
+          color = "rgba(216, 222, 233, 0.8)";
           font_family = "SF Compact Rounded SemiBold";
-          font_size = "160";
-          position = "0, -50";
+          font_size = "200";
+          position = "0, -140";
           halign = "center";
           valign = "top";
           shadow_passes = "10";
@@ -23,10 +23,10 @@
         }
         {
           text = ''cmd[update:43200000] date +"%A, %d %B %Y"'';
-          color = "rgb(${config.lib.stylix.colors.base00})";
+          color = "rgba(216, 222, 233, 0.8)";
           font_family = "SF Compact Rounded Medium";
-          font_size = "32";
-          position = "0, -270";
+          font_size = "40";
+          position = "0, -120";
           halign = "center";
           valign = "top";
         }
