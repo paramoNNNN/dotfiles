@@ -214,6 +214,7 @@ in {
     tinyproxy
     proxychains
 
+    aria2
     wget
     eza
     git
