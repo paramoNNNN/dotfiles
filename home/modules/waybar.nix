@@ -88,15 +88,15 @@
         };
         memory = {
           interval = 1;
-          format = "   {used:0.2f}";
+          format = "    {used:0.2f}";
         };
       };
     };
 
     style = ''
       * {
-        font-family: "SF Pro Rounded";
-        font-size: 16.5px;
+        font-family: "SF Compact Rounded";
+        font-size: 17.5px;
       }
 
       tooltip label {
