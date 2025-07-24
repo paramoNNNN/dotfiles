@@ -3,10 +3,17 @@
     enable = true;
     settings = {
       general = { lock_cmd = "pidof hyprlock || hyprlock"; };
-      listener = [{
-        timeout = 300;
-        on-timeout = "hyprlock";
-      }];
+      listener = [
+        {
+          timeout = 900; # 15 minutes
+          on-timeout = "hyprlock";
+        }
+        {
+          timeout = 1200; # 20 minutes
+          on-timeout = "hyprctl dispatch dpms off";
+          on-resume = "hyprctl dispatch dpms on";
+        }
+      ];
     };
   };
 }
