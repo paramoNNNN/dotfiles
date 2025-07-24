@@ -24,6 +24,7 @@
     ./toggleterm.nix
     ./treesitter.nix
     ./ts-autotag.nix
+    ./ts-comments.nix
     ./ufo.nix
     ./undotree.nix
     ./which-key.nix
