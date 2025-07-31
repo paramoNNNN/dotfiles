@@ -9,7 +9,14 @@
     plugins = with pkgs; [
       tmuxPlugins.better-mouse-mode
       tmuxPlugins.sensible
-      inputs.minimal-tmux.packages.${pkgs.system}.default
+      {
+        plugin = inputs.minimal-tmux.packages.${pkgs.system}.default;
+        extraConfig = ''
+          set -g @minimal-tmux-status "bottom"
+          set -g @minimal-tmux-fg "#${config.lib.stylix.colors.base09}"
+          set -g @minimal-tmux-bg "#${config.lib.stylix.colors.base01}"
+        '';
+      }
     ];
 
     extraConfig = ''
@@ -42,8 +49,6 @@
       bind-key -T copy-mode-vi v send-keys -X begin-selection
       bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel
 
-      set -g @minimal-tmux-fg "#${config.lib.stylix.colors.base09}"
-      set -g @minimal-tmux-bg "#${config.lib.stylix.colors.base02}"
       set -g status-style bg=default
     '';
   };
