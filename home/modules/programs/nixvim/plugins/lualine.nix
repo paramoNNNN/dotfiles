@@ -2,7 +2,7 @@
   programs.nixvim = {
     plugins.lualine = {
       enable = true;
-      settings = { options = { globalstatus = true; }; };
+      settings = { options = { globalstatus = false; }; };
     };
 
     extraConfigLuaPost = ''
@@ -74,9 +74,15 @@
       local function ins_left(component)
         table.insert(config.sections.lualine_c, component)
       end
+      local function ins_left_inactive(component)
+        table.insert(config.inactive_sections.lualine_c, component)
+      end
 
       local function ins_right(component)
         table.insert(config.sections.lualine_x, component)
+      end
+      local function ins_right_inactive(component)
+        table.insert(config.inactive_sections.lualine_x, component)
       end
 
       ins_left {
@@ -90,6 +96,12 @@
       }
 
       ins_left {
+        'filename',
+        path = 4,
+        cond = conditions.buffer_not_empty,
+        color = { fg = "${config.lib.stylix.colors.base04}" , gui = 'bold' },
+      }
+      ins_left_inactive {
         'filename',
         path = 4,
         cond = conditions.buffer_not_empty,
@@ -114,6 +126,10 @@
       }
 
       ins_right {
+        'filetype',
+        colored = true;
+      }
+      ins_right_inactive {
         'filetype',
         colored = true;
       }
