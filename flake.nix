@@ -46,6 +46,12 @@
       url = "github:samuelngs/apple-emoji-linux";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nextmeeting = {
+      url = "github:chmouel/nextmeeting?dir=packaging";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs = { self, darwin, home-manager, nix-homebrew, nixpkgs, ... }@inputs:
