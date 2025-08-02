@@ -247,6 +247,7 @@ in {
     tree-sitter
     imagemagick
     ffmpeg
+    gcalcli
 
     protonup
     mangohud

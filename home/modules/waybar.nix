@@ -1,4 +1,6 @@
-{
+{ pkgs, lib, inputs, ... }:
+let nextmeeting = lib.getExe inputs.nextmeeting.packages.${pkgs.system}.default;
+in {
   programs.waybar = {
     enable = true;
     settings = {
@@ -11,7 +13,7 @@
         spacing = 7;
         height = 45;
 
-        modules-left = [ "hyprland/workspaces" "memory" ];
+        modules-left = [ "hyprland/workspaces" "memory" "custom/agenda" ];
         modules-center = [ "custom/nowplaying" ];
         modules-right =
           [ "network" "pulseaudio" "clock" "custom/notifications" ];
@@ -70,6 +72,7 @@
           format-ethernet = "";
           format-disconnected = "Disconnected ⚠";
         };
+
         pulseaudio = {
           format = "{icon}  {volume}%";
           tooltip = true;
@@ -86,9 +89,19 @@
           scroll-step = 5;
           on-click = "pavucontrol";
         };
+
         memory = {
           interval = 1;
           format = "    {used:0.2f}";
+        };
+
+        "custom/agenda" = {
+          format = "{}";
+          exec = nextmeeting + " --max-title-length 30 --waybar";
+          on-click = nextmeeting + " --open-meet-url";
+          interval = 59;
+          return-type = "json";
+          tooltip = true;
         };
       };
     };
@@ -145,7 +158,8 @@
       }
 
       #workspaces,
-      #memory {
+      #memory,
+      #custom-agenda {
         border: 1px solid @overlay0;
         border-radius: 15px;
         background-color: @base00;
