@@ -122,6 +122,7 @@
     cuetools
     flac
     wavpack
+    monkeysAudio
     rsync
 
     gcc
