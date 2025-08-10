@@ -1,1 +1,6 @@
-{ imports = [ ./plex.nix ]; }
+{
+  imports = [
+    ./plex.nix
+    ./samba.nix
+  ];
+}

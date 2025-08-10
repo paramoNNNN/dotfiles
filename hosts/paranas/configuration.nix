@@ -82,12 +82,11 @@
   users.users.paranas = {
     isNormalUser = true;
     description = "paranas";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     shell = pkgs.fish;
-    packages = with pkgs;
-      [
-        #  thunderbird
-      ];
   };
 
   # Install firefox.
@@ -96,7 +95,10 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -150,7 +152,8 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  networking.firewall.enable = false;
+  networking.firewall.enable = true;
+  networking.firewall.allowPing = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
