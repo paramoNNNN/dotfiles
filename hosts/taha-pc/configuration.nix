@@ -15,6 +15,7 @@ in {
 
   # NTFS
   boot.supportedFilesystems = [ "ntfs" ];
+  services.gvfs.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
