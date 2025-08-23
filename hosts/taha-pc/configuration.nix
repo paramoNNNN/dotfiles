@@ -249,6 +249,7 @@ in {
     imagemagick
     ffmpeg
     gcalcli
+    android-tools
 
     protonup
     mangohud
