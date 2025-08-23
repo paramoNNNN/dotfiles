@@ -97,7 +97,8 @@ in {
 
         "custom/agenda" = {
           format = "{}";
-          exec = nextmeeting + " --max-title-length 30 --waybar";
+          exec = nextmeeting
+            + " --max-title-length 30 --notify-min-before-events 30 --waybar";
           on-click = nextmeeting + " --open-meet-url";
           interval = 59;
           return-type = "json";
