@@ -17,6 +17,7 @@
     ./notify.nix
     ./nui.nix
     ./package-info.nix
+    ./platformio.nix
     ./rainbow-delimiters.nix
     ./tailwind-tools.nix
     ./telescope.nix
