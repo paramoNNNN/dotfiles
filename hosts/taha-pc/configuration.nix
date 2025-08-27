@@ -251,6 +251,7 @@ in {
     ffmpeg
     gcalcli
     android-tools
+    platformio
 
     protonup
     mangohud
