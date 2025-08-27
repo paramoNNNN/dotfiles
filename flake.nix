@@ -66,7 +66,7 @@
           name = "taha";
         };
         paranas = {
-          email = "paramonnnnnn@gmail.com";
+          email = "paramoNNN@proton.me";
           fullName = "Taha Ojari";
           gitKey = "asd";
           name = "paranas";
