@@ -5,7 +5,7 @@
       git = {
         paging = {
           colorArg = "always";
-          pager = "delta --paging=never";
+          pager = "delta --paging=never --light";
         };
         overrideGpg = true;
       };
