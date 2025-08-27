@@ -148,7 +148,7 @@ in {
   users.users.taha = {
     isNormalUser = true;
     description = "Taha";
-    extraGroups = [ "networkmanager" "wheel" "docker" "input" "i2c" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "input" "i2c" "dialout" ];
     packages = [ ];
   };
 
