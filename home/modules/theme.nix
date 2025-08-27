@@ -2,10 +2,16 @@
   stylix = {
     enable = true;
     polarity = "light";
-    base16Scheme =
-      "${pkgs.base16-schemes}/share/themes/gruvbox-light-hard.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/chicago-day.yaml";
+    override = { base0E = "#EB3D7E"; };
 
-    image = ../../assets/View_of_Vent_in_the_Ventertal.jpg;
+    ## good ## 
+    # sakura -- not bad pink
+    # chicago-day -- green/blue ish
+    # atelier-cave-light -- pink 
+    # atelier-heath-light -- better pink
+
+    image = ../../assets/ghibli-japanese-walled-garden.png;
 
     targets = {
       nixvim = {

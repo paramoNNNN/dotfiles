@@ -13,7 +13,7 @@
         plugin = inputs.minimal-tmux.packages.${pkgs.system}.default;
         extraConfig = ''
           set -g @minimal-tmux-status "bottom"
-          set -g @minimal-tmux-fg "#${config.lib.stylix.colors.base09}"
+          set -g @minimal-tmux-fg "#${config.lib.stylix.colors.base0D}"
           set -g @minimal-tmux-bg "#${config.lib.stylix.colors.base01}"
         '';
       }
