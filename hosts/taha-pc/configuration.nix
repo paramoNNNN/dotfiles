@@ -185,6 +185,7 @@ in {
     qbittorrent
     droidcam
     flacon
+    sticky
 
     docker
     nodejs_22
