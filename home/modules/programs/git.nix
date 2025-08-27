@@ -2,11 +2,11 @@
   programs.git = {
     enable = true;
     userName = "Taha Ojari";
-    userEmail = "taha.ojari@gmail.com";
+    userEmail = "paramoNNN@proton.me";
     extraConfig = {
       push = { autoSetupRemove = true; };
       pull = { rebase = true; };
-      user = { signingkey = "BE8CF963ABC092E0"; };
+      user = { signingkey = "FCF819681F9DD20E"; };
       commit = { gpgsign = true; };
     };
   };

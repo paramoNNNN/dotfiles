@@ -60,7 +60,7 @@
       # Define user configurations
       users = {
         taha = {
-          email = "taha.ojari@gmail.com";
+          email = "paramoNNN@proton.me";
           fullName = "Taha Ojari";
           gitKey = "asd";
           name = "taha";
