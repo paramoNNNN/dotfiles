@@ -114,6 +114,7 @@
     xray
     nix-prefetch-github
     bun
+    platformio
     nixfmt-classic
     nixfmt-rfc-style
   ];
