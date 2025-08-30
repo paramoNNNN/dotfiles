@@ -12,7 +12,7 @@
           desc = "LazyDocker";
         }
       ];
-      mode = [ "n" "t" ];
+      mode = [ "n" ];
     }];
 
     extraPlugins = [
