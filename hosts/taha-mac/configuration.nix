@@ -119,6 +119,13 @@
     nixfmt-rfc-style
   ];
 
+  programs.ssh = {
+    extraConfig = ''
+      ServerAliveInterval 15
+      ServerAliveCountMax 200
+    '';
+  };
+
   # Shell configuration
   programs.zsh.enable = true;
   programs.fish.enable = true;
