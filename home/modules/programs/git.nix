@@ -1,7 +1,7 @@
 {
   programs.git = {
     enable = true;
-    userName = "Taha Ojari";
+    userName = "Taha";
     userEmail = "paramoNNN@proton.me";
     extraConfig = {
       push = { autoSetupRemove = true; };
