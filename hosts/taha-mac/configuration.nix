@@ -114,6 +114,8 @@
     xray
     nix-prefetch-github
     bun
+    nixfmt-classic
+    nixfmt-rfc-style
   ];
 
   # Shell configuration
