@@ -4,6 +4,7 @@
     ../modules/swaync.nix
     ../modules/hyprland/hyprland.nix
     ../modules/gammastep.nix
+    ../modules/programs/nixcord.nix
   ];
 
   # Enable home-manager
