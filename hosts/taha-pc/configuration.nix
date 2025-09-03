@@ -174,6 +174,7 @@ in {
     plexamp
     pavucontrol
     thunderbird
+    protonmail-desktop
     nicotine-plus
     spek
     ghostty
