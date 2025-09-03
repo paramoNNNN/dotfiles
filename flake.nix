@@ -51,6 +51,8 @@
       url = "github:chmouel/nextmeeting?dir=packaging";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixcord.url = "github:kaylorben/nixcord";
   };
 
   outputs = { self, darwin, home-manager, nix-homebrew, nixpkgs, ... }@inputs:
