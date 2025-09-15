@@ -1,5 +1,5 @@
 { inputs, ... }: {
-  imports = [ inputs.nixvim.homeManagerModules.nixvim ./plugins ];
+  imports = [ inputs.nixvim.homeModules.nixvim ./plugins ];
 
   home.shellAliases.v = "nvim";
 

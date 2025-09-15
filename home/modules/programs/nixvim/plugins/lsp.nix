@@ -135,9 +135,11 @@
 
     lspsaga = {
       enable = true;
-      lightbulb.enable = false;
-      codeAction = { showServerName = true; };
-      symbolInWinbar.enable = false;
+      settings = {
+        lightbulb.enable = false;
+        codeAction = { showServerName = true; };
+        symbolInWinbar.enable = false;
+      };
     };
 
     typescript-tools = { enable = true; };
