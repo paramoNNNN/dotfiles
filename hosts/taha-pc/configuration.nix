@@ -260,6 +260,7 @@ in {
     lact
     gamescope
     gamescope-wsi
+    chiaki
 
     ddcui
     ddcutil
