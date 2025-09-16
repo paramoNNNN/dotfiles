@@ -3,7 +3,7 @@
     enable = true;
     settings = {
       background = {
-        blur_passes = 3;
+        blur_passes = 2;
         contrast = 0.8;
         brightness = 0.8;
         vibrancy = 0.1696;
