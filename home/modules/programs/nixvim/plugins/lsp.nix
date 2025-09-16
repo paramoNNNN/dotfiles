@@ -138,7 +138,8 @@
       settings = {
         lightbulb.enable = false;
         codeAction = { showServerName = true; };
-        symbolInWinbar.enable = false;
+        implement.eanble = false;
+        symbol_in_winbar.enable = false;
       };
     };
 
