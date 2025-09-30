@@ -234,7 +234,6 @@ in {
     waybar-mpris
     btop
     nvtopPackages.amd
-    clipse
     openssl
     hyprpaper
     hyprshot

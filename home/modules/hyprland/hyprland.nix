@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   imports = [
-    ../cliphist.nix
+    ../cliphist/cliphist.nix
     ../gtk.nix
     ../swaync.nix
     ../waybar.nix
