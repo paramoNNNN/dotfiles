@@ -53,10 +53,20 @@ in {
         };
 
         "hyprland/workspaces" = {
-          format = "{icon}";
           on-click = "activate";
-          format-icons = { "active" = " "; };
-          sort-by-number = true;
+          format = "{icon}";
+          "format-icons" = {
+            "1" = "一";
+            "2" = "二";
+            "3" = "三";
+            "4" = "四";
+            "5" = "五";
+            "6" = "六";
+            "7" = "七";
+            "8" = "八";
+            "9" = "九";
+            "10" = "十";
+          };
         };
 
         clock = {
@@ -174,15 +184,15 @@ in {
       #workspaces button {
         padding: 0 5px;
         background-color: transparent;
-        color: @base06;
-        border-color: transparent;
+        color: @base03;
       }
       #workspaces button.urgent {
         color: @base08;
       }      
       .modules-left #workspaces button.focused,
       .modules-left #workspaces button.active {
-        border-bottom: 0;
+        color: @base05;
+        border: 0;
       }
 
       .modules-left {
