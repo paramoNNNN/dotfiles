@@ -168,7 +168,7 @@ in {
 
   environment.systemPackages = with pkgs; [
     ungoogled-chromium
-    inputs.zen-browser.packages."${system}".twilight
+    inputs.zen-browser.packages."${system}".beta
     telegram-desktop
     discord
     plexamp
