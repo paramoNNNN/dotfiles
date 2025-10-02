@@ -27,6 +27,12 @@
     options = [ "rw" "uid=1000" "gid=100" ];
   };
 
+  fileSystems."/mnt/hdd" = {
+    device = "/dev/disk/by-uuid/10EF0020EEFFFC2A";
+    fsType = "ntfs-3g";
+    options = [ "rw" "uid=1000" "gid=100" ];
+  };
+
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/249C-D3B0";
     fsType = "vfat";
