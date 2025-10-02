@@ -3,8 +3,8 @@
   gtk = {
     enable = true;
     iconTheme = {
-      name = "Tela-circle-dark";
-      package = pkgs.tela-circle-icon-theme;
+      name = "rose-pine-dawn";
+      package = pkgs.rose-pine-icon-theme;
     };
     cursorTheme = {
       name = "Yaru";

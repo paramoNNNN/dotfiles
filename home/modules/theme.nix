@@ -2,8 +2,8 @@
   stylix = {
     enable = true;
     polarity = "light";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/chicago-day.yaml";
-    override = { base0E = "#EB3D7E"; };
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine-dawn.yaml";
+    override = { base02 = "#f2e9e1"; };
 
     ## good ## 
     # sakura -- not bad pink
@@ -11,7 +11,7 @@
     # atelier-cave-light -- pink 
     # atelier-heath-light -- better pink
 
-    image = ../../assets/ghibli-japanese-walled-garden.png;
+    image = ../../assets/clouds.JPG;
 
     targets = {
       nixvim = {
