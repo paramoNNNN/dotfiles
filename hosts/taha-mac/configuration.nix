@@ -139,7 +139,7 @@
   homebrew = {
     enable = true;
     brews = [ "cloudflared" ];
-    casks = [ "dozer" "raycast" "ghostty" ];
+    casks = [ "dozer" "raycast" "ghostty" "ungoogled-chromium" ];
   };
 
   # Used for backwards compatibility, please read the changelog before changing.
