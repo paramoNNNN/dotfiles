@@ -113,16 +113,12 @@
     lsp = {
       enable = true;
       servers = {
-        ts_ls.enable = false;
+        nil_ls.enable = true;
         cssls.enable = true;
+        html.enable = true;
         tailwindcss.enable = true;
         jsonls.enable = true;
-        html.enable = true;
         astro.enable = true;
-        svelte.enable = false;
-        vuels.enable = false;
-        pyright.enable = true;
-        nil_ls.enable = true;
         dockerls.enable = true;
         yamlls.enable = true;
         biome.enable = true;
@@ -138,7 +134,7 @@
       settings = {
         lightbulb.enable = false;
         codeAction = { showServerName = true; };
-        implement.eanble = false;
+        implement.enable = false;
         symbol_in_winbar.enable = false;
       };
     };
