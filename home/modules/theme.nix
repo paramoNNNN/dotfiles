@@ -5,12 +5,6 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine-dawn.yaml";
     override = { base02 = "#f2e9e1"; };
 
-    ## good ## 
-    # sakura -- not bad pink
-    # chicago-day -- green/blue ish
-    # atelier-cave-light -- pink 
-    # atelier-heath-light -- better pink
-
     image = ../../assets/clouds.JPG;
 
     targets = {
