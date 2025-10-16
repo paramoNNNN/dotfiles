@@ -17,15 +17,17 @@
 
     plugins.neo-tree = {
       enable = true;
-      filesystem = {
-        followCurrentFile = { enabled = true; };
-        filteredItems = {
-          hideDotfiles = false;
-          hideGitignored = false;
+      settings = {
+        filesystem = {
+          follow_current_file = { enabled = true; };
+          filtered-items = {
+            hide_dot_files = false;
+            hide_gitignored = false;
+          };
         };
+        close_if_last_window = true;
+        window = { position = "right"; };
       };
-      closeIfLastWindow = true;
-      window = { position = "right"; };
     };
   };
 }
