@@ -121,7 +121,10 @@
         astro.enable = true;
         dockerls.enable = true;
         yamlls.enable = true;
-        biome.enable = true;
+        biome = {
+          enable = true;
+          packageFallback = true;
+        };
         lua_ls = {
           enable = true;
           settings.telemetry.enable = false;

@@ -19,10 +19,9 @@
       };
       format_on_save = {
         timeout_ms = 2000;
-        lsp_fallback = true;
+        lsp_format = "fallback";
         stop_after_first = true;
       };
-      formatters = { biome-check = { command = lib.getExe pkgs.biome; }; };
     };
   };
 }
