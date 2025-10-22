@@ -5,6 +5,7 @@
     ../modules/hyprland/hyprland.nix
     ../modules/gammastep.nix
     ../modules/programs/nixcord.nix
+    ../modules/programs/obsidian.nix
   ];
 
   # Enable home-manager
