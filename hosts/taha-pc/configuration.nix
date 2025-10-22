@@ -187,6 +187,7 @@ in {
     droidcam
     flacon
     sticky
+    bitwarden-desktop
 
     docker
     nodejs_22
