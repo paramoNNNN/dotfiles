@@ -5,5 +5,6 @@
     ./plex.nix
     ./samba.nix
     ./vaultwarden.nix
+    ./couchdb.nix
   ];
 }

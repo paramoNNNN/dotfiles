@@ -15,6 +15,14 @@
       useACMEHost = "nextcloud";
       forceSSL = true;
     };
+    virtualHosts."obsidian" = {
+      useACMEHost = "obsidian";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://localhost:5984";
+      };
+    };
+
   };
   security.acme = {
     acceptTerms = true;
