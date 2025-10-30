@@ -32,8 +32,6 @@
 
     nixvim = { url = "github:nix-community/nixvim"; };
 
-    zen-browser.url = "github:0xc000022070/zen-browser-flake";
-
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -168,7 +168,6 @@ in {
 
   environment.systemPackages = with pkgs; [
     ungoogled-chromium
-    inputs.zen-browser.packages."${system}".beta
     firefox-devedition
     telegram-desktop
     discord
@@ -255,7 +254,7 @@ in {
     android-tools
     platformio
 
-    protonup
+    protonup-ng
     mangohud
     vulkan-tools
     lact

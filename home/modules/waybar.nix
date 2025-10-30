@@ -171,7 +171,7 @@ in {
       #workspaces,
       #memory,
       #custom-agenda {
-        border: 1px solid @overlay0;
+        border: 1px solid @base02;
         border-radius: 15px;
         background-color: @base00;
         padding: 0 7px;
