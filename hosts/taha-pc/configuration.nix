@@ -6,6 +6,10 @@
 let
   tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
   hyprland-session = "${pkgs.hyprland}/share/wayland-sessions";
+  plexampPkgs = import inputs.plexamp {
+    system = pkgs.system;
+    config.allowUnfree = true;
+  };
 in {
   imports = [
     # Include the results of the hardware scan.
@@ -171,7 +175,7 @@ in {
     firefox-devedition
     telegram-desktop
     discord
-    plexamp
+    plexampPkgs.plexamp
     pavucontrol
     thunderbird
     protonmail-desktop
