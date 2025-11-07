@@ -6,9 +6,7 @@
       debug = true;
     };
     sources = {
-      code_actions = {
-        gitsigns.enable = true;
-      };
+      code_actions = { gitsigns.enable = true; };
       diagnostics = {
         deadnix.enable = true;
         pylint.enable = true;
@@ -30,7 +28,6 @@
             }
           '';
         };
-        biome = { enable = true; };
       };
     };
   };
