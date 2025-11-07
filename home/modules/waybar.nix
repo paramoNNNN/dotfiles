@@ -13,7 +13,7 @@ in {
         spacing = 7;
         height = 45;
 
-        modules-left = [ "hyprland/workspaces" "memory" "custom/agenda" ];
+        modules-left = [ "hyprland/workspaces" "custom/agenda" ];
         modules-center = [ "custom/nowplaying" ];
         modules-right =
           [ "network" "pulseaudio" "clock" "custom/notifications" ];
@@ -100,11 +100,6 @@ in {
           on-click = "pavucontrol";
         };
 
-        memory = {
-          interval = 1;
-          format = "    {used:0.2f}";
-        };
-
         "custom/agenda" = {
           format = "{}";
           exec = nextmeeting
@@ -169,16 +164,11 @@ in {
       }
 
       #workspaces,
-      #memory,
       #custom-agenda {
         border: 1px solid @base02;
         border-radius: 15px;
         background-color: @base00;
         padding: 0 7px;
-      }
-
-      #memory {
-        padding: 0 9px;
       }
 
       #workspaces button {
