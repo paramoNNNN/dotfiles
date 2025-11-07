@@ -113,6 +113,7 @@
     lsp = {
       enable = true;
       servers = {
+        tsgo.enable = true;
         nil_ls.enable = true;
         cssls.enable = true;
         html.enable = true;
@@ -142,6 +143,6 @@
       };
     };
 
-    typescript-tools = { enable = true; };
+    # typescript-tools = { enable = true; };
   };
 }
