@@ -187,6 +187,7 @@ in {
     qalculate-gtk
     libreoffice
     slack
+    mattermost-desktop
     qbittorrent
     droidcam
     flacon
@@ -200,6 +201,8 @@ in {
     python311
     python311Packages.pip
     vim
+    vscode
+    zed-editor
     kitty
     tmux
     teamocil
@@ -208,6 +211,11 @@ in {
     nixfmt-classic
     lazygit
     lazydocker
+    kubectl
+    lens
+    grafana
+    pgadmin4-desktopmode
+    postgresql
     delta
     stylua
     nixfmt-rfc-style
@@ -289,17 +297,6 @@ in {
   programs._1password-gui = {
     enable = true;
     polkitPolicyOwners = [ "taha" ];
-  };
-  environment.etc = {
-    "1password/custom_allowed_browsers" = {
-      text = ''
-        .zen-wrapped
-        zen
-        zen-bin
-        zen-beta-bin
-      '';
-      mode = "0755";
-    };
   };
 
   programs.steam = {
