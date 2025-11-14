@@ -201,7 +201,6 @@ in {
     python311
     python311Packages.pip
     vim
-    vscode
     zed-editor
     kitty
     tmux
@@ -292,6 +291,8 @@ in {
     libnotify
     libqalculate
   ];
+
+  services.tailscale.enable = true;
 
   programs._1password.enable = true;
   programs._1password-gui = {
