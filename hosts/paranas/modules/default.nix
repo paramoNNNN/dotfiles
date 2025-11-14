@@ -6,5 +6,6 @@
     ./samba.nix
     ./vaultwarden.nix
     ./couchdb.nix
+    ./tailscale.nix
   ];
 }
