@@ -131,6 +131,14 @@ in {
   services.libinput.enable = true;
   services.touchegg.enable = true;
 
+  services.openssh = {
+    enable = true;
+    ports = [ 22 ];
+    settings = {
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
+    };
+  };
   programs.ssh = {
     extraConfig = ''
       ServerAliveInterval 15
