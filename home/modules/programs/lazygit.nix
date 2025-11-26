@@ -3,10 +3,10 @@
     enable = true;
     settings = {
       git = {
-        paging = {
+        pagers = [{
           colorArg = "always";
           pager = "delta --paging=never --light";
-        };
+        }];
         overrideGpg = true;
       };
       os = {
