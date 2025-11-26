@@ -12,10 +12,6 @@
       memberCount.enable = true;
       messageLatency.enable = true;
       petpet.enable = true;
-      showMeYourName = {
-        enable = true;
-        mode = "nick-user";
-      };
       betterFolders = {
         enable = true;
         closeAllFolders = true;
