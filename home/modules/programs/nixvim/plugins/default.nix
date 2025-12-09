@@ -14,7 +14,6 @@
     ./multicursor.nix
     ./neo-tree.nix
     ./none-ls.nix
-    ./notify.nix
     ./nui.nix
     ./package-info.nix
     ./platformio.nix
