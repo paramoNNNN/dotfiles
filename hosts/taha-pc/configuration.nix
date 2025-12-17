@@ -212,6 +212,7 @@ in {
     flacon
     sticky
     bitwarden-desktop
+    gimp3
 
     docker
     nodejs_22
