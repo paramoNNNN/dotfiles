@@ -5,7 +5,7 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine-dawn.yaml";
     override = { base02 = "#f2e9e1"; };
 
-    image = ../../assets/clouds.JPG;
+    image = ../../assets/moon.jpg;
 
     targets = {
       nixvim = {
