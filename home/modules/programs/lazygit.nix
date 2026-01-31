@@ -15,6 +15,7 @@
         open = ''
           nvim --server /tmp/nvim-server-$(tmux display-message -p '#S-#{window_index}').pipe --remote-send "<cmd>lua lazygitOpenFile('{{filename}}', '{{line}}')<CR>"'';
       };
+      services = { "hamgit.ir" = "gitlab:hamgit.ir"; };
     };
   };
 }
