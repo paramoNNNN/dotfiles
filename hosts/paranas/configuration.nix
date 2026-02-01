@@ -106,6 +106,7 @@
     vim
     tmux
     git
+    delta
     aria2
 
     openvpn
@@ -123,6 +124,7 @@
     shntool
     cuetools
     flac
+    sacd
     wavpack
     monkeysAudio
     rsync
