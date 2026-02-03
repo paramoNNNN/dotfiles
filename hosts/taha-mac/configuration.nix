@@ -117,6 +117,7 @@
     platformio
     nixfmt-classic
     nixfmt-rfc-style
+    monitorcontrol
   ];
 
   programs.ssh = {
