@@ -43,8 +43,14 @@ in {
 
         "custom/nowplaying" = {
           return-type = "json";
-          exec =
-            "waybar-mpris --autofocus --interpolate --order 'ARTIST:TITLE'";
+          interval = 1;
+          exec = ''
+            if playerctl status &>/dev/null; then
+              timeout 1 waybar-mpris --autofocus --interpolate --order "ARTIST:TITLE" 2>/dev/null || echo '{"text":"","class":"empty"}'
+            else
+              echo '{"text":"","class":"empty"}'
+            fi
+          '';
           on-click = "playerctl play-pause";
           on-click-right = "playerctl next";
           on-double-click = "playerctl previous";
@@ -149,7 +155,17 @@ in {
       #custom-nowplaying {
         padding: 0 7px;
         padding-right: 0px;
+        border: 1px solid @base02;
+        border-radius: 15px;
+        background-color: @base00;
         color: @base05;
+      }
+      #custom-nowplaying.empty {
+        padding: 0;
+        margin: 0;
+        border: 0;
+        font-size: 0;
+        min-width: 0;
       }
 
       #custom-notifications {
@@ -189,8 +205,7 @@ in {
         background: transparent;
         border: none;
       }
-      .modules-right,
-      .modules-center {
+      .modules-right {
         border: 1px solid @base02;
         border-radius: 15px;
         background-color: @base00;
