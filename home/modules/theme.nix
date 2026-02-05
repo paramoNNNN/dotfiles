@@ -5,6 +5,19 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine-dawn.yaml";
     override = { base02 = "#f2e9e1"; };
 
+    icons = {
+      enable = true;
+      light = "rose-pine-dawn";
+      dark = "rose-pine";
+      package = pkgs.rose-pine-icon-theme;
+    };
+
+    cursor = {
+      name = "Yaru";
+      package = pkgs.yaru-theme;
+      size = 24;
+    };
+
     image = ../../assets/moon.jpg;
 
     targets = {
