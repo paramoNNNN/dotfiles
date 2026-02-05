@@ -26,6 +26,7 @@
       window-colorspace = "display-p3";
       window-vsync = "true";
       window-theme = "ghostty";
+      window-decoration = "none";
 
       cursor-style-blink = true;
       cursor-invert-fg-bg = true;
