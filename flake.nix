@@ -51,6 +51,15 @@
 
     plexamp.url =
       "nixpkgs/e6f23dc08d3624daab7094b701aa3954923c6bbb"; # 4.12.3 cause the new version breaks everything
+
+    vicinae = {
+      url = "github:vicinaehq/vicinae";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    vicinae-extensions = {
+      url = "github:vicinaehq/extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, darwin, home-manager, nix-homebrew, nixpkgs, ... }@inputs:
@@ -109,6 +118,7 @@
           };
           modules = [
             inputs.stylix.homeModules.stylix
+            inputs.vicinae.homeManagerModules.default
             ./home/${username}/${hostname}.nix
           ];
         };
