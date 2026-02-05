@@ -7,6 +7,8 @@
     ../modules/gammastep.nix
     ../modules/programs/nixcord.nix
     ../modules/programs/obsidian.nix
+    ../modules/programs/obsidian.nix
+    ../modules/programs/vicinae.nix
   ];
 
   # Enable home-manager
