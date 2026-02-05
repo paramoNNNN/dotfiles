@@ -13,9 +13,6 @@
   home.pointerCursor = {
     gtk.enable = true;
     x11.enable = true;
-    package = pkgs.yaru-theme;
-    name = "Yaru";
-    size = 24;
   };
 
   wayland.windowManager.hyprland = { xwayland.enable = true; };
