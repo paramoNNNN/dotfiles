@@ -3,6 +3,7 @@
     ../modules/common.nix
     ../modules/swaync.nix
     ../modules/hyprland/hyprland.nix
+    ../modules/gnome/gnome.nix
     ../modules/gammastep.nix
     ../modules/programs/nixcord.nix
     ../modules/programs/obsidian.nix

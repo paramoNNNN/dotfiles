@@ -5,7 +5,6 @@
 { pkgs, inputs, ... }:
 let
   tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
-  hyprland-session = "${pkgs.hyprland}/share/wayland-sessions";
   plexampPkgs = import inputs.plexamp {
     system = pkgs.system;
     config.allowUnfree = true;
@@ -83,16 +82,14 @@ in {
   };
 
   services = {
-    xserver.enable = false; # disable xorg server
+    xserver.enable = true; # disable xorg server
     # https://wiki.archlinux.org/title/Greetd
     greetd = {
       enable = true;
       settings = {
         default_session = {
           user = "taha";
-          # command = "$HOME/.wayland-session"; # start a wayland session directly without a login manager
-          command =
-            "${tuigreet} --time --remember --remember-session --sessions ${hyprland-session} --cmd 'uwsm start select'";
+          command = "${tuigreet} --time --remember --remember-session";
         };
       };
     };
@@ -194,6 +191,7 @@ in {
     firefox-devedition
     telegram-desktop
     discord
+    flatpak
     plexampPkgs.plexamp
     pavucontrol
     thunderbird
@@ -309,6 +307,16 @@ in {
     libinput-gestures
     libnotify
     libqalculate
+
+    gnome-tweaks
+    refine
+    gnomeExtensions.appindicator
+    gnomeExtensions.just-perfection
+    gnomeExtensions.media-controls
+    gnomeExtensions.blur-my-shell
+    gnomeExtensions.dash-to-dock
+    gnomeExtensions.vertical-workspaces
+    gnomeExtensions.vicinae
   ];
 
   services.tailscale.enable = true;
@@ -386,6 +394,9 @@ in {
   nixpkgs.config.allowUnfree = true;
 
   system.stateVersion = "24.11";
+
+  services.displayManager.gdm.enable = false;
+  services.desktopManager.gnome.enable = true;
 
   programs.hyprland = {
     enable = true;
