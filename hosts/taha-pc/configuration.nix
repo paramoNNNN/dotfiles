@@ -37,7 +37,10 @@ in {
   nix.settings.trusted-users = [ "root" "taha" ];
 
   # Enable networking
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    plugins = with pkgs; [ networkmanager-openvpn ];
+  };
   networking.nameservers = [ "192.168.1.1" ];
   networking.firewall.allowedTCPPorts = [ 5173 8040 10810 ];
 
@@ -229,8 +232,6 @@ in {
     lazygit
     lazydocker
     kubectl
-    lens
-    grafana
     pgadmin4-desktopmode
     postgresql
     delta
