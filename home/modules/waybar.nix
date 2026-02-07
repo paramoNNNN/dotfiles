@@ -1,6 +1,4 @@
-{ pkgs, lib, inputs, ... }:
-let nextmeeting = lib.getExe inputs.nextmeeting.packages.${pkgs.system}.default;
-in {
+{ ... }: {
   programs.waybar = {
     enable = true;
     settings = {
@@ -104,16 +102,6 @@ in {
           };
           scroll-step = 5;
           on-click = "pavucontrol";
-        };
-
-        "custom/agenda" = {
-          format = "{}";
-          exec = nextmeeting
-            + " --max-title-length 30 --notify-min-before-events 30 --waybar";
-          on-click = nextmeeting + " --open-meet-url";
-          interval = 59;
-          return-type = "json";
-          tooltip = true;
         };
       };
     };
