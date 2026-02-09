@@ -14,6 +14,7 @@
           pkgs.gnomeExtensions.dash-to-dock.extensionUuid
           pkgs.gnomeExtensions.vertical-workspaces.extensionUuid
           pkgs.gnomeExtensions.vicinae.extensionUuid
+          pkgs.gnomeExtensions.brightness-control-using-ddcutil.extensionUuid
         ];
       };
     };

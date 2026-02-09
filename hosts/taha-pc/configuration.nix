@@ -318,6 +318,7 @@ in {
     gnomeExtensions.dash-to-dock
     gnomeExtensions.vertical-workspaces
     gnomeExtensions.vicinae
+    gnomeExtensions.brightness-control-using-ddcutil
   ];
 
   services.tailscale.enable = true;
