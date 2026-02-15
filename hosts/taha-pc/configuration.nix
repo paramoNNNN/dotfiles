@@ -209,6 +209,7 @@ in {
     sticky
     bitwarden-desktop
     gimp3
+    postman
 
     docker
     nodejs_22
@@ -218,6 +219,7 @@ in {
     python311Packages.pip
     vim
     zed-editor
+    vscode
     kitty
     tmux
     teamocil
