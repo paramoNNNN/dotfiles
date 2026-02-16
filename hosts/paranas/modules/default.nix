@@ -7,5 +7,6 @@
     ./vaultwarden.nix
     ./couchdb.nix
     ./tailscale.nix
+    ./immich.nix
   ];
 }
