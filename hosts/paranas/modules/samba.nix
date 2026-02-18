@@ -13,18 +13,36 @@
         "guest account" = "nobody";
         "map to guest" = "bad user";
       };
-      "external" = {
-        "path" = "/mnt/external";
+      "Share" = {
+        "path" = "/storage/share";
         "browseable" = "yes";
         "writeable" = "yes";
+        "read only" = "no";
+        "guest ok" = "yes";
+        "create mask" = "0600";
+        "directory mask" = "0700";
+        "force user" = "paranas";
+      };
+      "Movies" = {
+        "path" = "/storage/media/Movies";
+        "browseable" = "yes";
         "read only" = "no";
         "guest ok" = "no";
         "create mask" = "0600";
         "directory mask" = "0700";
         "force user" = "paranas";
       };
-      "media" = {
-        "path" = "/mnt/media";
+      "Music" = {
+        "path" = "/storage/media/Music";
+        "browseable" = "yes";
+        "read only" = "no";
+        "guest ok" = "no";
+        "create mask" = "0600";
+        "directory mask" = "0700";
+        "force user" = "paranas";
+      };
+      "TV Shows" = {
+        "path" = "/storage/media/TV Shows";
         "browseable" = "yes";
         "read only" = "no";
         "guest ok" = "no";
