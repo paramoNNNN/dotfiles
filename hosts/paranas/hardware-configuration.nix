@@ -28,7 +28,7 @@
     fsType = "ext4";
   };
 
-  fileSystems."/mnt/media" = {
+  fileSystems."/mnt/hdd" = {
     device = "/dev/disk/by-uuid/6C0C482A0C47EE20";
     fsType = "ntfs-3g";
     options = [
@@ -38,7 +38,7 @@
     ];
   };
 
-  fileSystems."/mnt/external" = {
+  fileSystems."/mnt/buk" = {
     device = "/dev/disk/by-uuid/42AC-D6A5";
     fsType = "exfat";
     options = [

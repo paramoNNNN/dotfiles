@@ -1,7 +1,7 @@
 {
   services.vaultwarden = {
     enable = true;
-    backupDir = "/mnt/media/vaultwarden/backup";
+    backupDir = "/storage/backups/vaultwarden/backup";
     environmentFile = "/home/paranas/vw";
     config = {
       DOMAIN = "rick";
