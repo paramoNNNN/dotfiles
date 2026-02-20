@@ -80,7 +80,7 @@ in {
   };
 
   services = {
-    xserver.enable = true; # disable xorg server
+    xserver.enable = false; # disable xorg server
     # https://wiki.archlinux.org/title/Greetd
     greetd = {
       enable = true;
