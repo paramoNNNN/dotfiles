@@ -194,7 +194,6 @@ in {
     flatpak
     plexamp
     pavucontrol
-    thunderbird
     protonmail-desktop
     nicotine-plus
     spek
@@ -208,7 +207,6 @@ in {
     qbittorrent
     droidcam
     flacon
-    sticky
     bitwarden-desktop
     gimp3
     postman
@@ -238,7 +236,6 @@ in {
     nixfmt-rfc-style
     tailwindcss-language-server
     ngrok
-    cloudflared
     prettierd
     eslint_d
 
