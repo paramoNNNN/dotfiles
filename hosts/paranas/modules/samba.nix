@@ -11,7 +11,7 @@
         "hosts allow" = "192.168.0. 127.0.0.1 localhost 192.168.1. 100.0.0.0/8";
         "hosts deny" = "0.0.0.0/0";
         "guest account" = "nobody";
-        "map to guest" = "bad user";
+        "map to guest" = "never";
       };
       "Share" = {
         "path" = "/storage/share";
@@ -49,6 +49,16 @@
         "create mask" = "0600";
         "directory mask" = "0700";
         "force user" = "paranas";
+      };
+      "Saeed" = {
+        "path" = "/storage/saeed";
+        "browseable" = "no";
+        "read only" = "no";
+        "guest ok" = "no";
+        "create mask" = "0600";
+        "directory mask" = "0700";
+        "valid users" = "saeed";
+        "force user" = "saeed";
       };
     };
   };
