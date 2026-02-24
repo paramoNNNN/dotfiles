@@ -37,8 +37,16 @@
         '';
       };
     };
-    virtualHosts."plex" = {
-      useACMEHost = "plex";
+    virtualHosts."hs" = {
+      useACMEHost = "john";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://localhost:8080";
+        proxyWebsockets = true;
+      };
+    };
+    virtualHosts."tv.taha.surf" = {
+      useACMEHost = "taha.surf";
       forceSSL = true;
       extraConfig = ''
         #Some players don't reopen a socket and playback stops totally instead of resuming after an extended pause
@@ -115,6 +123,15 @@
         dnsResolver = "1.1.1.1:53";
         # TODO: setup with agent
         environmentFile = "/home/paranas/cf";
+      };
+      "john" = {
+        extraDomainNames = [
+          "doe"
+        ];
+        group = "nginx";
+        dnsProvider = "arvancloud";
+        dnsResolver = "1.1.1.1:53";
+        environmentFile = "/home/paranas/arv";
       };
     };
   };

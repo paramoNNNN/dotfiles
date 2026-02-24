@@ -52,6 +52,8 @@
       url = "github:vicinaehq/extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    headscale.url = "github:juanfont/headscale";
   };
 
   outputs = { self, darwin, home-manager, nix-homebrew, nixpkgs, ... }@inputs:
