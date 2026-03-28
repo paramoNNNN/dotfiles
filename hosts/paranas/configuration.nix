@@ -128,6 +128,9 @@
     wavpack
     monkeysAudio
     rsync
+    vnstat
+    iftop
+    dig
 
     gcc
     libgcc
