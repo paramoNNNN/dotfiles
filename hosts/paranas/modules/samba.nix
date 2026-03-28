@@ -11,7 +11,7 @@
         "hosts allow" = "192.168.0. 127.0.0.1 localhost 192.168.1. 100.0.0.0/8";
         "hosts deny" = "0.0.0.0/0";
         "guest account" = "nobody";
-        "map to guest" = "never";
+        "map to guest" = "Bad User";
       };
       "Share" = {
         "path" = "/storage/share";
@@ -36,7 +36,7 @@
         "path" = "/storage/media/Music";
         "browseable" = "yes";
         "read only" = "no";
-        "guest ok" = "no";
+        "guest ok" = "yes";
         "create mask" = "0600";
         "directory mask" = "0700";
         "force user" = "paranas";
