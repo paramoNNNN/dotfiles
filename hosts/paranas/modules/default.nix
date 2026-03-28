@@ -8,5 +8,6 @@
     ./couchdb.nix
     ./tailscale.nix
     ./immich.nix
+    ./jellyfin.nix
   ];
 }
