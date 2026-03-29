@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 let
   domain = "khkhkh";
   matrixHost = "ch.${domain}";
@@ -22,6 +22,10 @@ let
   '';
 in
 {
+  environment.systemPackages = with pkgs; [
+    matrix-synapse
+  ];
+
   services.postgresql = {
     enable = true;
 
@@ -83,10 +87,33 @@ in
     };
   };
 
+  services.coturn = {
+    enable = true;
+    listening-port = 3479;
+
+    realm = "khkhkh";
+    use-auth-secret = true;
+    static-auth-secret = "super";
+    no-cli = true;
+    no-tcp-relay = false;
+    min-port = 49152;
+    max-port = 49999;
+    cert = "${config.security.acme.certs."khkhkhk".directory}/fullchain.pem";
+    pkey = "${config.security.acme.certs."khkhkhk".directory}/key.pem";
+    extraConfig = ''
+      no-multicast-peers
+      listening-ip=0.0.0.0
+      relay-ip=0.0.0.0
+      external-ip=000000
+      fingerprint
+      lt-cred-mech
+    '';
+  };
+
   services.matrix-synapse = {
     enable = true;
 
-    settings = {
+    settings = with config.services.coturn; {
       server_name = domain;
       public_baseurl = baseUrl;
       registration_shared_secret = ":pray:";
@@ -120,10 +147,31 @@ in
           ];
         }
       ];
+
+      turn_uris = [
+        "turn:${realm}:3479?transport=udp"
+        "turn:${realm}:3479?transport=tcp"
+      ];
+      turn_shared_secret = static-auth-secret;
+      turn_user_lifetime = "1h";
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    matrix-synapse
-  ];
+  networking.firewall = {
+    allowedUDPPorts = [
+      3479
+      5349
+    ];
+    allowedTCPPorts = [
+      3479
+      5349
+    ];
+
+    allowedUDPPortRanges = [
+      {
+        from = 49152;
+        to = 49999;
+      }
+    ];
+  };
 }
