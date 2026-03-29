@@ -9,5 +9,6 @@
     ./tailscale.nix
     ./immich.nix
     ./jellyfin.nix
+    ./matrix.nix
   ];
 }
