@@ -10,5 +10,6 @@
     ./immich.nix
     ./jellyfin.nix
     ./matrix.nix
+    ./teamspeak.nix
   ];
 }
