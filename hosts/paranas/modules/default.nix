@@ -9,6 +9,7 @@
     ./tailscale.nix
     ./immich.nix
     ./jellyfin.nix
+    ./navidrome.nix
     ./matrix.nix
     ./teamspeak.nix
   ];
