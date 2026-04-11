@@ -193,6 +193,7 @@ in {
     discord
     flatpak
     plexamp
+    feishin
     pavucontrol
     protonmail-desktop
     nicotine-plus
@@ -207,6 +208,7 @@ in {
     qbittorrent
     droidcam
     flacon
+    picard
     bitwarden-desktop
     gimp3
     postman
