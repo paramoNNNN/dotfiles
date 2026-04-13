@@ -217,8 +217,6 @@ in {
     nodejs_22
     deno
     bun
-    python311
-    python311Packages.pip
     vim
     zed-editor
     vscode
@@ -255,7 +253,7 @@ in {
     fd
     ripgrep
     gotop
-    neofetch
+    fastfetch
     bat
     unzip
     unrar
@@ -401,14 +399,12 @@ in {
       inputs.apple-fonts.packages.${pkgs.system}.sf-pro
       inputs.apple-fonts.packages.${pkgs.system}.sf-compact
       inputs.apple-fonts.packages.${pkgs.system}.sf-arabic
-      inputs.apple-emoji.packages.${pkgs.system}.apple-emoji-linux
     ];
     fontconfig = {
       defaultFonts = {
         sansSerif = [ "SF Compact Rounded" "SF Arabic" ];
         serif = [ "SF Compact Rounded" "SF Arabic" ];
         monospace = [ "CaskaydiaCove Nerd Font" ];
-        emoji = [ "Apple Color Emoji" ];
       };
     };
   };

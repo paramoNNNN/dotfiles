@@ -37,10 +37,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
-    apple-emoji = {
-      url = "github:samuelngs/apple-emoji-linux";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     nixcord.url = "github:kaylorben/nixcord";
 
