@@ -128,7 +128,7 @@
     eza
     fd
     ripgrep
-    neofetch
+    fastfetch
     bat
     unzip
     unrar
