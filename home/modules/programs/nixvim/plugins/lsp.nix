@@ -113,8 +113,8 @@
     lsp = {
       enable = true;
       servers = {
-        # tsgo.enable = true;
-        ts_ls.enable = true;
+        tsgo.enable = true;
+        # ts_ls.enable = true;
         nil_ls.enable = true;
         cssls.enable = true;
         html.enable = true;
