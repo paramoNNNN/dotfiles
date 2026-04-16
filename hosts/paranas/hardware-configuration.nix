@@ -38,16 +38,6 @@
     ];
   };
 
-  fileSystems."/mnt/buk" = {
-    device = "/dev/disk/by-uuid/42AC-D6A5";
-    fsType = "exfat";
-    options = [
-      "rw"
-      "uid=1000"
-      "gid=100"
-    ];
-  };
-
   fileSystems."/storage" = {
     device = "/dev/disk/by-uuid/0da42b89-a805-448a-919c-980100138d08";
     fsType = "btrfs";
