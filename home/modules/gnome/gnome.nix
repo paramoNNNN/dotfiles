@@ -17,6 +17,9 @@
           pkgs.gnomeExtensions.brightness-control-using-ddcutil.extensionUuid
         ];
       };
+      "org/gnome/shell/extensions/display-brightness-ddcutil" = {
+        ddcutil-binary-path = "ddcutil";
+      };
     };
   };
 }
