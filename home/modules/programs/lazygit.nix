@@ -3,19 +3,21 @@
     enable = true;
     settings = {
       git = {
-        pagers = [{
-          colorArg = "always";
-          pager = "delta --paging=never --light";
-        }];
+        pagers = [
+          {
+            colorArg = "always";
+            pager = "delta --paging=never --light";
+          }
+        ];
         overrideGpg = true;
       };
       os = {
-        edit = ''
-          nvim --server /tmp/nvim-server-$(tmux display-message -p '#S-#{window_index}').pipe --remote-send "<cmd>lua lazygitOpenFile('{{filename}}', '{{line}}')<CR>"'';
-        open = ''
-          nvim --server /tmp/nvim-server-$(tmux display-message -p '#S-#{window_index}').pipe --remote-send "<cmd>lua lazygitOpenFile('{{filename}}', '{{line}}')<CR>"'';
+        edit = ''nvim --server /tmp/nvim-server-$(tmux display-message -p '#S-#{window_index}').pipe --remote-send "<cmd>lua lazygitOpenFile('{{filename}}', '{{line}}')<CR>"'';
+        open = ''nvim --server /tmp/nvim-server-$(tmux display-message -p '#S-#{window_index}').pipe --remote-send "<cmd>lua lazygitOpenFile('{{filename}}', '{{line}}')<CR>"'';
       };
-      services = { "hamgit.ir" = "gitlab:hamgit.ir"; };
+      services = {
+        "hamgit.ir" = "gitlab:hamgit.ir";
+      };
     };
   };
 }

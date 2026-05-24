@@ -1,4 +1,10 @@
-{ pkgs, outputs, userConfig, ... }: {
+{
+  pkgs,
+  outputs,
+  userConfig,
+  ...
+}:
+{
   system.primaryUser = "taha";
 
   # Add nix-homebrew configuration
@@ -13,11 +19,15 @@
   nixpkgs = {
     overlays = [ outputs.overlays.stable-packages ];
 
-    config = { allowUnfree = true; };
+    config = {
+      allowUnfree = true;
+    };
   };
 
   # Nix settings
-  nix.settings = { experimental-features = "nix-command flakes"; };
+  nix.settings = {
+    experimental-features = "nix-command flakes";
+  };
   nix.optimise.automatic = true;
 
   nix.package = pkgs.nix;
@@ -138,7 +148,13 @@
 
   homebrew = {
     enable = true;
-    casks = [ "dozer" "raycast" "ghostty" "ungoogled-chromium" "mattermost" ];
+    casks = [
+      "dozer"
+      "raycast"
+      "ghostty"
+      "ungoogled-chromium"
+      "mattermost"
+    ];
   };
 
   # Used for backwards compatibility, please read the changelog before changing.

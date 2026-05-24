@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   imports = [ ../modules/common.nix ];
 
   # Enable home-manager

@@ -21,10 +21,19 @@
               '';
             };
           };
-          documentation = { window = { border = "rounded"; }; };
+          documentation = {
+            window = {
+              border = "rounded";
+            };
+          };
         };
         sources = {
-          default = [ "lsp" "path" "buffer" "snippets" ];
+          default = [
+            "lsp"
+            "path"
+            "buffer"
+            "snippets"
+          ];
         };
         snippets = {
           preset = "luasnip";

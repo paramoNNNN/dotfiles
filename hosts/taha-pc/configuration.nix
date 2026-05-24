@@ -3,8 +3,10 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { pkgs, inputs, ... }:
-let tuigreet = "${pkgs.tuigreet}/bin/tuigreet";
-in {
+let
+  tuigreet = "${pkgs.tuigreet}/bin/tuigreet";
+in
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -21,15 +23,20 @@ in {
 
   # AMD
   boot.initrd.kernelModules = [ "amdgpu" ];
-  systemd.tmpfiles.rules =
-    [ "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}" ];
+  systemd.tmpfiles.rules = [ "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}" ];
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
-  nix.settings.trusted-users = [ "root" "taha" ];
+  nix.settings.trusted-users = [
+    "root"
+    "taha"
+  ];
 
   # Enable networking
   networking.networkmanager = {
@@ -46,7 +53,10 @@ in {
         DNSOverTLS = "false";
         DNSSEC = "false";
         Domains = [ "~." ];
-        FallbackDNS = [ "1.1.1.1#one.one.one.one" "1.0.0.1#one.one.one.one" ];
+        FallbackDNS = [
+          "1.1.1.1#one.one.one.one"
+          "1.0.0.1#one.one.one.one"
+        ];
       };
     };
   };
@@ -59,7 +69,10 @@ in {
 
   services.printing = {
     enable = true;
-    drivers = with pkgs; [ cups-filters cups-browsed ];
+    drivers = with pkgs; [
+      cups-filters
+      cups-browsed
+    ];
   };
 
   # Set your time zone.
@@ -109,7 +122,10 @@ in {
 
   systemd.user.services.mpris-proxy = {
     description = "Mpris proxy";
-    after = [ "network.target" "sound.target" ];
+    after = [
+      "network.target"
+      "sound.target"
+    ];
     wantedBy = [ "default.target" ];
     serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
   };
@@ -170,7 +186,14 @@ in {
   users.users.taha = {
     isNormalUser = true;
     description = "Taha";
-    extraGroups = [ "networkmanager" "wheel" "docker" "input" "i2c" "dialout" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+      "input"
+      "i2c"
+      "dialout"
+    ];
     packages = [ ];
   };
 
@@ -182,11 +205,21 @@ in {
 
   virtualisation.docker = {
     enable = true;
-    daemon.settings = { dns = [ "1.1.1.1" "8.8.8.8" ]; };
+    daemon.settings = {
+      dns = [
+        "1.1.1.1"
+        "8.8.8.8"
+      ];
+    };
     rootless = {
       enable = true;
       setSocketVariable = true;
-      daemon.settings = { dns = [ "1.1.1.1" "8.8.8.8" ]; };
+      daemon.settings = {
+        dns = [
+          "1.1.1.1"
+          "8.8.8.8"
+        ];
+      };
     };
   };
 
@@ -332,8 +365,8 @@ in {
     gnomeExtensions.brightness-control-using-ddcutil
   ];
 
-  environment.variables.GST_PLUGIN_SYSTEM_PATH_1_0 = pkgs.lib.mkForce
-    (pkgs.lib.concatStringsSep ":" [
+  environment.variables.GST_PLUGIN_SYSTEM_PATH_1_0 = pkgs.lib.mkForce (
+    pkgs.lib.concatStringsSep ":" [
       "${pkgs.gst_all_1.gstreamer}/lib/gstreamer-1.0"
       "${pkgs.gst_all_1.gst-plugins-base}/lib/gstreamer-1.0"
       "${pkgs.gst_all_1.gst-plugins-good}/lib/gstreamer-1.0"
@@ -341,7 +374,8 @@ in {
       "${pkgs.gst_all_1.gst-plugins-ugly}/lib/gstreamer-1.0"
       "${pkgs.gst_all_1.gst-libav}/lib/gstreamer-1.0"
       "${pkgs.gst_all_1.gst-vaapi}/lib/gstreamer-1.0"
-    ]);
+    ]
+  );
 
   services.tailscale.enable = true;
 
@@ -362,8 +396,7 @@ in {
     extraCompatPackages = [ pkgs.proton-ge-bin ];
   };
   environment.sessionVariables = {
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS =
-      "/home/taha/.steam/root/compatibilitytools.d";
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "/home/taha/.steam/root/compatibilitytools.d";
   };
   programs.gamemode = {
     enable = true;
@@ -375,8 +408,7 @@ in {
       };
       gpu = {
         apply_gpu_optimisations = "accept-responsibility";
-        gpu_device =
-          1; # The DRM device number on the system (usually 0), ie. the number in /sys/class/drm/card0/
+        gpu_device = 1; # The DRM device number on the system (usually 0), ie. the number in /sys/class/drm/card0/
         amd_performance_level = "high";
       };
       custom = {
@@ -389,7 +421,9 @@ in {
     description = "AMDGPU Control Daemon";
     after = [ "multi-user.target" ];
     wantedBy = [ "multi-user.target" ];
-    serviceConfig = { ExecStart = "${pkgs.lact}/bin/lact daemon"; };
+    serviceConfig = {
+      ExecStart = "${pkgs.lact}/bin/lact daemon";
+    };
     enable = true;
   };
 
@@ -406,8 +440,14 @@ in {
     ];
     fontconfig = {
       defaultFonts = {
-        sansSerif = [ "SF Compact Rounded" "SF Arabic" ];
-        serif = [ "SF Compact Rounded" "SF Arabic" ];
+        sansSerif = [
+          "SF Compact Rounded"
+          "SF Arabic"
+        ];
+        serif = [
+          "SF Compact Rounded"
+          "SF Arabic"
+        ];
         monospace = [ "CaskaydiaCove Nerd Font" ];
       };
     };

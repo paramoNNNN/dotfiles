@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   imports = [
     ../modules/common.nix
     ../modules/swaync.nix

@@ -1,19 +1,22 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.nixvim = {
-    plugins.which-key.settings.spec = [{
-      __unkeyed-1 = [
-        {
-          __unkeyed-1 = "<leader>f";
-          group = "Telescope";
-        }
-        {
-          __unkeyed-1 = "<leader>fd";
-          __unkeyed-2 = "<Cmd>lua LazyDocker.toggle()<CR>";
-          desc = "LazyDocker";
-        }
-      ];
-      mode = [ "n" ];
-    }];
+    plugins.which-key.settings.spec = [
+      {
+        __unkeyed-1 = [
+          {
+            __unkeyed-1 = "<leader>f";
+            group = "Telescope";
+          }
+          {
+            __unkeyed-1 = "<leader>fd";
+            __unkeyed-2 = "<Cmd>lua LazyDocker.toggle()<CR>";
+            desc = "LazyDocker";
+          }
+        ];
+        mode = [ "n" ];
+      }
+    ];
 
     extraPlugins = [
       (pkgs.vimUtils.buildVimPlugin {

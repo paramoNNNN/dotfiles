@@ -1,5 +1,9 @@
-{ inputs, ... }: {
-  imports = [ inputs.nixvim.homeModules.nixvim ./plugins ];
+{ inputs, ... }:
+{
+  imports = [
+    inputs.nixvim.homeModules.nixvim
+    ./plugins
+  ];
 
   home.shellAliases.v = "nvim";
 
@@ -12,30 +16,42 @@
       {
         key = "J";
         action = ":m '>+1<CR>gv=gv";
-        options = { desc = "Move selected line up"; };
+        options = {
+          desc = "Move selected line up";
+        };
       }
       {
         key = "K";
         action = ":m '>-2<CR>gv=gv";
-        options = { desc = "Move selected line down"; };
+        options = {
+          desc = "Move selected line down";
+        };
       }
       {
         key = "<leader>s";
         action = ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>";
-        options = { desc = "Replace"; };
+        options = {
+          desc = "Replace";
+        };
       }
       {
         key = "<leader>S";
         action = ":s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>";
-        options = { desc = "Replace on current line"; };
+        options = {
+          desc = "Replace on current line";
+        };
       }
     ];
 
     clipboard.register = "unnamedplus";
 
-    globals = { mapleader = " "; };
+    globals = {
+      mapleader = " ";
+    };
 
-    diagnostic.settings = { severity_sort = true; };
+    diagnostic.settings = {
+      severity_sort = true;
+    };
 
     opts = {
       guicursor = "i:ver30-iCursor-blinkwait300-blinkon200-blinkoff150";

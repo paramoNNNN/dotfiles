@@ -1,1 +1,5 @@
-{ programs.nixvim.plugins.ts-comments = { enable = true; }; }
+{
+  programs.nixvim.plugins.ts-comments = {
+    enable = true;
+  };
+}

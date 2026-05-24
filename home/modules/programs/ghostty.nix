@@ -12,7 +12,12 @@
       clipboard-trim-trailing-spaces = true;
 
       font-size = 14;
-      font-feature = [ "ss02" "ss03" "ss04" "liga" ];
+      font-feature = [
+        "ss02"
+        "ss03"
+        "ss04"
+        "liga"
+      ];
       font-thicken = true;
       font-thicken-strength = 0;
 

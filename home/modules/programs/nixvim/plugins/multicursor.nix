@@ -1,30 +1,31 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
 
-  programs.nixvim.plugins.which-key.settings.spec = [{
-    __unkeyed-1 = [
-      {
-        __unkeyed-1 = "<leader>n";
-        __unkeyed-2 =
-          {
+  programs.nixvim.plugins.which-key.settings.spec = [
+    {
+      __unkeyed-1 = [
+        {
+          __unkeyed-1 = "<leader>n";
+          __unkeyed-2 = {
             __raw = ''
               function() require("multicursor-nvim").matchAddCursor(1) end
             '';
           };
-        desc = "Add a cursor by matching selection";
-      }
-      {
-        __unkeyed-1 = "<leader>b";
-        __unkeyed-2 =
-          {
+          desc = "Add a cursor by matching selection";
+        }
+        {
+          __unkeyed-1 = "<leader>b";
+          __unkeyed-2 = {
             __raw = ''
               function() require("multicursor-nvim").matchSkipCursor(1) end
             '';
           };
-        desc = "Skip a cursor by matching selection";
-      }
-    ];
-    mode = [ "x" ];
-  }];
+          desc = "Skip a cursor by matching selection";
+        }
+      ];
+      mode = [ "x" ];
+    }
+  ];
 
   programs.nixvim.extraPlugins = [
     (pkgs.vimUtils.buildVimPlugin {

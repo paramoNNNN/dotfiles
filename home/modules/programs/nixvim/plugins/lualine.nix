@@ -1,8 +1,13 @@
-{ config, ... }: {
+{ config, ... }:
+{
   programs.nixvim = {
     plugins.lualine = {
       enable = true;
-      settings = { options = { globalstatus = false; }; };
+      settings = {
+        options = {
+          globalstatus = false;
+        };
+      };
     };
 
     extraConfigLuaPost = ''

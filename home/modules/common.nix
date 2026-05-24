@@ -1,4 +1,5 @@
-{ outputs, ... }: {
+{ outputs, ... }:
+{
   imports = [
     ./programs/ghostty.nix
     ./programs/bat.nix
@@ -17,6 +18,8 @@
   nixpkgs = {
     overlays = [ outputs.overlays.stable-packages ];
 
-    config = { allowUnfree = true; };
+    config = {
+      allowUnfree = true;
+    };
   };
 }
