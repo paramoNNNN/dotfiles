@@ -115,8 +115,7 @@
     nix-prefetch-github
     bun
     platformio
-    nixfmt-classic
-    nixfmt-rfc-style
+    nixfmt
     monitorcontrol
   ];
 

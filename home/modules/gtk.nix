@@ -1,4 +1,5 @@
-{ userConfig, ... }: {
+{ userConfig, config, ... }:
+{
   # GTK theme configuration
   gtk = {
     enable = true;
@@ -8,9 +9,9 @@
         "file:///home/${userConfig.name}/Downloads"
         "file:///home/${userConfig.name}/Pictures"
         "file:///home/${userConfig.name}/Videos"
-        "file:///home/${userConfig.name}/Downloads/temp"
-        "file:///home/${userConfig.name}/Documents/repositories"
+        "file:///home/${userConfig.name}/Music"
       ];
     };
+    gtk4.theme = config.gtk.theme;
   };
 }

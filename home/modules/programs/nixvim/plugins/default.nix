@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
 
   imports = [
     ./cmp.nix
@@ -34,6 +35,5 @@
     advanced-git-search-nvim
     promise-async
     tailwind-tools-nvim
-    plenary-nvim
   ];
 }
