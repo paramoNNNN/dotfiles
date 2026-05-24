@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, ... }:
+{
   programs.hyprlock = {
     enable = true;
     settings = {
@@ -32,8 +33,7 @@
         }
       ];
       input-field = {
-        placeholder_text = ''
-          <span foreground="##${config.lib.stylix.colors.base05}"><i>󰌾  Logged in as </i><span foreground="##${config.lib.stylix.colors.base08}">$USER</span></span>'';
+        placeholder_text = ''<span foreground="##${config.lib.stylix.colors.base05}"><i>󰌾  Logged in as </i><span foreground="##${config.lib.stylix.colors.base08}">$USER</span></span>'';
         fade_on_empty = false;
         hide_input = false;
         dots_size = 0.2;

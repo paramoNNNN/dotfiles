@@ -2,7 +2,9 @@
   services.hypridle = {
     enable = true;
     settings = {
-      general = { lock_cmd = "pidof hyprlock || hyprlock"; };
+      general = {
+        lock_cmd = "pidof hyprlock || hyprlock";
+      };
       listener = [
         {
           timeout = 900; # 15 minutes

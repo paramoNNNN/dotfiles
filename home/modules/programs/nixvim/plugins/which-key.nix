@@ -6,7 +6,18 @@
       notify = false;
       preset = false;
       delay = 300;
-      replace = { desc = [ [ "<space>" "SPACE" ] [ "<leader>" "SPACE" ] ]; };
+      replace = {
+        desc = [
+          [
+            "<space>"
+            "SPACE"
+          ]
+          [
+            "<leader>"
+            "SPACE"
+          ]
+        ];
+      };
       icons.mappings = false;
     };
   };

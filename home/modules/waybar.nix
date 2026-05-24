@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   programs.waybar = {
     enable = true;
     settings = {
@@ -11,10 +12,17 @@
         spacing = 7;
         height = 45;
 
-        modules-left = [ "hyprland/workspaces" "custom/agenda" ];
+        modules-left = [
+          "hyprland/workspaces"
+          "custom/agenda"
+        ];
         modules-center = [ "custom/nowplaying" ];
-        modules-right =
-          [ "network" "pulseaudio" "clock" "custom/notifications" ];
+        modules-right = [
+          "network"
+          "pulseaudio"
+          "clock"
+          "custom/notifications"
+        ];
 
         "custom/notifications" = {
           tooltip = true;
@@ -24,11 +32,9 @@
             none = "";
             dnd-notification = "<span foreground='red'><sup></sup></span>";
             dnd-none = "";
-            inhibited-notification =
-              "<span foreground='red'><sup></sup></span>";
+            inhibited-notification = "<span foreground='red'><sup></sup></span>";
             inhibited-none = "";
-            dnd-inhibited-notification =
-              "<span foreground='red'><sup></sup></span>";
+            dnd-inhibited-notification = "<span foreground='red'><sup></sup></span>";
             dnd-inhibited-none = "";
           };
           return-type = "json";

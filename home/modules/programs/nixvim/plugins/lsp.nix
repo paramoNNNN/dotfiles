@@ -1,114 +1,116 @@
 {
   programs.nixvim.plugins = {
-    which-key.settings.spec = [{
-      __unkeyed-1 = [
-        {
-          __unkeyed-1 = "<leader>l";
-          group = "LSP";
-        }
-        {
-          __unkeyed-1 = "<leader>lr";
-          __unkeyed-2 = "<Cmd>LspRestart<CR>";
-          desc = "Restart";
-        }
-        {
-          __unkeyed-1 = "<leader>li";
-          __unkeyed-2 = "<Cmd>LspInfo<CR>";
-          desc = "Info";
-        }
+    which-key.settings.spec = [
+      {
+        __unkeyed-1 = [
+          {
+            __unkeyed-1 = "<leader>l";
+            group = "LSP";
+          }
+          {
+            __unkeyed-1 = "<leader>lr";
+            __unkeyed-2 = "<Cmd>LspRestart<CR>";
+            desc = "Restart";
+          }
+          {
+            __unkeyed-1 = "<leader>li";
+            __unkeyed-2 = "<Cmd>LspInfo<CR>";
+            desc = "Info";
+          }
 
-        {
-          __unkeyed-1 = "[d";
-          __unkeyed-2 = {
-            __raw = ''
-              function()
-                require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
-              end
-            '';
-          };
-          desc = "Previous diagnostic";
-        }
-        {
-          __unkeyed-1 = "]d";
-          __unkeyed-2 = {
-            __raw = ''
-              function()
-                require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
-              end
-            '';
-          };
-          desc = "Previous diagnostic";
-        }
-        {
-          __unkeyed-1 = "[w";
-          __unkeyed-2 = {
-            __raw = ''
-              function()
-                require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.WARN })
-              end
-            '';
-          };
-          desc = "Previous diagnostic";
-        }
-        {
-          __unkeyed-1 = "]w";
-          __unkeyed-2 = {
-            __raw = ''
-              function()
-                require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.WARN })
-              end
-            '';
-          };
-          desc = "Previous diagnostic";
-        }
-        {
-          __unkeyed-1 = "K";
-          __unkeyed-2 = "<Cmd>Lspsaga hover_doc<CR>";
-          desc = "View documentation";
-        }
-        {
-          __unkeyed-1 = "<leader>ve";
-          __unkeyed-2 = "<Cmd>Lspsaga show_line_diagnostics<CR>";
-          desc = "View line diagnostics";
-        }
-        {
-          __unkeyed-1 = "<leader>vrr";
-          __unkeyed-2 = "<Cmd>Telescope lsp_references<CR>";
-          desc = "View references";
-        }
-        {
-          __unkeyed-1 = "<leader>vd";
-          __unkeyed-2 = "<Cmd>Telescope lsp_definitions<CR>";
-          desc = "View definitions";
-        }
-        {
-          __unkeyed-1 = "<leader>vi";
-          __unkeyed-2 = "<Cmd>Telescope lsp_implementations<CR>";
-          desc = "View implementations";
-        }
-        {
-          __unkeyed-1 = "<leader>vt";
-          __unkeyed-2 = "<Cmd>Telescope lsp_type_definitions<CR>";
-          desc = "View type definitions";
-        }
-        {
-          __unkeyed-1 = "<leader>vca";
-          __unkeyed-2 = "<Cmd>Lspsaga code_action<CR>";
-          desc = "View code actions";
-        }
-        {
-          __unkeyed-1 = "<leader>vcc";
-          __unkeyed-2 = "<Cmd>Lspsaga incoming_calls<CR>";
-          desc = "View incoming calls";
-        }
-        {
-          __unkeyed-1 = "<leader>vrn";
-          __unkeyed-2 = "<Cmd>Lspsaga rename<CR>";
-          desc = "Rename symbol";
-        }
-      ];
-      mode = [ "n" ];
-    }];
+          {
+            __unkeyed-1 = "[d";
+            __unkeyed-2 = {
+              __raw = ''
+                function()
+                  require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+                end
+              '';
+            };
+            desc = "Previous diagnostic";
+          }
+          {
+            __unkeyed-1 = "]d";
+            __unkeyed-2 = {
+              __raw = ''
+                function()
+                  require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+                end
+              '';
+            };
+            desc = "Previous diagnostic";
+          }
+          {
+            __unkeyed-1 = "[w";
+            __unkeyed-2 = {
+              __raw = ''
+                function()
+                  require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.WARN })
+                end
+              '';
+            };
+            desc = "Previous diagnostic";
+          }
+          {
+            __unkeyed-1 = "]w";
+            __unkeyed-2 = {
+              __raw = ''
+                function()
+                  require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.WARN })
+                end
+              '';
+            };
+            desc = "Previous diagnostic";
+          }
+          {
+            __unkeyed-1 = "K";
+            __unkeyed-2 = "<Cmd>Lspsaga hover_doc<CR>";
+            desc = "View documentation";
+          }
+          {
+            __unkeyed-1 = "<leader>ve";
+            __unkeyed-2 = "<Cmd>Lspsaga show_line_diagnostics<CR>";
+            desc = "View line diagnostics";
+          }
+          {
+            __unkeyed-1 = "<leader>vrr";
+            __unkeyed-2 = "<Cmd>Telescope lsp_references<CR>";
+            desc = "View references";
+          }
+          {
+            __unkeyed-1 = "<leader>vd";
+            __unkeyed-2 = "<Cmd>Telescope lsp_definitions<CR>";
+            desc = "View definitions";
+          }
+          {
+            __unkeyed-1 = "<leader>vi";
+            __unkeyed-2 = "<Cmd>Telescope lsp_implementations<CR>";
+            desc = "View implementations";
+          }
+          {
+            __unkeyed-1 = "<leader>vt";
+            __unkeyed-2 = "<Cmd>Telescope lsp_type_definitions<CR>";
+            desc = "View type definitions";
+          }
+          {
+            __unkeyed-1 = "<leader>vca";
+            __unkeyed-2 = "<Cmd>Lspsaga code_action<CR>";
+            desc = "View code actions";
+          }
+          {
+            __unkeyed-1 = "<leader>vcc";
+            __unkeyed-2 = "<Cmd>Lspsaga incoming_calls<CR>";
+            desc = "View incoming calls";
+          }
+          {
+            __unkeyed-1 = "<leader>vrn";
+            __unkeyed-2 = "<Cmd>Lspsaga rename<CR>";
+            desc = "Rename symbol";
+          }
+        ];
+        mode = [ "n" ];
+      }
+    ];
 
     lsp = {
       enable = true;
@@ -127,6 +129,14 @@
           enable = true;
           packageFallback = true;
         };
+        oxlint = {
+          enable = true;
+          packageFallback = true;
+        };
+        oxfmt = {
+          enable = true;
+          packageFallback = true;
+        };
         lua_ls = {
           enable = true;
           settings.telemetry.enable = false;
@@ -138,7 +148,9 @@
       enable = true;
       settings = {
         lightbulb.enable = false;
-        codeAction = { showServerName = true; };
+        codeAction = {
+          showServerName = true;
+        };
         implement.enable = false;
         symbol_in_winbar.enable = false;
       };
