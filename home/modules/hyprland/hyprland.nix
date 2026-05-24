@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ ... }:
+{
   imports = [
     ../gtk.nix
     ../swaync.nix
@@ -15,10 +16,15 @@
     x11.enable = true;
   };
 
-  wayland.windowManager.hyprland = { xwayland.enable = true; };
+  wayland.windowManager.hyprland = {
+    xwayland.enable = true;
+    configType = "hyprlang";
+  };
 
   xdg.configFile = {
-    "hypr/hyprland.conf" = { source = ./hyprland.conf; };
+    "hypr/hyprland.conf" = {
+      source = ./hyprland.conf;
+    };
 
     "hypr/gamemode.sh" = {
       text = ''

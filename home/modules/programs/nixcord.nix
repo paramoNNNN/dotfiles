@@ -1,4 +1,5 @@
-{ inputs, ... }: {
+{ inputs, ... }:
+{
   imports = [ inputs.nixcord.homeModules.nixcord ];
   programs.nixcord = {
     enable = true;
@@ -11,7 +12,6 @@
       friendsSince.enable = true;
       memberCount.enable = true;
       messageLatency.enable = true;
-      petpet.enable = true;
       betterFolders = {
         enable = true;
         closeAllFolders = true;
@@ -30,4 +30,3 @@
     }
   '';
 }
-

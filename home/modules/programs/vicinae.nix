@@ -8,8 +8,13 @@
     };
     settings = {
       close_on_focus_loss = true;
-      font = { normal = { size = 11; }; };
-      launcher_window = lib.mkForce { opacity = 0.95; };
+      font = {
+        normal = {
+          size = 11;
+          family = "SF Compact Rounded";
+        };
+      };
+      launcher_window = lib.mkForce { opacity = 1; };
     };
     extensions =
       with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [

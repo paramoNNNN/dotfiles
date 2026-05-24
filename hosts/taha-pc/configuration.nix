@@ -3,7 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { pkgs, inputs, ... }:
-let tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
+let tuigreet = "${pkgs.tuigreet}/bin/tuigreet";
 in {
   imports = [
     # Include the results of the hardware scan.
@@ -41,10 +41,14 @@ in {
 
   services.resolved = {
     enable = true;
-    dnssec = "false";
-    domains = [ "~." ];
-    fallbackDns = [ "1.1.1.1#one.one.one.one" "1.0.0.1#one.one.one.one" ];
-    dnsovertls = "false";
+    settings = {
+      Resolve = {
+        DNSOverTLS = "false";
+        DNSSEC = "false";
+        Domains = [ "~." ];
+        FallbackDNS = [ "1.1.1.1#one.one.one.one" "1.0.0.1#one.one.one.one" ];
+      };
+    };
   };
 
   services.avahi = {
@@ -225,7 +229,7 @@ in {
     teamocil
     nil
     cargo
-    nixfmt-classic
+    nixfmt
     lazygit
     lazydocker
     kubectl
@@ -233,7 +237,6 @@ in {
     postgresql
     delta
     stylua
-    nixfmt-rfc-style
     tailwindcss-language-server
     ngrok
     prettierd
@@ -241,6 +244,7 @@ in {
 
     openvpn
     xray
+    v2rayn
     tinyproxy
     proxychains
 

@@ -30,7 +30,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixvim = { url = "github:nix-community/nixvim"; };
+    nixvim = {
+      # pinning back to fca03f1 because of overlay issue https://github.com/nix-community/stylix/issues/2323#issuecomment-4529576643
+      url = "github:nix-community/nixvim/fca03f175902fe899a87872228bf69c1b43a8543";
+    };
 
     stylix = {
       url = "github:danth/stylix";
@@ -52,7 +55,15 @@
     headscale.url = "github:juanfont/headscale";
   };
 
-  outputs = { self, darwin, home-manager, nix-homebrew, nixpkgs, ... }@inputs:
+  outputs =
+    {
+      self,
+      darwin,
+      home-manager,
+      nix-homebrew,
+      nixpkgs,
+      ...
+    }@inputs:
     let
       inherit (self) outputs;
 
@@ -73,7 +84,8 @@
       };
 
       # Function for NixOS system configuration
-      mkNixosConfiguration = hostname: username:
+      mkNixosConfiguration =
+        hostname: username:
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
@@ -84,7 +96,8 @@
         };
 
       # Function for nix-darwin system configuration
-      mkDarwinConfiguration = hostname: username:
+      mkDarwinConfiguration =
+        hostname: username:
         darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           specialArgs = {
@@ -99,7 +112,8 @@
         };
 
       # Function for Home Manager configuration
-      mkHomeConfiguration = system: username: hostname:
+      mkHomeConfiguration =
+        system: username: hostname:
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs { inherit system; };
           extraSpecialArgs = {
@@ -112,7 +126,8 @@
             ./home/${username}/${hostname}.nix
           ];
         };
-    in {
+    in
+    {
       nixosConfigurations = {
         taha = mkNixosConfiguration "taha-pc" "taha";
         paranas = mkNixosConfiguration "paranas" "paranas";
@@ -123,11 +138,9 @@
       };
 
       homeConfigurations = {
-        "taha@taha-mac" =
-          mkHomeConfiguration "aarch64-darwin" "taha" "taha-mac";
+        "taha@taha-mac" = mkHomeConfiguration "aarch64-darwin" "taha" "taha-mac";
         "taha@taha-pc" = mkHomeConfiguration "x86_64-linux" "taha" "taha-pc";
-        "paranas@paranas" =
-          mkHomeConfiguration "x86_64-linux" "paranas" "paranas";
+        "paranas@paranas" = mkHomeConfiguration "x86_64-linux" "paranas" "paranas";
       };
 
       overlays = import ./overlays { inherit inputs; };

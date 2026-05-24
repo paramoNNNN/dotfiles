@@ -32,13 +32,14 @@
 
   services.resolved = {
     enable = true;
-    dnssec = "false";
-    domains = [ "~." ];
-    fallbackDns = [
-      "1.1.1.1#one.one.one.one"
-      "1.0.0.1#one.one.one.one"
-    ];
-    dnsovertls = "false";
+    settings = {
+      Resolve = {
+        DNSOverTLS = "false";
+        DNSSEC = "false";
+        Domains = [ "~." ];
+        FallbackDNS = [ "1.1.1.1#one.one.one.one" "1.0.0.1#one.one.one.one" ];
+      };
+    };
   };
 
   # Set your time zone.
@@ -93,10 +94,7 @@
   users.users.paranas = {
     isNormalUser = true;
     description = "paranas";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-    ];
+    extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.fish;
   };
 
@@ -106,10 +104,7 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -142,6 +137,7 @@
     vnstat
     iftop
     dig
+    nixfmt
 
     gcc
     libgcc
@@ -177,11 +173,7 @@
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;
-  networking.firewall.allowedTCPPorts = [
-    22
-    80
-    443
-  ];
+  networking.firewall.allowedTCPPorts = [ 22 80 443 ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
