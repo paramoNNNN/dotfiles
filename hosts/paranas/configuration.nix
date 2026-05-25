@@ -100,6 +100,7 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "docker"
     ];
     shell = pkgs.fish;
   };
@@ -114,6 +115,25 @@
     "nix-command"
     "flakes"
   ];
+
+  virtualisation.containers.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    daemon.settings = {
+      dns = [
+        "1.1.1.1"
+      ];
+    };
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+      daemon.settings = {
+        dns = [
+          "1.1.1.1"
+        ];
+      };
+    };
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
