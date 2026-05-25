@@ -316,6 +316,7 @@ in
     gcalcli
     android-tools
     platformio
+    rclone
 
     kooha
     x264
