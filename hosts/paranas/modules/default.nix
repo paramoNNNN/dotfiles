@@ -12,5 +12,6 @@
     ./navidrome.nix
     ./matrix.nix
     ./teamspeak.nix
+    ./grafana.nix
   ];
 }
