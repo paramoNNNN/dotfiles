@@ -2,7 +2,7 @@
 {
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud31;
+    package = pkgs.nextcloud33;
     extraApps = {
       inherit (config.services.nextcloud.package.packages.apps)
         contacts
