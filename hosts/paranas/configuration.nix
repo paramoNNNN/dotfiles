@@ -162,6 +162,7 @@
     sacd
     wavpack
     monkeysAudio
+    rsgain
     rsync
     vnstat
     iftop
