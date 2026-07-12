@@ -12,6 +12,5 @@
         "file:///home/${userConfig.name}/Music"
       ];
     };
-    gtk4.theme = config.gtk.theme;
   };
 }
