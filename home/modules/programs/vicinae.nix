@@ -5,7 +5,7 @@
   ...
 }:
 {
-  services.vicinae = {
+  programs.vicinae = {
     enable = true;
     systemd = {
       enable = true;
@@ -17,7 +17,7 @@
     settings = {
       close_on_focus_loss = true;
       font = {
-        normal = {
+        normal = lib.mkForce {
           size = 11;
           family = "SF Compact Rounded";
         };
@@ -25,7 +25,6 @@
       launcher_window = lib.mkForce { opacity = 1; };
     };
     extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
-      bluetooth
       nix
       hypr-keybinds
       gnome-dnd

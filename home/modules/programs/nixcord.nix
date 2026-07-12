@@ -3,13 +3,15 @@
   imports = [ inputs.nixcord.homeModules.nixcord ];
   programs.nixcord = {
     enable = true;
-    discord.enable = true;
+    discord = {
+      enable = true;
+      vencord.enable = true;
+    };
     config.plugins = {
       betterSettings.enable = true;
       colorSighted.enable = true;
       fakeNitro.enable = true;
       fixYoutubeEmbeds.enable = true;
-      friendsSince.enable = true;
       memberCount.enable = true;
       messageLatency.enable = true;
       betterFolders = {

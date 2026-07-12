@@ -225,7 +225,7 @@ in
 
   environment.systemPackages = with pkgs; [
     ungoogled-chromium
-    firefox-devedition
+    firefox
     telegram-desktop
     discord
     flatpak
@@ -343,7 +343,7 @@ in
     pamixer
     wireplumber
     swaynotificationcenter
-    libsForQt5.qt5.qtwayland
+    qt5.qtwayland
     gcc
     libgcc
     gnumake
@@ -374,7 +374,6 @@ in
       "${pkgs.gst_all_1.gst-plugins-bad}/lib/gstreamer-1.0"
       "${pkgs.gst_all_1.gst-plugins-ugly}/lib/gstreamer-1.0"
       "${pkgs.gst_all_1.gst-libav}/lib/gstreamer-1.0"
-      "${pkgs.gst_all_1.gst-vaapi}/lib/gstreamer-1.0"
     ]
   );
 
