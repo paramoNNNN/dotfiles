@@ -4,7 +4,9 @@
     enable = true;
     polarity = "light";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine-dawn.yaml";
-    override = { base02 = "#f2e9e1"; };
+    override = {
+      base02 = "#f2e9e1";
+    };
 
     icons = {
       enable = true;
@@ -14,8 +16,8 @@
     };
 
     cursor = {
-      name = "Yaru";
-      package = pkgs.yaru-theme;
+      name = "Bibata-Modern-Classic";
+      package = pkgs.bibata-cursors;
       size = 24;
     };
 
