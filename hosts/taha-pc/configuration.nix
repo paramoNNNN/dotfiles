@@ -2,11 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, inputs, ... }:
-let
-  tuigreet = "${pkgs.tuigreet}/bin/tuigreet";
-in
-{
+{ pkgs, inputs, ... }: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -98,26 +94,6 @@ in
 
   services = {
     xserver.enable = false; # disable xorg server
-    # https://wiki.archlinux.org/title/Greetd
-    greetd = {
-      enable = true;
-      settings = {
-        default_session = {
-          user = "taha";
-          command = "${tuigreet} --time --remember --remember-session";
-        };
-      };
-    };
-  };
-  systemd.services.greetd.serviceConfig = {
-    Type = "idle";
-    StandardInput = "tty";
-    StandardOutput = "tty";
-    StandardError = "journal"; # Without this errors will spam on screen
-    # Without these bootlogs will spam on screen
-    TTYReset = true;
-    TTYVHangup = true;
-    TTYVTDisallocate = true;
   };
 
   systemd.user.services.mpris-proxy = {
@@ -457,7 +433,7 @@ in
 
   system.stateVersion = "24.11";
 
-  services.displayManager.gdm.enable = false;
+  services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
 
   programs.hyprland = {
