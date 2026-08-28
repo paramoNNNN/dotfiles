@@ -225,6 +225,8 @@
     bitwarden-desktop
     gimp3
     postman
+    codex
+    codex-acp
 
     docker
     nodejs_22

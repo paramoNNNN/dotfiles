@@ -2,6 +2,7 @@
 {
 
   imports = [
+    ./avante.nix
     ./cmp.nix
     ./conform.nix
     ./gitsigns.nix
