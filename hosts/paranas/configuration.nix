@@ -143,6 +143,8 @@
     git
     delta
     aria2
+    codex
+    codex-acp
 
     openvpn
     xray

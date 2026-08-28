@@ -127,6 +127,9 @@
     platformio
     nixfmt
     monitorcontrol
+
+    codex
+    codex-acp
   ];
 
   programs.ssh = {
