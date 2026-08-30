@@ -1,7 +1,7 @@
 {
   services.plex = {
-    enable = true;
-    openFirewall = true;
+    enable = false;
+    openFirewall = false;
     user = "paranas";
     dataDir = "/storage/media";
   };

@@ -3,12 +3,12 @@
   imports = [ inputs.headscale.nixosModules.default ];
 
   services.headscale = {
-    enable = true;
+    enable = false;
     address = "0.0.0.0";
     port = 8080;
 
     settings = {
-      server_url = "hs";
+      server_url = "https://hs.paranas.ir";
 
       prefixes = {
         v4 = "100.64.0.0/10";
