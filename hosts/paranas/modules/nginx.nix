@@ -4,26 +4,58 @@
     enable = true;
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
-    virtualHosts."rick" = {
-      useACMEHost = "rick";
+
+    eventsConfig = ''
+      worker_connections 8192;
+      multi_accept on;
+    '';
+    appendHttpConfig = ''
+      sendfile on;
+      tcp_nopush on;
+    '';
+
+    virtualHosts."_default_" = {
+      default = true;
+
+      locations."/" = {
+        return = "404";
+      };
+    };
+
+    virtualHosts."arkane.dummy" = {
+      useACMEHost = "dummy";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}";
       };
     };
-    virtualHosts."nextcloud" = {
-      useACMEHost = "nextcloud";
+    virtualHosts."arkane.dummy" = {
+      useACMEHost = "dummy";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}";
+      };
+    };
+
+    virtualHosts."nc.dummy" = {
+      useACMEHost = "dummy";
       forceSSL = true;
     };
-    virtualHosts."obsidian" = {
-      useACMEHost = "obsidian";
+    virtualHosts."nc.dummy" = {
+      useACMEHost = "dummy";
+      forceSSL = true;
+    };
+
+    virtualHosts."obs.dummy" = {
+      useACMEHost = "dummy";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://localhost:5984";
       };
     };
-    virtualHosts."immich" = {
-      useACMEHost = "immich";
+
+    virtualHosts."photos.dummy" = {
+      useACMEHost = "dummy";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://localhost:2283";
@@ -37,101 +69,167 @@
         '';
       };
     };
-    virtualHosts."hs" = {
-      useACMEHost = "john";
+    virtualHosts."photos.dummy" = {
+      useACMEHost = "dummy";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://localhost:2283";
+        proxyWebsockets = true;
+        recommendedProxySettings = true;
+        extraConfig = ''
+          client_max_body_size 50000M;
+          proxy_read_timeout   600s;
+          proxy_send_timeout   600s;
+          send_timeout         600s;
+        '';
+      };
+    };
+
+    virtualHosts."hs.dummy" = {
+      useACMEHost = "dummy";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://localhost:8080";
         proxyWebsockets = true;
       };
     };
-    virtualHosts."tv.taha.surf" = {
-      useACMEHost = "taha.surf";
+
+    virtualHosts."tv.dummy" = {
+      useACMEHost = "dummy";
       forceSSL = true;
       extraConfig = ''
-        #Some players don't reopen a socket and playback stops totally instead of resuming after an extended pause
-        send_timeout 100m;
+        client_max_body_size 20M;
+        add_header X-Content-Type-Options "nosniff";
+        add_header Permissions-Policy "accelerometer=(), ambient-light-sensor=(), battery=(), bluetooth=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), payment=(), publickey-credentials-get=(), serial=(), sync-xhr=(), usb=(), xr-spatial-tracking=()" always;
+        add_header Content-Security-Policy "default-src https: data: blob: ; img-src 'self' https://* ; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://www.youtube.com blob:; worker-src 'self' blob:; connect-src 'self'; object-src 'none'; font-src 'self'";
 
-        # Why this is important: https://blog.cloudflare.com/ocsp-stapling-how-cloudflare-just-made-ssl-30/
-        ssl_stapling on;
-        ssl_stapling_verify on;
-
-        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-        ssl_prefer_server_ciphers on;
-        #Intentionally not hardened for security for player support and encryption video streams has a lot of overhead with something like AES-256-GCM-SHA384.
-        ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:ECDHE-RSA-DES-CBC3-SHA:ECDHE-ECDSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA';
-
-        # Forward real ip and host to Plex
+        proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_set_header Host $server_addr;
-        proxy_set_header Referer $server_addr;
-        proxy_set_header Origin $server_addr; 
-
-        # Plex has A LOT of javascript, xml and html. This helps a lot, but if it causes playback issues with devices turn it off.
-        gzip on;
-        gzip_vary on;
-        gzip_min_length 1000;
-        gzip_proxied any;
-        gzip_types text/plain text/css text/xml application/xml text/javascript application/x-javascript image/svg+xml;
-        gzip_disable "MSIE [1-6]\.";
-
-        # Nginx default client_max_body_size is 1MB, which breaks Camera Upload feature from the phones.
-        # Increasing the limit fixes the issue. Anyhow, if 4K videos are expected to be uploaded, the size might need to be increased even more
-        client_max_body_size 100M;
-
-        # Plex headers
-        proxy_set_header X-Plex-Client-Identifier $http_x_plex_client_identifier;
-        proxy_set_header X-Plex-Device $http_x_plex_device;
-        proxy_set_header X-Plex-Device-Name $http_x_plex_device_name;
-        proxy_set_header X-Plex-Platform $http_x_plex_platform;
-        proxy_set_header X-Plex-Platform-Version $http_x_plex_platform_version;
-        proxy_set_header X-Plex-Product $http_x_plex_product;
-        proxy_set_header X-Plex-Token $http_x_plex_token;
-        proxy_set_header X-Plex-Version $http_x_plex_version;
-        proxy_set_header X-Plex-Nocache $http_x_plex_nocache;
-        proxy_set_header X-Plex-Provides $http_x_plex_provides;
-        proxy_set_header X-Plex-Device-Vendor $http_x_plex_device_vendor;
-        proxy_set_header X-Plex-Model $http_x_plex_model;
-
-        # Websockets
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-
-        # Buffering off send to the client as soon as the data is received from Plex.
-        proxy_redirect off;
+        proxy_set_header X-Forwarded-Protocol $scheme;
+        proxy_set_header X-Forwarded-Host $http_host;
         proxy_buffering off;
       '';
       locations."/" = {
-        proxyPass = "https://localhost:32400";
+        proxyPass = "http://localhost:8096";
+      };
+      locations."/socket" = {
+        proxyPass = "http://localhost:8096";
+        proxyWebsockets = true;
+      };
+    };
+    virtualHosts."navi.dummy" = {
+      useACMEHost = "dummy";
+      forceSSL = true;
+      extraConfig = ''
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Protocol $scheme;
+        proxy_set_header X-Forwarded-Host $http_host;
+        proxy_buffering off;
+      '';
+      locations."/" = {
+        proxyPass = "http://localhost:4533";
       };
     };
 
+    virtualHosts."n8n.dummy" = {
+      useACMEHost = "dummy";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:5678";
+        proxyWebsockets = true;
+        extraConfig = ''
+          proxy_read_timeout 300s;
+          proxy_send_timeout 300s;
+        '';
+      };
+    };
+
+    virtualHosts."grafana.dummy" = {
+      useACMEHost = "dummy";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:3000";
+        proxyWebsockets = true;
+      };
+    };
+
+    virtualHosts."ch.dummy" = {
+      useACMEHost = "dummy";
+      forceSSL = true;
+      extraConfig = ''
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Protocol $scheme;
+        proxy_set_header X-Forwarded-Host $http_host;
+        proxy_buffering off;
+      '';
+      locations."/ray" = {
+        proxyPass = "http://127.0.0.1:1443";
+        proxyWebsockets = true;
+        extraConfig = ''
+          proxy_read_timeout 1d;
+          proxy_send_timeout 1d;
+          proxy_buffering off;
+          proxy_request_buffering off;
+          tcp_nodelay on;
+        '';
+      };
+      locations."/assets" = {
+        proxyPass = "http://127.0.0.1:1444";
+        proxyWebsockets = true;
+        extraConfig = ''
+          proxy_read_timeout 1d;
+          proxy_send_timeout 1d;
+          proxy_buffering off;
+          proxy_request_buffering off;
+          tcp_nodelay on;
+        '';
+      };
+    };
   };
   security.acme = {
     acceptTerms = true;
-    defaults.email = "rick";
+    defaults.email = "paramoNNN@proton.me";
     certs = {
-      "rick" = {
+      "dummy" = {
         extraDomainNames = [
-          "roll"
+          "tv.dummy"
+          "obs.dummy"
+          "nc.dummy"
+          "arkane.dummy"
+          "photos.dummy"
         ];
         group = "nginx";
         dnsProvider = "cloudflare";
         dnsResolver = "1.1.1.1:53";
-        # TODO: setup with agent
-        environmentFile = "/home/paranas/cf";
+        environmentFile = "/var/lib/acme-secrets/cloudflare.env";
       };
-      "john" = {
+      "dummy" = {
         extraDomainNames = [
-          "doe"
+          "tv.dummy"
+          "navi.dummy"
+          "obs.dummy"
+          "nc.dummy"
+          "hs.dummy"
+          "tn.dummy"
+          "ch.dummy"
+          "elm.dummy"
+          "arkane.dummy"
+          "photos.dummy"
+          "n8n.dummy"
+          "grafana.dummy"
         ];
         group = "nginx";
         dnsProvider = "arvancloud";
         dnsResolver = "1.1.1.1:53";
-        environmentFile = "/home/paranas/arv";
+        environmentFile = "/var/lib/acme-secrets/arvancloud.env";
       };
     };
   };
@@ -139,4 +237,5 @@
     "acme"
     "turnserver"
   ];
+  systemd.tmpfiles.rules = [ "d /var/lib/acme-secrets 0750 root acme -" ];
 }
