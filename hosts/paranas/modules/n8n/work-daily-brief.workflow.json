@@ -1,0 +1,670 @@
+{
+  "name": "Work Daily Brief to Obsidian",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "45 6 * * *"
+            }
+          ]
+        }
+      },
+      "id": "schedule",
+      "name": "Every day at 06:45",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1320,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const now = new Date();\nconst dateParts = value => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Tehran', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(value);\nconst localDate = value => {\n  const parts = dateParts(value);\n  const get = type => parts.find(part => part.type === type).value;\n  return `${get('year')}-${get('month')}-${get('day')}`;\n};\nconst today = localDate(now);\nconst offset = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Tehran', timeZoneName: 'longOffset' }).formatToParts(now).find(part => part.type === 'timeZoneName').value.replace('GMT', '');\nconst todayStart = new Date(`${today}T00:00:00${offset}`);\nconst since = new Date(todayStart.getTime() - 86400000);\nreturn [{ json: { reportDate: localDate(since), since: since.toISOString(), until: todayStart.toISOString(), generatedAt: now.toISOString() } }];"
+      },
+      "id": "window",
+      "name": "Yesterday window",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1100,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.GITLAB_BASE_URL }}/api/v4/projects/{{ $env.GITLAB_PROJECT_ID }}/repository/commits?since={{ $json.since }}&until={{ $json.until }}&per_page=100",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "PRIVATE-TOKEN",
+              "value": "={{ $env.GITLAB_API_TOKEN }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "commits",
+      "name": "GitLab commits",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -880,
+        0
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const window = $('Yesterday window').first().json;\nconst rows = $input.all().flatMap(item => Array.isArray(item.json) ? item.json : [item.json]);\nreturn [{ json: { ...window, commits: rows.filter(row => row && row.id) } }];"
+      },
+      "id": "collect-commits",
+      "name": "Collect commits",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -660,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.GITLAB_BASE_URL }}/api/v4/projects/{{ $env.GITLAB_PROJECT_ID }}/merge_requests?scope=all&updated_after={{ $json.since }}&per_page=100&order_by=updated_at&sort=desc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "PRIVATE-TOKEN",
+              "value": "={{ $env.GITLAB_API_TOKEN }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "merge-requests",
+      "name": "GitLab merge requests",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -440,
+        0
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const prior = $('Collect commits').first().json;\nconst rows = $input.all().flatMap(item => Array.isArray(item.json) ? item.json : [item.json]);\nreturn [{ json: { ...prior, mergeRequests: rows.filter(row => row && row.id) } }];"
+      },
+      "id": "collect-mrs",
+      "name": "Collect merge requests",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -220,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.GITLAB_BASE_URL }}/api/v4/projects/{{ $env.GITLAB_PROJECT_ID }}/pipelines?updated_after={{ $json.since }}&per_page=100&order_by=updated_at&sort=desc",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "PRIVATE-TOKEN",
+              "value": "={{ $env.GITLAB_API_TOKEN }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "pipelines",
+      "name": "GitLab pipelines",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        0
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const prior = $('Collect merge requests').first().json;\nconst rows = $input.all().flatMap(item => Array.isArray(item.json) ? item.json : [item.json]);\nreturn [{ json: { ...prior, pipelines: rows.filter(row => row && row.id) } }];"
+      },
+      "id": "collect-pipelines",
+      "name": "Collect pipelines",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.PLANE_BASE_URL }}/api/v1/workspaces/{{ $env.PLANE_WORKSPACE_SLUG }}/projects/?per_page=100",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $env.PLANE_API_KEY }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "projects",
+      "name": "Plane projects",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const payloads = $input.all().map(item => item.json);\nconst projects = payloads.flatMap(value => Array.isArray(value) ? value : (value.results || []));\nreturn projects.map(project => ({ json: { projectId: project.id, projectName: project.name, projectIdentifier: project.identifier } }));"
+      },
+      "id": "split-projects",
+      "name": "Split Plane projects",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.PLANE_BASE_URL }}/api/v1/workspaces/{{ $env.PLANE_WORKSPACE_SLUG }}/projects/{{ $json.projectId }}/work-items/?per_page=100&expand=state,assignees",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $env.PLANE_API_KEY }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "work-items",
+      "name": "Plane work items",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        0
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const project = $('Split Plane projects').item.json;\nreturn [{ json: { project, workItemsResponse: $json } }];"
+      },
+      "id": "wrap-work-items",
+      "name": "Wrap Plane work items",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.PLANE_BASE_URL }}/api/v1/workspaces/{{ $env.PLANE_WORKSPACE_SLUG }}/projects/{{ $json.project.projectId }}/cycles/?per_page=100",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $env.PLANE_API_KEY }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cycles",
+      "name": "Plane cycles",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1320,
+        0
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const prior = $('Wrap Plane work items').item.json;\nreturn [{ json: { ...prior, cyclesResponse: $json } }];"
+      },
+      "id": "wrap-cycles",
+      "name": "Wrap Plane cycles",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const asArray = value => Array.isArray(value) ? value : (value?.results || []);\nconst now = new Date($('Collect pipelines').first().json.until);\nconst cycles = asArray($json.cyclesResponse);\nconst activeCycle = cycles.find(cycle => cycle.status === 'current' || cycle.is_current) || cycles.find(cycle => cycle.start_date && cycle.end_date && new Date(`${cycle.start_date}T00:00:00Z`) <= now && new Date(`${cycle.end_date}T23:59:59Z`) >= now) || null;\nreturn [{ json: { ...$json, activeCycle } }];"
+      },
+      "id": "select-current-cycle",
+      "name": "Select current Plane cycle",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1650,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.PLANE_BASE_URL }}/api/v1/workspaces/{{ $env.PLANE_WORKSPACE_SLUG }}/projects/{{ $json.project.projectId }}/cycles/{{ $json.activeCycle?.id || 'no-current-cycle' }}/cycle-issues/?per_page=100",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $env.PLANE_API_KEY }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cycle-items",
+      "name": "Plane current cycle items",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1760,
+        0
+      ],
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const prior = $('Select current Plane cycle').item.json;\nreturn [{ json: { ...prior, cycleItemsResponse: $json } }];"
+      },
+      "id": "wrap-cycle-items",
+      "name": "Wrap Plane cycle items",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1870,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.PLANE_BASE_URL }}/api/v1/workspaces/{{ $env.PLANE_WORKSPACE_SLUG }}/projects/{{ $json.project.projectId }}/states/?per_page=100",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $env.PLANE_API_KEY }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "states",
+      "name": "Plane states",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1760,
+        0
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const prior = $('Wrap Plane cycle items').item.json;\nreturn [{ json: { ...prior, statesResponse: $json } }];"
+      },
+      "id": "wrap-states",
+      "name": "Wrap Plane states",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1980,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.PLANE_BASE_URL }}/api/v1/workspaces/{{ $env.PLANE_WORKSPACE_SLUG }}/projects/{{ $json.project.projectId }}/pages/?per_page=100",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $env.PLANE_API_KEY }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "pages",
+      "name": "Plane pages",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2200,
+        0
+      ],
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const prior = $('Wrap Plane states').item.json;\nreturn [{ json: { ...prior, pagesResponse: $json } }];"
+      },
+      "id": "wrap-context",
+      "name": "Wrap Plane context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2420,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const gitlab = $('Collect pipelines').first().json;\nconst rows = $input.all().map(item => item.json);\nconst asArray = value => Array.isArray(value) ? value : (value?.results || []);\nconst privateConfig = {\n  reportTitle: $env.WORK_REPORT_TITLE || 'Work',\n  planeBaseUrl: String($env.PLANE_BASE_URL || '').replace(/\\/$/, ''),\n  planeWorkspaceSlug: String($env.PLANE_WORKSPACE_SLUG || ''),\n  gitlabProjectWebUrl: String($env.GITLAB_PROJECT_WEB_URL || '')\n};\nconst now = new Date(gitlab.until);\nconst windowStart = new Date(gitlab.since);\nconst inWindow = value => value && new Date(value) >= windowStart && new Date(value) < now;\nconst esc = value => String(value ?? '').replace(/\\|/g, '\\\\|').replace(/\\r?\\n/g, ' ');\nconst link = (label, url) => url ? `[${esc(label)}](${url})` : esc(label);\nconst itemLine = item => `- ${link(`${item.project}: ${item.name}`, item.url)} — **${esc(item.state)}**${item.owner ? ` — ${esc(item.owner)}` : ''}${item.targetDate ? ` — due ${item.targetDate}` : ''}`;\nconst projects = rows.map(row => {\n  const states = asArray(row.statesResponse);\n  const stateMap = new Map(states.map(state => [String(state.id), state]));\n  const currentCycleItemIds = new Set(asArray(row.cycleItemsResponse).map(relation => String(relation.issue?.id || relation.issue || relation.work_item?.id || relation.work_item)).filter(Boolean));\n  return { ...row.project, activeCycle: row.activeCycle || null, currentCycleItemIds, stateMap, workItems: asArray(row.workItemsResponse), pages: asArray(row.pagesResponse), pagesError: row.pagesResponse?.error || row.pagesResponse?.message || null };\n});\nconst workItems = projects.flatMap(project => project.workItems.map(item => {\n  const stateId = String(item.state?.id || item.state || '');\n  const state = item.state_detail || (typeof item.state === 'object' ? item.state : null) || project.stateMap.get(stateId) || {};\n  const group = String(state.group || state.state_group || '').toLowerCase();\n  return {\n    id: String(item.id),\n    project: project.projectName || project.projectIdentifier,\n    name: item.name || 'Untitled',\n    state: state.name || stateId || 'Unknown',\n    group,\n    priority: String(item.priority || 'none').toLowerCase(),\n    owner: asArray(item.assignees).map(person => person.display_name || person.name || person.email || person).join(', '),\n    targetDate: item.target_date || null,\n    updatedAt: item.updated_at || null,\n    completedAt: item.completed_at || null,\n    cancelledAt: item.cancelled_at || null,\n    inCurrentCycle: Boolean(project.activeCycle && project.currentCycleItemIds.has(String(item.id))),\n    url: `${privateConfig.planeBaseUrl}/${privateConfig.planeWorkspaceSlug}/projects/${project.projectId}/issues/${item.id}`\n  };\n}));\nconst open = workItems.filter(item => !item.completedAt && !item.cancelledAt && !['completed', 'cancelled', 'canceled'].includes(item.group));\nconst current = open.filter(item => item.inCurrentCycle);\nconst currentInProgress = current.filter(item => item.group === 'started');\nconst currentTodo = current.filter(item => item.group !== 'started');\nconst overdue = open.filter(item => item.targetDate && new Date(`${item.targetDate}T23:59:59Z`) < now);\nconst upcoming = open.filter(item => item.targetDate && new Date(`${item.targetDate}T23:59:59Z`) >= now && new Date(`${item.targetDate}T23:59:59Z`) <= new Date(now.getTime() + 7 * 86400000));\nconst recentlyChanged = workItems.filter(item => inWindow(item.updatedAt) || inWindow(item.completedAt));\nconst failedPipelines = gitlab.pipelines.filter(pipeline => ['failed', 'canceled'].includes(pipeline.status));\nconst openMrs = gitlab.mergeRequests.filter(mr => mr.state === 'opened');\nconst recentPages = projects.flatMap(project => project.pages.map(page => ({ project: project.projectName || project.projectIdentifier, name: page.name || 'Untitled', updatedAt: page.updated_at, url: `${privateConfig.planeBaseUrl}/${privateConfig.planeWorkspaceSlug}/projects/${project.projectId}/pages/${page.id}` }))).filter(page => page.updatedAt).sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt))).slice(0, 10);\nconst pagesUnavailable = projects.some(project => project.pagesError);\nconst section = (title, values, render, empty = '- Nothing found.') => [`## ${title}`, '', ...(values.length ? values.map(render) : [empty]), ''];\nconst lines = [\n  '---',\n  'type: briefing',\n  `date: ${gitlab.reportDate}`,\n  `generated_at: ${gitlab.generatedAt}`,\n  'generated_by: n8n',\n  'sources:',\n  '  - plane',\n  '  - gitlab',\n  '---',\n  '',\n  `# ${privateConfig.reportTitle} brief — ${gitlab.reportDate}`,\n  '',\n  '> [!info]',\n  '> Generated deterministically from Plane and GitLab. Personal notes and meeting context remain elsewhere in this vault.',\n  '',\n  '## At a glance',\n  '',\n  `- ${gitlab.commits.length} GitLab commit(s)`,\n  `- ${openMrs.length} open merge request(s) touched since yesterday`,\n  `- ${failedPipelines.length} failed or canceled pipeline(s)`,\n  `- ${recentlyChanged.length} Plane work item(s) changed`,\n  `- ${current.length} current-cycle item(s) across ${projects.filter(project => project.activeCycle).length} project(s)`,\n  '',\n  ...section('Deadlines', [...overdue, ...upcoming], itemLine, '- No overdue or next-seven-day deadlines found.'),\n  ...section('Current cycle — in progress', currentInProgress, itemLine),\n  ...section('Current cycle — todo', currentTodo, itemLine),\n  ...section('Plane changes yesterday', recentlyChanged, itemLine),\n  ...section('GitLab commits', gitlab.commits, commit => `- ${link(commit.title, commit.web_url)} — ${esc(commit.author_name)}${commit.short_id ? ` (\\`${commit.short_id}\\`)` : ''}`),\n  ...section('Open merge requests touched yesterday', openMrs, mr => `- ${link(`!${mr.iid} ${mr.title}`, mr.web_url)} — ${esc(mr.author?.name || '')}`),\n  ...section('Pipelines needing attention', failedPipelines, pipeline => `- ${link(`#${pipeline.id} ${pipeline.ref || ''}`, pipeline.web_url)} — **${esc(pipeline.status)}**`),\n  ...section('Recently updated Plane pages', recentPages, page => `- ${link(`${page.project}: ${page.name}`, page.url)} — ${String(page.updatedAt).slice(0, 10)}`, pagesUnavailable ? '- Unavailable: this self-hosted Plane release does not expose Pages to API-key clients.' : '- No recently updated pages found.'),\n  '## Source systems',\n  '',\n  `- [Plane](${privateConfig.planeBaseUrl}/)`,\n  `- [GitLab](${privateConfig.gitlabProjectWebUrl})`,\n  ''\n];\nconst markdown = lines.join('\\n');\nconst fileName = `${gitlab.reportDate}.md`;\nreturn [{ json: { reportDate: gitlab.reportDate, fileName, targetPath: `/var/lib/obsidian-vault/Briefings/${fileName}`, markdown }, binary: { data: { data: Buffer.from(markdown, 'utf8').toString('base64'), mimeType: 'text/markdown', fileName, fileExtension: 'md' } } }];\n"
+      },
+      "id": "render",
+      "name": "Render Obsidian brief",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2640,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "={{ $json.targetPath }}",
+        "dataPropertyName": "data",
+        "options": {}
+      },
+      "id": "write",
+      "name": "Write brief to vault",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        2860,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Every day at 06:45": {
+      "main": [
+        [
+          {
+            "node": "Yesterday window",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Yesterday window": {
+      "main": [
+        [
+          {
+            "node": "GitLab commits",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GitLab commits": {
+      "main": [
+        [
+          {
+            "node": "Collect commits",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect commits": {
+      "main": [
+        [
+          {
+            "node": "GitLab merge requests",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GitLab merge requests": {
+      "main": [
+        [
+          {
+            "node": "Collect merge requests",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect merge requests": {
+      "main": [
+        [
+          {
+            "node": "GitLab pipelines",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GitLab pipelines": {
+      "main": [
+        [
+          {
+            "node": "Collect pipelines",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect pipelines": {
+      "main": [
+        [
+          {
+            "node": "Plane projects",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Plane projects": {
+      "main": [
+        [
+          {
+            "node": "Split Plane projects",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Plane projects": {
+      "main": [
+        [
+          {
+            "node": "Plane work items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Plane work items": {
+      "main": [
+        [
+          {
+            "node": "Wrap Plane work items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wrap Plane work items": {
+      "main": [
+        [
+          {
+            "node": "Plane cycles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Plane cycles": {
+      "main": [
+        [
+          {
+            "node": "Wrap Plane cycles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wrap Plane cycles": {
+      "main": [
+        [
+          {
+            "node": "Select current Plane cycle",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select current Plane cycle": {
+      "main": [
+        [
+          {
+            "node": "Plane current cycle items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Plane current cycle items": {
+      "main": [
+        [
+          {
+            "node": "Wrap Plane cycle items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wrap Plane cycle items": {
+      "main": [
+        [
+          {
+            "node": "Plane states",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Plane states": {
+      "main": [
+        [
+          {
+            "node": "Wrap Plane states",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wrap Plane states": {
+      "main": [
+        [
+          {
+            "node": "Plane pages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Plane pages": {
+      "main": [
+        [
+          {
+            "node": "Wrap Plane context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wrap Plane context": {
+      "main": [
+        [
+          {
+            "node": "Render Obsidian brief",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Render Obsidian brief": {
+      "main": [
+        [
+          {
+            "node": "Write brief to vault",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Tehran",
+    "availableInMCP": false
+  },
+  "active": false,
+  "versionId": "1d68e3e5-4fe3-4e5c-a8b8-1ee42df60c27",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": []
+}

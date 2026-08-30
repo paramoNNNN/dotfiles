@@ -10,7 +10,9 @@
     ./immich.nix
     ./jellyfin.nix
     ./navidrome.nix
-    ./matrix.nix
+    ./n8n.nix
+    ./obsidian-bridge.nix
+    # ./matrix.nix
     ./teamspeak.nix
     ./grafana.nix
   ];
