@@ -2,7 +2,7 @@
   services.vaultwarden = {
     enable = true;
     backupDir = "/storage/backups/vaultwarden/backup";
-    environmentFile = "/home/paranas/vw";
+    environmentFile = "/var/lib/vaultwarden-secrets/environment";
     config = {
       DOMAIN = "rick";
       SIGNUPS_ALLOWED = false;
@@ -12,4 +12,6 @@
       ROCKET_LOG = "critical";
     };
   };
+
+  systemd.tmpfiles.rules = [ "d /var/lib/vaultwarden-secrets 0750 root vaultwarden -" ];
 }

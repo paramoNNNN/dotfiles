@@ -2,7 +2,7 @@
 {
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud33;
+    package = pkgs.nextcloud34;
     extraApps = {
       inherit (config.services.nextcloud.package.packages.apps)
         contacts
@@ -14,7 +14,9 @@
     hostName = "roll";
     https = true;
 
-    config.adminpassFile = "/home/paranas/nc";
+    config.adminpassFile = "/var/lib/nextcloud-secrets/admin-password";
     config.dbtype = "sqlite";
   };
+
+  systemd.tmpfiles.rules = [ "d /var/lib/nextcloud-secrets 0750 root nextcloud -" ];
 }

@@ -105,6 +105,16 @@
     shell = pkgs.fish;
   };
 
+  users.users.saeed = {
+    isNormalUser = true;
+    hashedPasswordFile = "/var/lib/user-secrets/saeed-password-hash";
+    description = "paranas";
+    home = "/home/saeed";
+    shell = pkgs.fish;
+  };
+
+  systemd.tmpfiles.rules = [ "d /var/lib/user-secrets 0700 root root -" ];
+
   # Install firefox.
   programs.firefox.enable = true;
 
