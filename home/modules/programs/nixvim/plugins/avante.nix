@@ -5,7 +5,8 @@
       fd
       curl
       gnutar
-      codex-acp
+      nodejs
+      pnpm
     ];
     opts.laststatus = 3;
 
