@@ -1,24 +1,25 @@
 {
+  hostname,
+  userConfig,
+  ...
+}:
+{
   programs.git = {
     enable = true;
     settings = {
       user = {
-        name = "Taha";
-        email = "paramoNNN@proton.me";
+        name = userConfig.fullName;
+        email = userConfig.email;
+        signingkey = userConfig.gitSigningKeys.${hostname};
       };
-      extraConfig = {
-        push = {
-          autoSetupRemove = true;
-        };
-        pull = {
-          rebase = true;
-        };
-        user = {
-          signingkey = "FCF819681F9DD20E";
-        };
-        commit = {
-          gpgsign = true;
-        };
+      push = {
+        autoSetupRemote = true;
+      };
+      pull = {
+        rebase = true;
+      };
+      commit = {
+        gpgsign = true;
       };
 
       delta = {

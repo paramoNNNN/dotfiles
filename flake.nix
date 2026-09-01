@@ -71,14 +71,17 @@
       users = {
         taha = {
           email = "paramoNNN@proton.me";
-          fullName = "Taha Ojari";
-          gitKey = "asd";
+          fullName = "Taha";
+          gitSigningKeys = {
+            taha-pc = "FCF819681F9DD20E";
+            taha-mac = "A546293786574A84";
+          };
           name = "taha";
         };
         paranas = {
           email = "paramoNNN@proton.me";
-          fullName = "Taha Ojari";
-          gitKey = "asd";
+          fullName = "Taha";
+          gitSigningKeys.paranas = "FCF819681F9DD20E";
           name = "paranas";
         };
       };
@@ -117,7 +120,7 @@
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs { inherit system; };
           extraSpecialArgs = {
-            inherit inputs outputs;
+            inherit inputs outputs hostname;
             userConfig = users.${username};
           };
           modules = [
