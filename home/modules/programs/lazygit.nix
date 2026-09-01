@@ -1,3 +1,4 @@
+{ config, ... }:
 {
   programs.lazygit = {
     enable = true;
@@ -6,7 +7,7 @@
         pagers = [
           {
             colorArg = "always";
-            pager = "delta --paging=never --light";
+            pager = "delta --paging=never --${config.theme.variant}";
           }
         ];
         overrideGpg = true;
