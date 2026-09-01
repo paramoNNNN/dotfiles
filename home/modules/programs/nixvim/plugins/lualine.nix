@@ -102,13 +102,13 @@
 
       ins_left {
         'filename',
-        path = 4,
+        path = 1,
         cond = conditions.buffer_not_empty,
         color = { fg = "${config.lib.stylix.colors.base04}" , gui = 'bold' },
       }
       ins_left_inactive {
         'filename',
-        path = 4,
+        path = 1,
         cond = conditions.buffer_not_empty,
         color = { fg = "${config.lib.stylix.colors.base04}" , gui = 'bold' },
       }
