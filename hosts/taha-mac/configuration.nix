@@ -48,8 +48,11 @@
     home = "/Users/${userConfig.name}";
   };
 
-  # Add ability to use TouchID for sudo
-  security.pam.services.sudo_local.touchIdAuth = true;
+  # Allow sudo to use Touch ID, including from tmux sessions.
+  security.pam.services.sudo_local = {
+    touchIdAuth = true;
+    reattach = true;
+  };
 
   # System settings
   # system = {
