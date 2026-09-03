@@ -36,6 +36,58 @@
     },
     {
       "parameters": {
+        "command": "archive-obsidian-notes"
+      },
+      "id": "archive-notes",
+      "name": "Archive old notes and find todos",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        -990,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const window = $('Yesterday window').first().json;\nconst command = $input.first().json;\nlet archive = { remainingTodos: [], archivedDaily: 0, archivedBriefings: 0 };\ntry {\n  archive = { ...archive, ...JSON.parse(command.stdout || '{}') };\n} catch (error) {\n  throw new Error(`Archive command returned invalid JSON: ${error.message}`);\n}\nreturn [{ json: { ...window, archive } }];"
+      },
+      "id": "collect-archive",
+      "name": "Collect archive result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -880,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "command": "prepare-calendar-meetings"
+      },
+      "id": "calendar-meetings",
+      "name": "Prepare today's meeting notes",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        -770,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const prior = $('Collect archive result').first().json;\nconst command = $input.first().json;\nlet calendar = { meetings: [], calendarConfigured: false };\ntry {\n  calendar = { ...calendar, ...JSON.parse(command.stdout || '{}') };\n} catch (error) {\n  throw new Error(`Calendar command returned invalid JSON: ${error.message}`);\n}\nreturn [{ json: { ...prior, calendar } }];"
+      },
+      "id": "collect-calendar",
+      "name": "Collect calendar result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -660,
+        0
+      ]
+    },
+    {
+      "parameters": {
         "url": "={{ $env.GITLAB_BASE_URL }}/api/v4/projects/{{ $env.GITLAB_PROJECT_ID }}/repository/commits?since={{ $json.since }}&until={{ $json.until }}&per_page=100",
         "sendHeaders": true,
         "headerParameters": {
@@ -53,7 +105,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -880,
+        -660,
         0
       ],
       "alwaysOutputData": true
@@ -67,7 +119,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -660,
+        -440,
         0
       ]
     },
@@ -208,7 +260,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const project = $('Split Plane projects').item.json;\nreturn [{ json: { project, workItemsResponse: $json } }];"
+        "jsCode": "const projects = $('Split Plane projects').all();\nreturn $input.all().map((item, index) => ({ json: { project: projects[index].json, workItemsResponse: item.json } }));"
       },
       "id": "wrap-work-items",
       "name": "Wrap Plane work items",
@@ -245,7 +297,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const prior = $('Wrap Plane work items').item.json;\nreturn [{ json: { ...prior, cyclesResponse: $json } }];"
+        "jsCode": "const priors = $('Wrap Plane work items').all();\nreturn $input.all().map((item, index) => ({ json: { ...priors[index].json, cyclesResponse: item.json } }));"
       },
       "id": "wrap-cycles",
       "name": "Wrap Plane cycles",
@@ -258,7 +310,8 @@
     },
     {
       "parameters": {
-        "jsCode": "const asArray = value => Array.isArray(value) ? value : (value?.results || []);\nconst now = new Date($('Collect pipelines').first().json.until);\nconst cycles = asArray($json.cyclesResponse);\nconst activeCycle = cycles.find(cycle => cycle.status === 'current' || cycle.is_current) || cycles.find(cycle => cycle.start_date && cycle.end_date && new Date(`${cycle.start_date}T00:00:00Z`) <= now && new Date(`${cycle.end_date}T23:59:59Z`) >= now) || null;\nreturn [{ json: { ...$json, activeCycle } }];"
+        "jsCode": "const asArray = value => Array.isArray(value) ? value : (Array.isArray(value?.results) ? value.results : (value?.id ? [value] : []));\nconst reportDate = String($('Collect pipelines').first().json.reportDate || '').slice(0, 10);\nconst cycles = asArray($json.cyclesResponse).filter(cycle => !cycle.deleted_at && !cycle.archived_at);\nconst activeStatuses = new Set(['current', 'active', 'started', 'in-progress', 'in_progress']);\nconst hasActiveStatus = cycle => cycle.is_current === true || activeStatuses.has(String(cycle.status || cycle.cycle_view || cycle.state || '').toLowerCase());\nconst containsReportDate = cycle => {\n  const start = String(cycle.start_date || '').slice(0, 10);\n  const end = String(cycle.end_date || '').slice(0, 10);\n  return Boolean(reportDate && start && end && start <= reportDate && reportDate <= end);\n};\nconst activeCycle = cycles.find(hasActiveStatus) || cycles.find(containsReportDate) || (cycles.length === 1 ? cycles[0] : null);\nconst cycleSelection = {\n  reportDate,\n  cyclesFound: cycles.length,\n  cycleNames: cycles.map(cycle => cycle.name),\n  selectedCycleId: activeCycle?.id || null,\n  selectedCycleName: activeCycle?.name || null\n};\nreturn { json: { ...$json, cyclesFound: cycles.length, cycleSelection, activeCycle } };",
+        "mode": "runOnceForEachItem"
       },
       "id": "select-current-cycle",
       "name": "Select current Plane cycle",
@@ -271,7 +324,7 @@
     },
     {
       "parameters": {
-        "url": "={{ $env.PLANE_BASE_URL }}/api/v1/workspaces/{{ $env.PLANE_WORKSPACE_SLUG }}/projects/{{ $json.project.projectId }}/cycles/{{ $json.activeCycle?.id || 'no-current-cycle' }}/cycle-issues/?per_page=100",
+        "url": "={{ $env.PLANE_BASE_URL }}/api/v1/workspaces/{{ $env.PLANE_WORKSPACE_SLUG }}/projects/{{ $json.activeCycle?.project || $json.project.projectId }}/cycles/{{ $json.activeCycle?.id || 'no-current-cycle' }}/cycle-issues/?per_page=100",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -296,7 +349,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const prior = $('Select current Plane cycle').item.json;\nreturn [{ json: { ...prior, cycleItemsResponse: $json } }];"
+        "jsCode": "const priors = $('Select current Plane cycle').all();\nreturn $input.all().map((item, index) => ({ json: { ...priors[index].json, cycleItemsResponse: item.json } }));"
       },
       "id": "wrap-cycle-items",
       "name": "Wrap Plane cycle items",
@@ -333,7 +386,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const prior = $('Wrap Plane cycle items').item.json;\nreturn [{ json: { ...prior, statesResponse: $json } }];"
+        "jsCode": "const priors = $('Wrap Plane cycle items').all();\nreturn $input.all().map((item, index) => ({ json: { ...priors[index].json, statesResponse: item.json } }));"
       },
       "id": "wrap-states",
       "name": "Wrap Plane states",
@@ -371,7 +424,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const prior = $('Wrap Plane states').item.json;\nreturn [{ json: { ...prior, pagesResponse: $json } }];"
+        "jsCode": "const priors = $('Wrap Plane states').all();\nreturn $input.all().map((item, index) => ({ json: { ...priors[index].json, pagesResponse: item.json } }));"
       },
       "id": "wrap-context",
       "name": "Wrap Plane context",
@@ -384,7 +437,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const gitlab = $('Collect pipelines').first().json;\nconst rows = $input.all().map(item => item.json);\nconst asArray = value => Array.isArray(value) ? value : (value?.results || []);\nconst privateConfig = {\n  reportTitle: $env.WORK_REPORT_TITLE || 'Work',\n  planeBaseUrl: String($env.PLANE_BASE_URL || '').replace(/\\/$/, ''),\n  planeWorkspaceSlug: String($env.PLANE_WORKSPACE_SLUG || ''),\n  gitlabProjectWebUrl: String($env.GITLAB_PROJECT_WEB_URL || '')\n};\nconst now = new Date(gitlab.until);\nconst windowStart = new Date(gitlab.since);\nconst inWindow = value => value && new Date(value) >= windowStart && new Date(value) < now;\nconst esc = value => String(value ?? '').replace(/\\|/g, '\\\\|').replace(/\\r?\\n/g, ' ');\nconst link = (label, url) => url ? `[${esc(label)}](${url})` : esc(label);\nconst itemLine = item => `- ${link(`${item.project}: ${item.name}`, item.url)} — **${esc(item.state)}**${item.owner ? ` — ${esc(item.owner)}` : ''}${item.targetDate ? ` — due ${item.targetDate}` : ''}`;\nconst projects = rows.map(row => {\n  const states = asArray(row.statesResponse);\n  const stateMap = new Map(states.map(state => [String(state.id), state]));\n  const currentCycleItemIds = new Set(asArray(row.cycleItemsResponse).map(relation => String(relation.issue?.id || relation.issue || relation.work_item?.id || relation.work_item)).filter(Boolean));\n  return { ...row.project, activeCycle: row.activeCycle || null, currentCycleItemIds, stateMap, workItems: asArray(row.workItemsResponse), pages: asArray(row.pagesResponse), pagesError: row.pagesResponse?.error || row.pagesResponse?.message || null };\n});\nconst workItems = projects.flatMap(project => project.workItems.map(item => {\n  const stateId = String(item.state?.id || item.state || '');\n  const state = item.state_detail || (typeof item.state === 'object' ? item.state : null) || project.stateMap.get(stateId) || {};\n  const group = String(state.group || state.state_group || '').toLowerCase();\n  return {\n    id: String(item.id),\n    project: project.projectName || project.projectIdentifier,\n    name: item.name || 'Untitled',\n    state: state.name || stateId || 'Unknown',\n    group,\n    priority: String(item.priority || 'none').toLowerCase(),\n    owner: asArray(item.assignees).map(person => person.display_name || person.name || person.email || person).join(', '),\n    targetDate: item.target_date || null,\n    updatedAt: item.updated_at || null,\n    completedAt: item.completed_at || null,\n    cancelledAt: item.cancelled_at || null,\n    inCurrentCycle: Boolean(project.activeCycle && project.currentCycleItemIds.has(String(item.id))),\n    url: `${privateConfig.planeBaseUrl}/${privateConfig.planeWorkspaceSlug}/projects/${project.projectId}/issues/${item.id}`\n  };\n}));\nconst open = workItems.filter(item => !item.completedAt && !item.cancelledAt && !['completed', 'cancelled', 'canceled'].includes(item.group));\nconst current = open.filter(item => item.inCurrentCycle);\nconst currentInProgress = current.filter(item => item.group === 'started');\nconst currentTodo = current.filter(item => item.group !== 'started');\nconst overdue = open.filter(item => item.targetDate && new Date(`${item.targetDate}T23:59:59Z`) < now);\nconst upcoming = open.filter(item => item.targetDate && new Date(`${item.targetDate}T23:59:59Z`) >= now && new Date(`${item.targetDate}T23:59:59Z`) <= new Date(now.getTime() + 7 * 86400000));\nconst recentlyChanged = workItems.filter(item => inWindow(item.updatedAt) || inWindow(item.completedAt));\nconst failedPipelines = gitlab.pipelines.filter(pipeline => ['failed', 'canceled'].includes(pipeline.status));\nconst openMrs = gitlab.mergeRequests.filter(mr => mr.state === 'opened');\nconst recentPages = projects.flatMap(project => project.pages.map(page => ({ project: project.projectName || project.projectIdentifier, name: page.name || 'Untitled', updatedAt: page.updated_at, url: `${privateConfig.planeBaseUrl}/${privateConfig.planeWorkspaceSlug}/projects/${project.projectId}/pages/${page.id}` }))).filter(page => page.updatedAt).sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt))).slice(0, 10);\nconst pagesUnavailable = projects.some(project => project.pagesError);\nconst section = (title, values, render, empty = '- Nothing found.') => [`## ${title}`, '', ...(values.length ? values.map(render) : [empty]), ''];\nconst lines = [\n  '---',\n  'type: briefing',\n  `date: ${gitlab.reportDate}`,\n  `generated_at: ${gitlab.generatedAt}`,\n  'generated_by: n8n',\n  'sources:',\n  '  - plane',\n  '  - gitlab',\n  '---',\n  '',\n  `# ${privateConfig.reportTitle} brief — ${gitlab.reportDate}`,\n  '',\n  '> [!info]',\n  '> Generated deterministically from Plane and GitLab. Personal notes and meeting context remain elsewhere in this vault.',\n  '',\n  '## At a glance',\n  '',\n  `- ${gitlab.commits.length} GitLab commit(s)`,\n  `- ${openMrs.length} open merge request(s) touched since yesterday`,\n  `- ${failedPipelines.length} failed or canceled pipeline(s)`,\n  `- ${recentlyChanged.length} Plane work item(s) changed`,\n  `- ${current.length} current-cycle item(s) across ${projects.filter(project => project.activeCycle).length} project(s)`,\n  '',\n  ...section('Deadlines', [...overdue, ...upcoming], itemLine, '- No overdue or next-seven-day deadlines found.'),\n  ...section('Current cycle — in progress', currentInProgress, itemLine),\n  ...section('Current cycle — todo', currentTodo, itemLine),\n  ...section('Plane changes yesterday', recentlyChanged, itemLine),\n  ...section('GitLab commits', gitlab.commits, commit => `- ${link(commit.title, commit.web_url)} — ${esc(commit.author_name)}${commit.short_id ? ` (\\`${commit.short_id}\\`)` : ''}`),\n  ...section('Open merge requests touched yesterday', openMrs, mr => `- ${link(`!${mr.iid} ${mr.title}`, mr.web_url)} — ${esc(mr.author?.name || '')}`),\n  ...section('Pipelines needing attention', failedPipelines, pipeline => `- ${link(`#${pipeline.id} ${pipeline.ref || ''}`, pipeline.web_url)} — **${esc(pipeline.status)}**`),\n  ...section('Recently updated Plane pages', recentPages, page => `- ${link(`${page.project}: ${page.name}`, page.url)} — ${String(page.updatedAt).slice(0, 10)}`, pagesUnavailable ? '- Unavailable: this self-hosted Plane release does not expose Pages to API-key clients.' : '- No recently updated pages found.'),\n  '## Source systems',\n  '',\n  `- [Plane](${privateConfig.planeBaseUrl}/)`,\n  `- [GitLab](${privateConfig.gitlabProjectWebUrl})`,\n  ''\n];\nconst markdown = lines.join('\\n');\nconst fileName = `${gitlab.reportDate}.md`;\nreturn [{ json: { reportDate: gitlab.reportDate, fileName, targetPath: `/var/lib/obsidian-vault/Briefings/${fileName}`, markdown }, binary: { data: { data: Buffer.from(markdown, 'utf8').toString('base64'), mimeType: 'text/markdown', fileName, fileExtension: 'md' } } }];\n"
+        "jsCode": "const gitlab = $('Collect pipelines').first().json;\nconst archive = $('Collect archive result').first().json.archive;\nconst remainingTodos = Array.isArray(archive.remainingTodos) ? archive.remainingTodos : [];\nconst calendar = $('Collect calendar result').first().json.calendar;\nconst meetings = Array.isArray(calendar.meetings) ? calendar.meetings : [];\nconst rows = $input.all().map(item => item.json);\nconst asArray = value => Array.isArray(value) ? value : (value?.results || []);\nconst privateConfig = {\n  reportTitle: $env.WORK_REPORT_TITLE || 'Work',\n  planeBaseUrl: String($env.PLANE_BASE_URL || '').replace(/\\/$/, ''),\n  planeWorkspaceSlug: String($env.PLANE_WORKSPACE_SLUG || ''),\n  gitlabProjectWebUrl: String($env.GITLAB_PROJECT_WEB_URL || '')\n};\nconst now = new Date(gitlab.until);\nconst windowStart = new Date(gitlab.since);\nconst inWindow = value => value && new Date(value) >= windowStart && new Date(value) < now;\nconst esc = value => String(value ?? '').replace(/\\|/g, '\\\\|').replace(/\\r?\\n/g, ' ');\nconst link = (label, url) => url ? `[${esc(label)}](${url})` : esc(label);\nconst itemLine = item => `- ${link(`${item.project}: ${item.name}`, item.url)} — **${esc(item.state)}**${item.owner ? ` — ${esc(item.owner)}` : ''}${item.targetDate ? ` — due ${item.targetDate}` : ''}`;\nconst cycleWorkItemId = relation => {\n  const related = relation?.issue?.id ?? relation?.issue_id ?? relation?.issue ?? relation?.work_item?.id ?? relation?.work_item_id ?? relation?.work_item;\n  if (related !== undefined && related !== null && typeof related !== 'object') return String(related);\n  // Some Plane releases return expanded work items directly instead of a\n  // cycle-to-item relation. Only then is the row's own id the work-item id.\n  if (relation?.id && (relation.name || relation.sequence_id)) return String(relation.id);\n  return null;\n};\nconst projects = rows.map(row => {\n  const states = asArray(row.statesResponse);\n  const stateMap = new Map(states.map(state => [String(state.id), state]));\n  const cycleRows = asArray(row.cycleItemsResponse);\n  const currentCycleItemIds = new Set(cycleRows.map(cycleWorkItemId).filter(Boolean));\n  return { ...row.project, activeCycle: row.activeCycle || null, cycleRowCount: cycleRows.length, currentCycleItemIds, stateMap, workItems: asArray(row.workItemsResponse), pages: asArray(row.pagesResponse), pagesError: row.pagesResponse?.error || row.pagesResponse?.message || null };\n});\nconst workItems = projects.flatMap(project => project.workItems.map(item => {\n  const stateId = String(item.state?.id || item.state || '');\n  const state = item.state_detail || (typeof item.state === 'object' ? item.state : null) || project.stateMap.get(stateId) || {};\n  const group = String(state.group || state.state_group || '').toLowerCase();\n  return {\n    id: String(item.id),\n    project: project.projectName || project.projectIdentifier,\n    name: item.name || 'Untitled',\n    state: state.name || stateId || 'Unknown',\n    group,\n    priority: String(item.priority || 'none').toLowerCase(),\n    owner: asArray(item.assignees).map(person => person.display_name || person.name || person.email || person).join(', '),\n    targetDate: item.target_date || null,\n    updatedAt: item.updated_at || null,\n    completedAt: item.completed_at || null,\n    cancelledAt: item.cancelled_at || null,\n    inCurrentCycle: Boolean(project.activeCycle && project.currentCycleItemIds.has(String(item.id))),\n    url: `${privateConfig.planeBaseUrl}/${privateConfig.planeWorkspaceSlug}/projects/${project.projectId}/issues/${item.id}`\n  };\n}));\nconst open = workItems.filter(item => !item.completedAt && !item.cancelledAt && !['completed', 'cancelled', 'canceled'].includes(item.group));\nconst current = open.filter(item => item.inCurrentCycle);\nconst cycleRowsFound = projects.reduce((total, project) => total + project.cycleRowCount, 0);\nconst cycleIdsResolved = projects.reduce((total, project) => total + project.currentCycleItemIds.size, 0);\nconst currentInProgress = current.filter(item => item.group === 'started');\nconst currentTodo = current.filter(item => item.group !== 'started');\nconst overdue = open.filter(item => item.targetDate && new Date(`${item.targetDate}T23:59:59Z`) < now);\nconst upcoming = open.filter(item => item.targetDate && new Date(`${item.targetDate}T23:59:59Z`) >= now && new Date(`${item.targetDate}T23:59:59Z`) <= new Date(now.getTime() + 7 * 86400000));\nconst recentlyChanged = workItems.filter(item => inWindow(item.updatedAt) || inWindow(item.completedAt));\nconst failedPipelines = gitlab.pipelines.filter(pipeline => ['failed', 'canceled'].includes(pipeline.status));\nconst openMrs = gitlab.mergeRequests.filter(mr => mr.state === 'opened');\nconst recentPages = projects.flatMap(project => project.pages.map(page => ({ project: project.projectName || project.projectIdentifier, name: page.name || 'Untitled', updatedAt: page.updated_at, url: `${privateConfig.planeBaseUrl}/${privateConfig.planeWorkspaceSlug}/projects/${project.projectId}/pages/${page.id}` }))).filter(page => page.updatedAt).sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt))).slice(0, 10);\nconst pagesUnavailable = projects.some(project => project.pagesError);\nconst section = (title, values, render, empty = '- Nothing found.') => [`## ${title}`, '', ...(values.length ? values.map(render) : [empty]), ''];\nconst lines = [\n  '---',\n  'type: briefing',\n  `date: ${gitlab.reportDate}`,\n  `generated_at: ${gitlab.generatedAt}`,\n  'generated_by: n8n',\n  'sources:',\n  '  - plane',\n  '  - gitlab',\n  '---',\n  '',\n  `# ${privateConfig.reportTitle} brief — ${gitlab.reportDate}`,\n  '',\n  '> [!info]',\n  '> Generated deterministically from Plane and GitLab. Personal notes and meeting context remain elsewhere in this vault.',\n  '',\n  '## Remaining todos from previous daily notes',\n  '',\n  ...(remainingTodos.length ? remainingTodos.map(todo => `- [ ] ${esc(todo.text)} — [[${String(todo.path).replace(/\\.md$/, '')}|${todo.date}]]`) : ['- No unfinished todos found in previous daily notes.']),\n  '',\n  '## Meetings requiring documentation — past 30 days',\n  '',\n  ...(meetings.length ? meetings.map(meeting => `- ${String(meeting.start).slice(0, 10)} ${String(meeting.start).slice(11, 16)} — [[${String(meeting.path).replace(/\\.md$/, '')}|${esc(meeting.title)}]] — missing: ${meeting.missingSections.map(esc).join(', ')}`) : [calendar.calendarConfigured ? '- All non-routine meetings in the past 30 days are documented.' : '- Calendar feed is not configured.']),\n  '',\n  '## At a glance',\n  '',\n  `- ${gitlab.commits.length} GitLab commit(s)`,\n  `- ${openMrs.length} open merge request(s) touched since yesterday`,\n  `- ${failedPipelines.length} failed or canceled pipeline(s)`,\n  `- ${recentlyChanged.length} Plane work item(s) changed`,\n  `- ${current.length} open current-cycle item(s) across ${projects.filter(project => project.activeCycle).length} project(s)`,\n  ...(cycleRowsFound > 0 && current.length === 0 ? [`- ⚠️ Plane returned ${cycleRowsFound} cycle membership row(s); ${cycleIdsResolved} item ID(s) were resolved but none matched an open project work item.`] : []),\n  '',\n  ...section('Deadlines', [...overdue, ...upcoming], itemLine, '- No overdue or next-seven-day deadlines found.'),\n  ...section('Current cycle — in progress', currentInProgress, itemLine),\n  ...section('Current cycle — todo', currentTodo, itemLine),\n  ...section('Plane changes yesterday', recentlyChanged, itemLine),\n  ...section('GitLab commits', gitlab.commits, commit => `- ${link(commit.title, commit.web_url)} — ${esc(commit.author_name)}${commit.short_id ? ` (\\`${commit.short_id}\\`)` : ''}`),\n  ...section('Open merge requests touched yesterday', openMrs, mr => `- ${link(`!${mr.iid} ${mr.title}`, mr.web_url)} — ${esc(mr.author?.name || '')}`),\n  ...section('Pipelines needing attention', failedPipelines, pipeline => `- ${link(`#${pipeline.id} ${pipeline.ref || ''}`, pipeline.web_url)} — **${esc(pipeline.status)}**`),\n  ...section('Recently updated Plane pages', recentPages, page => `- ${link(`${page.project}: ${page.name}`, page.url)} — ${String(page.updatedAt).slice(0, 10)}`, pagesUnavailable ? '- Unavailable: this self-hosted Plane release does not expose Pages to API-key clients.' : '- No recently updated pages found.'),\n  '## Source systems',\n  '',\n  `- [Plane](${privateConfig.planeBaseUrl}/)`,\n  `- [GitLab](${privateConfig.gitlabProjectWebUrl})`,\n  ''\n];\nconst markdown = lines.join('\\n');\nconst fileName = `${gitlab.reportDate}.md`;\nreturn [{ json: { reportDate: gitlab.reportDate, fileName, targetPath: `/var/lib/obsidian-vault/Briefings/${fileName}`, markdown }, binary: { data: { data: Buffer.from(markdown, 'utf8').toString('base64'), mimeType: 'text/markdown', fileName, fileExtension: 'md' } } }];\n"
       },
       "id": "render",
       "name": "Render Obsidian brief",
@@ -425,6 +478,50 @@
       ]
     },
     "Yesterday window": {
+      "main": [
+        [
+          {
+            "node": "Archive old notes and find todos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Archive old notes and find todos": {
+      "main": [
+        [
+          {
+            "node": "Collect archive result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect archive result": {
+      "main": [
+        [
+          {
+            "node": "Prepare today's meeting notes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare today's meeting notes": {
+      "main": [
+        [
+          {
+            "node": "Collect calendar result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect calendar result": {
       "main": [
         [
           {
