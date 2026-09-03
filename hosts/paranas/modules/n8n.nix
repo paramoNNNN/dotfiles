@@ -1,5 +1,21 @@
 { pkgs, ... }:
 
+let
+  archiveObsidianNotes = pkgs.writeShellApplication {
+    name = "archive-obsidian-notes";
+    runtimeInputs = with pkgs; [
+      coreutils
+      findutils
+      gawk
+      jq
+    ];
+    text = builtins.readFile ./n8n/archive-obsidian-notes.sh;
+  };
+  prepareCalendarMeetings = pkgs.writers.writePython3Bin "prepare-calendar-meetings" {
+    flakeIgnore = [ "E501" ];
+  } (builtins.readFile ./n8n/prepare-calendar-meetings.py);
+in
+
 {
   services.n8n = {
     enable = true;
@@ -15,6 +31,7 @@
       N8N_HOST = "n8n.paranas.ir";
       N8N_LISTEN_ADDRESS = "0.0.0.0";
       N8N_LOG_LEVEL = "warn";
+      NODES_EXCLUDE = ''["n8n-nodes-base.localFileTrigger"]'';
       N8N_PORT = "5678";
       N8N_PROTOCOL = "https";
       N8N_RESTRICT_FILE_ACCESS_TO = "/var/lib/n8n-files;/var/lib/obsidian-vault";
@@ -31,6 +48,10 @@
 
   };
   systemd.services.n8n = {
+    path = [
+      archiveObsidianNotes
+      prepareCalendarMeetings
+    ];
     serviceConfig = {
       EnvironmentFile = "/var/lib/n8n-secrets/environment";
       MemoryHigh = "1280M";
@@ -48,5 +69,9 @@
     };
   };
 
-  environment.systemPackages = [ pkgs.apacheHttpd ];
+  environment.systemPackages = [
+    archiveObsidianNotes
+    prepareCalendarMeetings
+    pkgs.apacheHttpd
+  ];
 }

@@ -55,22 +55,27 @@ let
     ${pkgs.coreutils}/bin/cp -Rn ${./obsidian-vault}/. /var/lib/obsidian-vault/
     ${pkgs.coreutils}/bin/chown -R root:obsidian-vault /var/lib/obsidian-vault
     ${pkgs.coreutils}/bin/chmod -R u+rwX,g+rwX,o-rwx /var/lib/obsidian-vault
+    ${pkgs.findutils}/bin/find /var/lib/obsidian-vault -type d -exec ${pkgs.coreutils}/bin/chmod g+s {} +
   '';
 in
 {
   users.groups.obsidian-vault = { };
 
   systemd.tmpfiles.rules = [
-    "d /var/lib/obsidian-vault 0770 root obsidian-vault -"
+    # setgid makes files created by n8n and the bridge inherit the shared
+    # obsidian-vault group instead of either service's DynamicUser group.
+    "d /var/lib/obsidian-vault 2770 root obsidian-vault -"
   ];
 
   systemd.services.obsidian-livesync-bridge = {
     description = "Self-hosted LiveSync CouchDB to Markdown bridge";
     documentation = [ "https://github.com/vrtmrz/livesync-bridge" ];
     wantedBy = [ "multi-user.target" ];
+    requires = [ "obsidian-vault-permissions.service" ];
     after = [
       "couchdb.service"
       "network-online.target"
+      "obsidian-vault-permissions.service"
     ];
     wants = [
       "couchdb.service"
@@ -114,6 +119,21 @@ in
         "/var/lib/obsidian-vault"
       ];
     };
+  };
+
+  systemd.services.obsidian-vault-permissions = {
+    description = "Repair shared permissions on the Obsidian filesystem mirror";
+    wantedBy = [ "multi-user.target" ];
+    before = [
+      "n8n.service"
+      "obsidian-livesync-bridge.service"
+    ];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      ${pkgs.coreutils}/bin/chown -R root:obsidian-vault /var/lib/obsidian-vault
+      ${pkgs.coreutils}/bin/chmod -R u+rwX,g+rwX,o-rwx /var/lib/obsidian-vault
+      ${pkgs.findutils}/bin/find /var/lib/obsidian-vault -type d -exec ${pkgs.coreutils}/bin/chmod g+s {} +
+    '';
   };
 
   # Run explicitly after the first mirror completes. Existing files are kept.
