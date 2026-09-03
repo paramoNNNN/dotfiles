@@ -81,7 +81,7 @@
         paranas = {
           email = "paramoNNN@proton.me";
           fullName = "Taha";
-          gitSigningKeys.paranas = "FCF819681F9DD20E";
+          gitSigningKeys.paranas = "32B34AC4E97C8950";
           name = "paranas";
         };
       };
