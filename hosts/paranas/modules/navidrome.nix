@@ -1,15 +1,22 @@
+{ pkgs, ... }:
+
 {
   services.navidrome = {
     enable = true;
+    plugins = with pkgs.navidromePlugins; [
+      apple-music
+      audiomuseai
+    ];
     settings = {
       Plugins.Enabled = true;
       Plugins.AutoReload = true;
       Plugins.LogLevel = "debug";
 
+      EnableExternalServices = true;
       EnableSharing = true;
       CoverArtQuality = 100;
 
-      Agents = "lastfm,listenbrainz";
+      Agents = "audiomuseai,lastfm,listenbrainz";
       LastFM.ScrobbleFirstArtistOnly = true;
 
       Prometheus.Enabled = true;
@@ -20,7 +27,6 @@
     EnvironmentFile = "/var/lib/navidrome-secrets/environment";
     BindReadOnlyPaths = [
       "/storage/media/Music"
-      "/storage/media/Navidrome/Plugins"
     ];
   };
 
