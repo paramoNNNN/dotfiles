@@ -82,7 +82,7 @@ in
     settings = {
       database = {
         type = "sqlite3";
-        path = "/var/lib/grafana/data/grafana-v13.db";
+        path = "/var/lib/grafana/data/grafana-v13-clean.db";
       };
       server = {
         http_addr = "0.0.0.0";
