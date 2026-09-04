@@ -16,6 +16,7 @@
 
     virtualHosts."_default_" = {
       default = true;
+      rejectSSL = true;
 
       locations."/" = {
         return = "404";
