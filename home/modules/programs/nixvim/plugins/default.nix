@@ -20,7 +20,6 @@
     ./package-info.nix
     ./platformio.nix
     ./rainbow-delimiters.nix
-    ./tailwind-tools.nix
     ./telescope.nix
     ./todo-comments.nix
     ./toggleterm.nix
@@ -35,6 +34,5 @@
   programs.nixvim.extraPlugins = with pkgs.vimPlugins; [
     advanced-git-search-nvim
     promise-async
-    tailwind-tools-nvim
   ];
 }
