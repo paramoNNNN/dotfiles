@@ -5,6 +5,7 @@ let
     name = "archive-obsidian-notes";
     runtimeInputs = with pkgs; [
       coreutils
+      diffutils
       findutils
       gawk
       jq
