@@ -15,5 +15,7 @@
     # ./matrix.nix
     ./teamspeak.nix
     ./grafana.nix
+    ./endurain.nix
+    ./dawarich.nix
   ];
 }
