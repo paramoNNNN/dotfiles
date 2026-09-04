@@ -158,8 +158,36 @@
       };
     };
 
-    virtualHosts."ch.dummy" = {
+    virtualHosts."endurain.dummy" = {
       useACMEHost = "dummy";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8020";
+        proxyWebsockets = true;
+        extraConfig = ''
+          client_max_body_size 100M;
+          proxy_read_timeout 300s;
+          proxy_send_timeout 300s;
+        '';
+      };
+    };
+
+    virtualHosts."dawarich.dummy" = {
+      useACMEHost = "dummy";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:8030";
+        proxyWebsockets = true;
+        extraConfig = ''
+          client_max_body_size 250M;
+          proxy_read_timeout 300s;
+          proxy_send_timeout 300s;
+        '';
+      };
+    };
+
+    virtualHosts."ch.paranas.ir" = {
+      useACMEHost = "paranas.ir";
       forceSSL = true;
       extraConfig = ''
         proxy_set_header Host $host;
@@ -225,6 +253,8 @@
           "photos.dummy"
           "n8n.dummy"
           "grafana.dummy"
+          "endurain.dummy"
+          "dawarich.dummy"
         ];
         group = "nginx";
         dnsProvider = "arvancloud";
