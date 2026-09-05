@@ -1,0 +1,12 @@
+{
+  "id": "menuClock",
+  "name": "Menu Bar Clock",
+  "description": "A compact macOS-style 24-hour clock without a separator glyph.",
+  "version": "1.0.0",
+  "author": "Taha",
+  "type": "widget",
+  "capabilities": ["dankbar-widget", "clock"],
+  "component": "./MenuClock.qml",
+  "icon": "schedule",
+  "requires_dms": ">=1.7.0"
+}

@@ -1,0 +1,12 @@
+{
+  "id": "titleMedia",
+  "name": "Now Playing Title",
+  "description": "A title-only now-playing widget that opens the native DMS media dashboard.",
+  "version": "1.0.0",
+  "author": "Taha",
+  "type": "widget",
+  "capabilities": ["dankbar-widget", "mpris"],
+  "component": "./TitleMedia.qml",
+  "icon": "music_note",
+  "requires_dms": ">=1.7.0"
+}

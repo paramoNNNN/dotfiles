@@ -8,7 +8,7 @@
       listener = [
         {
           timeout = 900; # 15 minutes
-          on-timeout = "hyprlock";
+          on-timeout = "loginctl lock-session";
         }
         {
           timeout = 1200; # 20 minutes

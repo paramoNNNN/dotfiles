@@ -1,11 +1,12 @@
-{ ... }:
+{ inputs, ... }:
 {
   imports = [
+    inputs.dms.homeModules.dank-material-shell
     ../modules/common.nix
-    ../modules/swaync.nix
+    ../modules/calendar.nix
+    ../modules/dms.nix
     ../modules/hyprland/hyprland.nix
     ../modules/gnome/gnome.nix
-    ../modules/gammastep.nix
     ../modules/programs/nixcord.nix
     ../modules/programs/obsidian.nix
     ../modules/programs/obsidian.nix

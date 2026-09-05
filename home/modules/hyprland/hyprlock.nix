@@ -4,10 +4,10 @@
     enable = true;
     settings = {
       background = {
-        blur_passes = 2;
-        contrast = 0.8;
-        brightness = 0.8;
-        vibrancy = 0.1696;
+        blur_passes = 0;
+        contrast = 1.0;
+        brightness = 1.0;
+        vibrancy = 0.0;
         vibrancy_darkness = 0.0;
       };
       label = [
@@ -19,8 +19,7 @@
           position = "0, -140";
           halign = "center";
           valign = "top";
-          shadow_passes = "10";
-          shadow_size = "3";
+          shadow_passes = "0";
         }
         {
           text = ''cmd[update:43200000] date +"%A, %d %B %Y"'';
