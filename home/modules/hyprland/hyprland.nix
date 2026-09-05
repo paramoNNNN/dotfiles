@@ -1,9 +1,44 @@
-{ ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  screenshotEditor = pkgs.writeShellScriptBin "screenshot-editor" ''
+    mode="''${1:-region}"
+    capture_dir="${config.home.homeDirectory}/Pictures/Screenshots"
+    ${pkgs.coreutils}/bin/mkdir -p "$capture_dir"
+    output="$capture_dir/$(${pkgs.coreutils}/bin/date +%Y-%m-%d_%H-%M-%S).png"
+
+    case "$mode" in
+      region)
+        geometry="$(${pkgs.slurp}/bin/slurp)" || exit 0
+        ;;
+      window)
+        geometry="$(${pkgs.hyprland}/bin/hyprctl activewindow -j \
+          | ${lib.getExe pkgs.jq} -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"')"
+        ;;
+      *)
+        exit 2
+        ;;
+    esac
+
+    ${pkgs.grim}/bin/grim -g "$geometry" - \
+      | ${lib.getExe pkgs.satty} \
+        --filename - \
+        --output-filename "$output" \
+        --copy-command "${pkgs.wl-clipboard}/bin/wl-copy" \
+        --actions-on-enter save-to-clipboard \
+        --save-after-copy \
+        --early-exit all \
+        --notification-thumbnail screenshot \
+        --fullscreen
+  '';
+in
 {
   imports = [
     ../gtk.nix
-    ../swaync.nix
-    ../waybar.nix
     ../fuzzel.nix
     ./hyprlock.nix
     ./hypridle.nix
@@ -17,14 +52,19 @@
     x11.enable = true;
   };
 
+  home.packages = [
+    screenshotEditor
+    pkgs.gpu-screen-recorder-gtk
+  ];
+
   wayland.windowManager.hyprland = {
     xwayland.enable = true;
-    configType = "hyprlang";
+    configType = "lua";
   };
 
   xdg.configFile = {
-    "hypr/hyprland.conf" = {
-      source = ./hyprland.conf;
+    "hypr/hyprland.lua" = {
+      source = ./hyprland.lua;
     };
 
     "hypr/gamemode.sh" = {

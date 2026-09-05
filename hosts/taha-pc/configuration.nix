@@ -130,7 +130,7 @@
   };
 
   services.libinput.enable = true;
-  services.touchegg.enable = true;
+  services.touchegg.enable = false;
 
   services.openssh = {
     enable = true;
@@ -272,7 +272,6 @@
     unzip
     unrar
     playerctl
-    waybar-mpris
     btop
     nvtopPackages.amd
     openssl
@@ -319,7 +318,6 @@
     pipewire
     pamixer
     wireplumber
-    swaynotificationcenter
     qt5.qtwayland
     gcc
     libgcc

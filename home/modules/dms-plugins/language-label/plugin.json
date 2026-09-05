@@ -1,0 +1,12 @@
+{
+  "id": "languageLabel",
+  "name": "Language Label",
+  "description": "Compact EN/FA keyboard layout indicator for Hyprland.",
+  "version": "1.0.0",
+  "author": "Taha",
+  "type": "widget",
+  "capabilities": ["dankbar-widget"],
+  "component": "./LanguageLabel.qml",
+  "icon": "keyboard",
+  "requires_dms": ">=1.7.0"
+}

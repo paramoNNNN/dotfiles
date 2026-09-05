@@ -160,6 +160,22 @@
         "type": "github"
       }
     },
+    "dank-qml-common": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1788376015,
+        "narHash": "sha256-/tT8rTznLADndTwLBzdgzzgfJH1ZhYQibYo5v/F8U+U=",
+        "owner": "AvengeMedia",
+        "repo": "dank-qml-common",
+        "rev": "26396ce432d6c71c3f5367438f96f4a8d667e160",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AvengeMedia",
+        "repo": "dank-qml-common",
+        "type": "github"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -177,6 +193,28 @@
       "original": {
         "owner": "LnL7",
         "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
+    "dms": {
+      "inputs": {
+        "dank-qml-common": "dank-qml-common",
+        "flake-compat": "flake-compat",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1788565319,
+        "narHash": "sha256-bK2ikO7yYqgff8WU7JkB1clafCuS9pGcN22wm7Xwf+k=",
+        "owner": "AvengeMedia",
+        "repo": "DankMaterialShell",
+        "rev": "e4793327b8b21d104d46bf53414b228d80986585",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AvengeMedia",
+        "repo": "DankMaterialShell",
         "type": "github"
       }
     },
@@ -220,6 +258,22 @@
       }
     },
     "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767039857,
+        "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
+        "owner": "NixOS",
+        "repo": "flake-compat",
+        "rev": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "flake-compat_2": {
       "flake": false,
       "locked": {
         "lastModified": 1767039857,
@@ -717,6 +771,7 @@
       "inputs": {
         "apple-fonts": "apple-fonts",
         "darwin": "darwin",
+        "dms": "dms",
         "hardware": "hardware",
         "headscale": "headscale",
         "home-manager": "home-manager",
@@ -1089,7 +1144,7 @@
     },
     "vicinae-extensions": {
       "inputs": {
-        "flake-compat": "flake-compat",
+        "flake-compat": "flake-compat_2",
         "nixpkgs": [
           "nixpkgs"
         ],
