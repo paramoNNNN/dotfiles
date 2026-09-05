@@ -20,8 +20,8 @@
           }
           {
             __unkeyed-1 = "<leader>fg";
-            __unkeyed-2 = "<Cmd>Telescope live_grep<CR>";
-            desc = "Live grep";
+            __unkeyed-2 = "<Cmd>Telescope live_grep_args<CR>";
+            desc = "Live grep with arguments";
           }
           {
             __unkeyed-1 = "<leader>fh";
@@ -47,6 +47,7 @@
       enable = true;
       extensions = {
         file-browser.enable = true;
+        live-grep-args.enable = true;
       };
       enabledExtensions = [ "advanced_git_search" ];
       settings = {
