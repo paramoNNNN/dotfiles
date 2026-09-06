@@ -1,0 +1,12 @@
+{
+  "id": "nextEvent",
+  "name": "Next Event",
+  "description": "Shows the next calendar event in the bar and opens the DMS calendar.",
+  "version": "1.0.0",
+  "author": "Taha",
+  "type": "widget",
+  "capabilities": ["dankbar-widget", "calendar"],
+  "component": "./NextEvent.qml",
+  "icon": "calendar_month",
+  "requires_dms": ">=1.7.0"
+}
