@@ -445,7 +445,16 @@
 
   system.stateVersion = "24.11";
 
-  services.displayManager.gdm.enable = true;
+  services.displayManager = {
+    autoLogin = {
+      enable = true;
+      user = "taha";
+    };
+    gdm = {
+      enable = true;
+      autoSuspend = false;
+    };
+  };
   services.desktopManager.gnome.enable = true;
 
   programs.hyprland = {
