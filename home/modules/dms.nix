@@ -111,6 +111,11 @@ in
       src = ./dms-plugins/language-label;
       settings.managed = true;
     };
+    plugins.nextEvent = {
+      enable = true;
+      src = ./dms-plugins/next-event;
+      settings.managed = true;
+    };
 
     # GNOME Night Light-style automatic sunset/sunrise scheduling. DMS owns
     # gamma control, so Gammastep is intentionally not started alongside it.
@@ -268,6 +273,10 @@ in
             }
           ];
           rightWidgets = [
+            {
+              id = "nextEvent";
+              enabled = true;
+            }
             {
               id = "systemTray";
               enabled = true;
