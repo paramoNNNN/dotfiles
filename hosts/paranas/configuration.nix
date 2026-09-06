@@ -30,6 +30,18 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  systemd.services.enable-wake-on-lan = {
+    description = "Enable Wake-on-LAN for enp1s0";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network-pre.target" ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.ethtool}/bin/ethtool --change enp1s0 wol g";
+    };
+  };
+
   services.resolved = {
     enable = true;
     settings = {
