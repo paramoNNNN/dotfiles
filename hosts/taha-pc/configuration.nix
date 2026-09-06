@@ -264,6 +264,7 @@
     ngrok
     prettierd
     eslint_d
+    glab
 
     openvpn
     xray
