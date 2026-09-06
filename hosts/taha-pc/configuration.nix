@@ -39,6 +39,19 @@
     enable = true;
     plugins = with pkgs; [ networkmanager-openvpn ];
   };
+
+  systemd.services.enable-wake-on-lan = {
+    description = "Enable Wake-on-LAN for enp6s0";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network-pre.target" ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.ethtool}/bin/ethtool --change enp6s0 wol g";
+    };
+  };
+
   networking.nameservers = [ "192.168.1.1" ];
 
   services.resolved = {
