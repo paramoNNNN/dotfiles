@@ -367,6 +367,43 @@
 
   services.tailscale.enable = true;
 
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = false;
+    settings.csrf_allowed_origins = "https://100.64.0.1:47990";
+  };
+  networking.firewall.interfaces."tailscale0" = {
+    allowedTCPPorts = [
+      47984
+      47989
+      47990
+      48010
+    ];
+    allowedUDPPorts = [
+      47998
+      47999
+      48000
+      48002
+      48010
+    ];
+  };
+  networking.firewall.interfaces."enp6s0" = {
+    allowedTCPPorts = [
+      47984
+      47989
+      48010
+    ];
+    allowedUDPPorts = [
+      47998
+      47999
+      48000
+      48002
+      48010
+    ];
+  };
+
   programs._1password.enable = true;
   programs._1password-gui = {
     enable = true;
