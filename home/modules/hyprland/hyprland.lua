@@ -30,7 +30,10 @@ hl.config({
 		inactive_opacity = 1.0,
 		dim_special = 0,
 		blur = {
-			enabled = false,
+			enabled = true,
+			size = 8,
+			passes = 2,
+			vibrancy = 0.15,
 		},
 		shadow = {
 			enabled = false,
@@ -67,6 +70,15 @@ hl.config({
 		workspace_swipe_distance = 600,
 		workspace_swipe_min_speed_to_force = 2,
 	},
+})
+
+-- DMS keeps its auto-hide dock surface alive and moves its contents internally,
+-- so its transition is handled in DMS while Hyprland supplies the background blur.
+hl.layer_rule({
+	name = "dms-dock-blur",
+	match = { namespace = "dms:dock" },
+	blur = true,
+	ignore_alpha = 0.1,
 })
 
 hl.animation({ leaf = "windows", enabled = true, speed = 5, bezier = "default" })

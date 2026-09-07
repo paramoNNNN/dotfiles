@@ -11,50 +11,52 @@ let
   # DMS's stock Stylix mapping uses base04 for secondary text. With this light
   # palette that is too close to the notification card background, so use the
   # normal foreground for both primary and secondary surface text.
-  dmsHighContrastTheme = pkgs.writeText "dms-stylix-high-contrast.json" (builtins.toJSON {
-    dark = {
-      name = "Stylix High Contrast";
-      background = "#${c.base00}";
-      backgroundText = "#${c.base05}";
-      surface = "#${c.base01}";
-      surfaceContainer = "#${c.base01}";
-      surfaceContainerHigh = "#${c.base02}";
-      surfaceContainerHighest = "#${c.base03}";
-      surfaceVariant = "#${c.base02}";
-      surfaceText = "#${c.base05}";
-      surfaceVariantText = "#${c.base05}";
-      outline = "#${c.base03}";
-      primary = "#${c.base0D}";
-      primaryText = "#${c.base00}";
-      primaryContainer = "#${c.base0C}";
-      secondary = "#${c.base0E}";
-      error = "#${c.base08}";
-      warning = "#${c.base0A}";
-      info = "#${c.base0C}";
-      surfaceTint = "#${c.base0D}";
-    };
-    light = {
-      name = "Stylix High Contrast";
-      background = "#${c.base00}";
-      backgroundText = "#${c.base05}";
-      surface = "#${c.base01}";
-      surfaceContainer = "#${c.base01}";
-      surfaceContainerHigh = "#${c.base02}";
-      surfaceContainerHighest = "#${c.base03}";
-      surfaceVariant = "#${c.base02}";
-      surfaceText = "#${c.base05}";
-      surfaceVariantText = "#${c.base05}";
-      outline = "#${c.base03}";
-      primary = "#${c.base0D}";
-      primaryText = "#${c.base00}";
-      primaryContainer = "#${c.base0C}";
-      secondary = "#${c.base0E}";
-      error = "#${c.base08}";
-      warning = "#${c.base0A}";
-      info = "#${c.base0C}";
-      surfaceTint = "#${c.base0D}";
-    };
-  });
+  dmsHighContrastTheme = pkgs.writeText "dms-stylix-high-contrast.json" (
+    builtins.toJSON {
+      dark = {
+        name = "Stylix High Contrast";
+        background = "#${c.base00}";
+        backgroundText = "#${c.base05}";
+        surface = "#${c.base01}";
+        surfaceContainer = "#${c.base01}";
+        surfaceContainerHigh = "#${c.base02}";
+        surfaceContainerHighest = "#${c.base03}";
+        surfaceVariant = "#${c.base02}";
+        surfaceText = "#${c.base05}";
+        surfaceVariantText = "#${c.base05}";
+        outline = "#${c.base03}";
+        primary = "#${c.base0D}";
+        primaryText = "#${c.base00}";
+        primaryContainer = "#${c.base0C}";
+        secondary = "#${c.base0E}";
+        error = "#${c.base08}";
+        warning = "#${c.base0A}";
+        info = "#${c.base0C}";
+        surfaceTint = "#${c.base0D}";
+      };
+      light = {
+        name = "Stylix High Contrast";
+        background = "#${c.base00}";
+        backgroundText = "#${c.base05}";
+        surface = "#${c.base01}";
+        surfaceContainer = "#${c.base01}";
+        surfaceContainerHigh = "#${c.base02}";
+        surfaceContainerHighest = "#${c.base03}";
+        surfaceVariant = "#${c.base02}";
+        surfaceText = "#${c.base05}";
+        surfaceVariantText = "#${c.base05}";
+        outline = "#${c.base03}";
+        primary = "#${c.base0D}";
+        primaryText = "#${c.base00}";
+        primaryContainer = "#${c.base0C}";
+        secondary = "#${c.base0E}";
+        error = "#${c.base08}";
+        warning = "#${c.base0A}";
+        info = "#${c.base0C}";
+        surfaceTint = "#${c.base0D}";
+      };
+    }
+  );
   setDmsProfileImage = pkgs.writeShellScript "set-dms-profile-image" ''
     image_path="$1"
     for attempt in $(${pkgs.coreutils}/bin/seq 1 40); do
@@ -79,6 +81,16 @@ in
         substituteInPlace $out/share/quickshell/dms/Widgets/DankPopout.qml \
           --replace-fail 'it.popupWidth = Qt.binding(() => root.popupWidth);' 'it.popupWidth = Qt.binding(() => root.popupWidth * 1.125);' \
           --replace-fail 'it.popupHeight = Qt.binding(() => root.popupHeight);' 'it.popupHeight = Qt.binding(() => root.popupHeight * 1.125);'
+        # The stock auto-hide dock uses a very stiff 200 ms spring. Use DMS's
+        # softer 400 ms spring so reveal/hide motion resembles Hyprland's
+        # smooth, critically damped transitions.
+        substituteInPlace $out/share/quickshell/dms/Modules/Dock/DockBody.qml \
+          --replace-fail 'Theme.springPreset("fast", Theme.shortDuration)' 'Theme.springPreset("default", Theme.mediumDuration)'
+        # Match icon hover motion to the dock's softer timing instead of the
+        # stock abrupt 200 ms acceleration.
+        substituteInPlace $out/share/quickshell/dms/Modules/Dock/DockAppButton.qml \
+          --replace-warn 'duration: Anims.durShort' 'duration: Theme.mediumDuration' \
+          --replace-fail 'easing.bezierCurve: Anims.emphasizedAccel' 'easing.bezierCurve: Anims.standardDecel'
         chmod u+w $out/share/quickshell/dms/Widgets
         for backend in DankPopoutStandalone.qml DankPopoutConnected.qml; do
           sed -i '/id: contentLoader/{n;s|anchors.fill: parent|anchors.left: parent.left\n                            anchors.top: parent.top\n                            width: parent.width / 1.125\n                            height: parent.height / 1.125\n                            scale: 1.125\n                            transformOrigin: Item.TopLeft|;}' \
@@ -126,6 +138,13 @@ in
       nightModeAutoEnabled = true;
       nightModeAutoMode = "location";
       nightModeUseIPLocation = true;
+      pinnedApps = [
+        "firefox"
+        "com.mitchellh.ghostty"
+        "Mattermost"
+        "obsidian"
+        "feishin"
+      ];
     };
 
     # Keep application theming under Stylix. DMS still controls its own light
@@ -138,6 +157,7 @@ in
       clockDateFormat = "ddd MMM d";
       fontFamily = lib.mkForce "SF Compact Rounded";
       fontWeight = 500;
+      lockScreenFontFamily = "SF Compact Rounded";
       # Popouts do not inherit the per-bar scale. Give control center and
       # notification surfaces a modest typography bump for the 4K display.
       fontScale = 1.25;
@@ -155,6 +175,35 @@ in
       audioVisualizerEnabled = false;
       systemTrayIconTintMode = "primary";
       soundNewNotification = false;
+
+      # Bottom application dock. These values mirror the configuration made
+      # in the DMS settings UI; keeping them here makes it survive rebuilds.
+      showDock = true;
+      dockAutoHide = false;
+      dockSmartAutoHide = true;
+      dockUseOverlayLayer = true;
+      dockShowOnFullscreen = true;
+      dockGroupByApp = true;
+      dockSeparatePinnedAndRunningApps = false;
+      dockRestoreSpecialWorkspaceOnClick = false;
+      dockOpenOnOverview = false;
+      dockPosition = 1; # Bottom.
+      dockSpacing = 12;
+      dockBottomGap = 0;
+      dockMargin = 8;
+      dockIconSize = 86;
+      dockIndicatorStyle = "circle";
+      dockBorderEnabled = true;
+      dockBorderColor = "secondary";
+      dockBorderOpacity = 0.19;
+      dockBorderThickness = 1;
+      dockIsolateDisplays = false;
+      dockLauncherEnabled = false;
+      dockMaxVisibleApps = 0;
+      dockMaxVisibleRunningApps = 0;
+      dockShowOverflowBadge = true;
+      dockShowTrash = false;
+      dockTransparency = lib.mkForce 0.85;
 
       # Keep every shell surface flat and opaque. Hyprland owns the only
       # remaining animations: windows and workspaces.
@@ -177,6 +226,19 @@ in
       showWorkspaceApps = false;
       showOccupiedWorkspacesOnly = false;
       workspaceScrolling = true;
+
+      appIdSubstitutions = [
+        {
+          pattern = "Mattermost.Desktop";
+          replacement = "Mattermost";
+          type = "exact";
+        }
+        {
+          pattern = "md.Obsidian";
+          replacement = "obsidian";
+          type = "exact";
+        }
+      ];
 
       # The media widget uses the wheel for previous/next instead of changing
       # an individual player's volume.
