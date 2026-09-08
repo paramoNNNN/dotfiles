@@ -1,11 +1,38 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
+let
+  audiomuseaiV10 = pkgs.stdenvNoCC.mkDerivation {
+    pname = "audiomuseai";
+    version = "10";
+
+    src = pkgs.fetchurl {
+      url = "https://github.com/NeptuneHub/AudioMuse-AI-NV-plugin/releases/download/v10/audiomuseai.ndp";
+      hash = "sha256-wTjprxbwl9jNB6yVf7iknZGn2gZuW0oUV8rb1HmqEKc=";
+    };
+
+    dontUnpack = true;
+    installPhase = ''
+      runHook preInstall
+      install -Dm444 "$src" "$out/share/audiomuseai.ndp"
+      runHook postInstall
+    '';
+
+    passthru.isNavidromePlugin = true;
+
+    meta = {
+      description = "AudioMuse-AI integration plugin for Navidrome";
+      homepage = "https://github.com/NeptuneHub/AudioMuse-AI-NV-plugin";
+      license = lib.licenses.agpl3Only;
+      sourceProvenance = with lib.sourceTypes; [ binaryNativeCode ];
+    };
+  };
+in
 {
   services.navidrome = {
     enable = true;
     plugins = with pkgs.navidromePlugins; [
       apple-music
-      audiomuseai
+      audiomuseaiV10
     ];
     settings = {
       Plugins.Enabled = true;
