@@ -10,6 +10,7 @@ PluginComponent {
     property var popoutService: null
     readonly property var player: MprisController.activePlayer
     readonly property string title: MprisController.stableTitle || ""
+    readonly property string artUrl: TrackArtService.resolvedArtUrl || root.player?.trackArtUrl || ""
     readonly property bool isPlaying: root.player !== null && root.player.playbackState === 1
 
     pillClickAction: (x, y, width, section, screen) => {
@@ -26,6 +27,15 @@ PluginComponent {
                 id: mediaRow
                 anchors.centerIn: parent
                 spacing: Theme.spacingS
+
+                MediaArtwork {
+                    id: artwork
+                    width: Math.min(24, root.widgetThickness - 6)
+                    height: width
+                    anchors.verticalCenter: parent.verticalCenter
+                    artUrl: root.artUrl
+                    cornerRadius: 5
+                }
 
                 Row {
                     id: equalizer
@@ -66,7 +76,7 @@ PluginComponent {
 
                 StyledText {
                     id: titleText
-                    width: Math.min(implicitWidth, 280)
+                    width: Math.min(implicitWidth, 310 - artwork.width - equalizer.width - mediaRow.spacing * 2)
                     anchors.verticalCenter: parent.verticalCenter
                     text: root.title
                     color: Theme.widgetTextColor
