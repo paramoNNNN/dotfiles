@@ -10,6 +10,8 @@ PluginComponent {
     property var popoutService: null
     readonly property var player: MprisController.activePlayer
     readonly property string title: MprisController.stableTitle || ""
+    readonly property string artist: MprisController.stableArtist || ""
+    readonly property string displayText: root.artist.length > 0 ? root.artist + " - " + root.title : root.title
     readonly property string artUrl: TrackArtService.resolvedArtUrl || root.player?.trackArtUrl || ""
     readonly property bool isPlaying: root.player !== null && root.player.playbackState === 1
 
@@ -20,7 +22,7 @@ PluginComponent {
     horizontalBarPill: Component {
         Item {
             visible: root.player !== null && root.title.length > 0
-            implicitWidth: visible ? Math.min(mediaRow.implicitWidth, 310) : 0
+            implicitWidth: visible ? mediaRow.implicitWidth : 0
             implicitHeight: root.widgetThickness
 
             Row {
@@ -37,6 +39,15 @@ PluginComponent {
                     cornerRadius: 5
                 }
 
+                Loader {
+                    active: root.isPlaying
+                    sourceComponent: Component {
+                        Ref {
+                            service: CavaService
+                        }
+                    }
+                }
+
                 Row {
                     id: equalizer
                     anchors.verticalCenter: parent.verticalCenter
@@ -45,29 +56,25 @@ PluginComponent {
                     height: 16
 
                     Repeater {
-                        model: [7, 13, 9, 15]
+                        model: 4
 
                         Rectangle {
-                            required property int modelData
                             required property int index
+                            readonly property real level: {
+                                const value = CavaService.values[index] || 0;
+                                return Math.sqrt(Math.max(0, Math.min(100, value)) / 100);
+                            }
+
                             width: 3
-                            height: root.isPlaying ? modelData : 3
+                            height: root.isPlaying ? 3 + level * 11 : 3
                             anchors.bottom: parent.bottom
-                            radius: 1.5
+                            radius: width / 2
                             color: Theme.primary
 
-                            SequentialAnimation on height {
-                                running: root.isPlaying
-                                loops: Animation.Infinite
+                            Behavior on height {
                                 NumberAnimation {
-                                    to: 4 + ((index * 5) % 11)
-                                    duration: 180 + index * 35
-                                    easing.type: Easing.InOutSine
-                                }
-                                NumberAnimation {
-                                    to: 15 - ((index * 3) % 8)
-                                    duration: 220 + index * 30
-                                    easing.type: Easing.InOutSine
+                                    duration: 40
+                                    easing.type: Easing.OutQuad
                                 }
                             }
                         }
@@ -76,13 +83,11 @@ PluginComponent {
 
                 StyledText {
                     id: titleText
-                    width: Math.min(implicitWidth, 310 - artwork.width - equalizer.width - mediaRow.spacing * 2)
                     anchors.verticalCenter: parent.verticalCenter
-                    text: root.title
+                    text: root.displayText
                     color: Theme.widgetTextColor
                     font.pixelSize: Theme.barTextSize(root.barThickness, 1.07)
                     verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
                 }
             }
         }
