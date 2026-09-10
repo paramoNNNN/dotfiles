@@ -40,7 +40,6 @@ in
   imports = [
     ../gtk.nix
     ../fuzzel.nix
-    ./hyprlock.nix
     ./hypridle.nix
     ./hyprpaper.nix
   ];
