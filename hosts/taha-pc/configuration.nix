@@ -119,8 +119,6 @@
   };
 
   security.polkit.enable = true;
-  security.pam.services.hyprlock = { };
-
   services.blueman.enable = true;
   hardware = {
     graphics = {
@@ -293,7 +291,6 @@
     hyprshot
     hyprpicker
     hypridle
-    hyprlock
     mkcert
     wl-clipboard
     wl-screenrec
