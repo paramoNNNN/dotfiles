@@ -70,16 +70,21 @@ in
       text = ''
         #!/usr/bin/env sh
         HYPRGAMEMODE=$(hyprctl getoption animations:enabled | awk 'NR==1{print $2}')
-        if [ "$HYPRGAMEMODE" = 1 ] ; then
-            hyprctl --batch "\
-                keyword animations:enabled 0;\
-                keyword decoration:shadow:enabled 0;\
-                keyword decoration:blur:enabled 0;\
-                keyword general:allow_tearing 1;\
-                keyword general:gaps_in 0;\
-                keyword general:gaps_out 0;\
-                keyword general:border_size 1;\
-                keyword decoration:rounding 0"
+        if [ "$HYPRGAMEMODE" = true ] || [ "$HYPRGAMEMODE" = 1 ]; then
+            hyprctl eval 'hl.config({
+                animations = { enabled = false },
+                general = {
+                    allow_tearing = true,
+                    gaps_in = 0,
+                    gaps_out = 0,
+                    border_size = 1,
+                },
+                decoration = {
+                    rounding = 0,
+                    blur = { enabled = false },
+                    shadow = { enabled = false },
+                },
+            })'
             exit
         fi
         hyprctl reload
