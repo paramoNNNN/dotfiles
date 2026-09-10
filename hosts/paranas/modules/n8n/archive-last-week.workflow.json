@@ -1,0 +1,62 @@
+{
+  "name": "Archive Last Week's Obsidian Notes",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "15 0 * * 6"
+            }
+          ]
+        }
+      },
+      "id": "saturday-schedule",
+      "name": "Every Saturday at 00:15",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -220,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "command": "archive-obsidian-notes"
+      },
+      "id": "archive-last-week",
+      "name": "Archive previous Saturday through Friday",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        20,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Every Saturday at 00:15": {
+      "main": [
+        [
+          {
+            "node": "Archive previous Saturday through Friday",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Tehran",
+    "availableInMCP": false
+  },
+  "active": false,
+  "versionId": "94d04e59-5f5d-484e-965d-0e6abcc4b874",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": []
+}

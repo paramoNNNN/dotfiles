@@ -36,10 +36,10 @@
     },
     {
       "parameters": {
-        "command": "archive-obsidian-notes"
+        "command": "archive-obsidian-notes --scan-only"
       },
       "id": "archive-notes",
-      "name": "Archive old notes and find todos",
+      "name": "Find remaining todos",
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
@@ -481,14 +481,14 @@
       "main": [
         [
           {
-            "node": "Archive old notes and find todos",
+            "node": "Find remaining todos",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Archive old notes and find todos": {
+    "Find remaining todos": {
       "main": [
         [
           {

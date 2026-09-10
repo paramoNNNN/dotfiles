@@ -10,6 +10,11 @@ from zoneinfo import ZoneInfo
 
 TEHRAN = ZoneInfo("Asia/Tehran")
 ROUTINE_WORDS = re.compile(r"\b(daily|planning|retro(?:spective)?)\b", re.I)
+REQUIRED_SECTIONS = ["Raw notes", "Summary", "Decisions", "Actions"]
+TEMPLATE_PLACEHOLDERS = {
+    "Raw notes": "Write freely here. AI processing must preserve this section unchanged.",
+    "Summary": "<!-- Generated after the meeting. -->",
+}
 
 
 def unfold_ics(value: str) -> list[str]:
@@ -56,8 +61,7 @@ def slug(value: str) -> str:
 
 
 def missing_sections(note: str) -> list[str]:
-    required = ["Agenda", "Notes", "Decisions", "Action items"]
-    sections: dict[str, list[str]] = {name: [] for name in required}
+    sections: dict[str, list[str]] = {name: [] for name in REQUIRED_SECTIONS}
     active: str | None = None
     for line in note.splitlines():
         heading = re.match(r"^##\s+(.+?)\s*$", line)
@@ -66,14 +70,40 @@ def missing_sections(note: str) -> list[str]:
         elif active:
             sections[active].append(line)
 
-    def meaningful(lines: list[str]) -> bool:
+    def meaningful(name: str, lines: list[str]) -> bool:
         for line in lines:
             value = line.strip()
-            if value and value not in {"-", "- [ ]", "*", "* [ ]"}:
-                return True
+            if not value or value in {"-", "- [ ]", "*", "* [ ]"}:
+                continue
+            if value == TEMPLATE_PLACEHOLDERS.get(name):
+                continue
+            if value.startswith("<!--") and value.endswith("-->"):
+                continue
+            return True
         return False
 
-    return [name for name in required if not meaningful(sections[name])]
+    return [
+        name for name in REQUIRED_SECTIONS if not meaningful(name, sections[name])
+    ]
+
+
+def render_meeting(template: str, title: str, start: datetime) -> str:
+    note = template.replace("{{date:YYYY-MM-DD}}", start.date().isoformat())
+    note = note.replace("{{title}}", title)
+
+    # Calendar-created notes retain the canonical template and add the event's
+    # start time to its frontmatter. Avoid adding it twice if the live template
+    # later gains its own start field.
+    frontmatter_end = note.find("\n---", 4)
+    frontmatter = note[:frontmatter_end] if frontmatter_end != -1 else ""
+    if not re.search(r"(?m)^start:", frontmatter):
+        note = re.sub(
+            r"(?m)^(date:.*)$",
+            rf'\1\nstart: "{start.strftime("%H:%M")}"',
+            note,
+            count=1,
+        )
+    return note.rstrip() + "\n"
 
 
 def main() -> None:
@@ -100,10 +130,14 @@ def main() -> None:
 
     today = datetime.now(TEHRAN).date()
     first_day = today - timedelta(days=29)
-    meetings_dir = Path(
+    prepare_through = today + timedelta(days=7)
+    vault = Path(
         os.environ.get("OBSIDIAN_VAULT_ROOT", "/var/lib/obsidian-vault")
-    ) / "Meetings"
+    )
+    meetings_dir = vault / "Meetings"
     meetings_dir.mkdir(parents=True, exist_ok=True)
+    template_path = vault / "Templates" / "Meeting.md"
+    template = template_path.read_text(encoding="utf-8")
     meetings = []
 
     for event in events:
@@ -113,7 +147,7 @@ def main() -> None:
             continue
         start = parse_start(start_key, event[start_key])
         event_date = start.date()
-        if not first_day <= event_date <= today:
+        if not first_day <= event_date <= prepare_through:
             continue
 
         filename = f"{event_date.isoformat()}-{slug(title)}.md"
@@ -121,35 +155,7 @@ def main() -> None:
         target = meetings_dir / filename
         created = False
         if not target.exists():
-            note = "\n".join(
-                [
-                    "---",
-                    "type: meeting",
-                    f'date: "{event_date.isoformat()}"',
-                    f'start: "{start.strftime("%H:%M")}"',
-                    f'title: {json.dumps(title, ensure_ascii=False)}',
-                    "---",
-                    "",
-                    f"# {title}",
-                    "",
-                    f"- **When:** {start.strftime('%Y-%m-%d %H:%M')} Asia/Tehran",
-                    "",
-                    "## Agenda",
-                    "",
-                    "- ",
-                    "",
-                    "## Notes",
-                    "",
-                    "## Decisions",
-                    "",
-                    "- ",
-                    "",
-                    "## Action items",
-                    "",
-                    "- [ ] ",
-                    "",
-                ]
-            )
+            note = render_meeting(template, title, start)
             try:
                 with target.open("x", encoding="utf-8") as handle:
                     handle.write(note)
@@ -158,7 +164,9 @@ def main() -> None:
                 pass
 
         missing = missing_sections(target.read_text(encoding="utf-8"))
-        if missing:
+        # Future events are prepared here, but the daily brief only audits
+        # meetings which have already started.
+        if missing and event_date <= today:
             meetings.append(
                 {
                     "title": title,
@@ -177,6 +185,7 @@ def main() -> None:
                 "calendarConfigured": True,
                 "checkedFrom": first_day.isoformat(),
                 "checkedThrough": today.isoformat(),
+                "preparedThrough": prepare_through.isoformat(),
             }
         )
     )
