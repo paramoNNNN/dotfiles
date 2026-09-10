@@ -91,6 +91,11 @@ in
         substituteInPlace $out/share/quickshell/dms/Modules/Dock/DockAppButton.qml \
           --replace-warn 'duration: Anims.durShort' 'duration: Theme.mediumDuration' \
           --replace-fail 'easing.bezierCurve: Anims.emphasizedAccel' 'easing.bezierCurve: Anims.standardDecel'
+        # Keep the microphone OSD visible while its input is muted. Unmuting
+        # restores the normal three-second timeout.
+        substituteInPlace $out/share/quickshell/dms/Modules/OSD/MicVolumeOSD.qml \
+          --replace-fail 'autoHideInterval: 3000' 'autoHideInterval: AudioService.source?.audio?.muted ? 2147483647 : 3000' \
+          --replace-fail 'if (root.shouldBeVisible && SettingsData.osdMicVolumeEnabled)' 'if ((AudioService.source?.audio?.muted && SettingsData.osdMicMuteEnabled) || (root.shouldBeVisible && SettingsData.osdMicVolumeEnabled))'
         chmod u+w $out/share/quickshell/dms/Widgets
         for backend in DankPopoutStandalone.qml DankPopoutConnected.qml; do
           sed -i '/id: contentLoader/{n;s|anchors.fill: parent|anchors.left: parent.left\n                            anchors.top: parent.top\n                            width: parent.width / 1.125\n                            height: parent.height / 1.125\n                            scale: 1.125\n                            transformOrigin: Item.TopLeft|;}' \
@@ -173,6 +178,7 @@ in
       enableRippleEffects = false;
       springBounce = 0;
       audioVisualizerEnabled = false;
+      osdMicMuteEnabled = true;
       systemTrayIconTintMode = "primary";
       soundNewNotification = false;
 
