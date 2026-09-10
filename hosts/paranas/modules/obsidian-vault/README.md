@@ -17,6 +17,7 @@ LiveSync Bridge then sends the new starter notes to Obsidian clients.
 Recommended community plugins:
 
 - Tasks for vault-wide task queries.
+- Kanban for weekend-project boards embedded in their project pages.
 - QuickAdd for one-key meeting and inbox capture.
 - Either Text Generator or Copilot for processing raw meeting notes.
 
