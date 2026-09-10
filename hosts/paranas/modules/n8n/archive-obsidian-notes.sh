@@ -2,14 +2,28 @@ set -euo pipefail
 
 vault=${OBSIDIAN_VAULT_ROOT:-/var/lib/obsidian-vault}
 today=$(TZ=Asia/Tehran date +%F)
-current_month=${today%??}
-current_month=${current_month%-}
 archive_root="$vault/Archive"
+scan_only=false
+
+if [ "${1:-}" = "--scan-only" ]; then
+  scan_only=true
+elif [ "$#" -ne 0 ]; then
+  echo "Usage: archive-obsidian-notes [--scan-only]" >&2
+  exit 2
+fi
+
+# Weeks run Saturday through Friday. On Saturday, archive exactly the week
+# which ended the previous day.
+weekday=$(TZ=Asia/Tehran date -d "$today" +%u)
+days_since_saturday=$(( (weekday + 1) % 7 ))
+current_week_start=$(TZ=Asia/Tehran date -d "$today - $days_since_saturday days" +%F)
+last_week_start=$(TZ=Asia/Tehran date -d "$current_week_start - 7 days" +%F)
+last_week_end=$(TZ=Asia/Tehran date -d "$current_week_start - 1 day" +%F)
 
 archived_daily=0
 archived_briefings=0
 
-archive_completed_months() {
+archive_last_week() {
   source_name=$1
   source_dir="$vault/$source_name"
 
@@ -26,7 +40,8 @@ archive_completed_months() {
       *) continue ;;
     esac
 
-    [[ "$note_month" < "$current_month" ]] || continue
+    [[ "$note_date" < "$last_week_start" ]] && continue
+    [[ "$note_date" > "$last_week_end" ]] && continue
 
     target_dir="$archive_root/$note_month/$source_name"
     mkdir -p "$target_dir"
@@ -71,8 +86,10 @@ archive_completed_months() {
   done < <(find "$source_dir" -maxdepth 1 -type f -name '????-??-??.md' -print0)
 }
 
-archive_completed_months Daily
-archive_completed_months Briefings
+if ! $scan_only; then
+  archive_last_week Daily
+  archive_last_week Briefings
+fi
 
 # Scan both active and archived Daily folders so unfinished tasks stay visible.
 todos_json=$(
