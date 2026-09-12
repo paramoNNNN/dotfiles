@@ -1,0 +1,13 @@
+{
+  "id": "tailscaleAccounts",
+  "name": "Tailscale Accounts",
+  "description": "Tailscale connection status and saved-account switcher.",
+  "version": "1.0.0",
+  "author": "Taha",
+  "type": "widget",
+  "capabilities": ["control-center"],
+  "component": "./TailscaleAccounts.qml",
+  "icon": "device_hub",
+  "dependencies": ["tailscale"],
+  "permissions": ["process"]
+}
