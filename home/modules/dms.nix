@@ -133,6 +133,11 @@ in
       src = ./dms-plugins/next-event;
       settings.managed = true;
     };
+    plugins.tailscaleAccounts = {
+      enable = true;
+      src = ./dms-plugins/tailscale-accounts;
+      settings.managed = true;
+    };
 
     # GNOME Night Light-style automatic sunset/sunrise scheduling. DMS owns
     # gamma control, so Gammastep is intentionally not started alongside it.
@@ -289,6 +294,11 @@ in
         }
         {
           id = "builtin_vpn";
+          enabled = true;
+          width = 50;
+        }
+        {
+          id = "plugin_tailscaleAccounts";
           enabled = true;
           width = 50;
         }
