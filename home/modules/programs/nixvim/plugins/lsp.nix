@@ -115,8 +115,8 @@
     lsp = {
       enable = true;
       servers = {
-        tsgo.enable = true;
-        # ts_ls.enable = true;
+        # tsgo.enable = true;
+        ts_ls.enable = true;
         nil_ls.enable = true;
         cssls.enable = true;
         html.enable = true;
@@ -126,14 +126,6 @@
         dockerls.enable = true;
         yamlls.enable = true;
         biome = {
-          enable = true;
-          packageFallback = true;
-        };
-        oxlint = {
-          enable = true;
-          packageFallback = true;
-        };
-        oxfmt = {
           enable = true;
           packageFallback = true;
         };
