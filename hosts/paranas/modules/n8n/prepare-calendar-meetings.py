@@ -2,6 +2,7 @@ import json
 import os
 import re
 import sys
+import urllib.error
 import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -113,8 +114,21 @@ def main() -> None:
         return
 
     request = urllib.request.Request(url, headers={"User-Agent": "n8n-calendar/1"})
-    with urllib.request.urlopen(request, timeout=30) as response:
-        content = response.read().decode("utf-8-sig")
+    try:
+        with urllib.request.urlopen(request, timeout=30) as response:
+            content = response.read().decode("utf-8-sig")
+    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as error:
+        print(
+            json.dumps(
+                {
+                    "meetings": [],
+                    "calendarConfigured": False,
+                    "calendarAvailable": False,
+                    "calendarError": str(error),
+                }
+            )
+        )
+        return
 
     events: list[dict[str, str]] = []
     current: dict[str, str] | None = None
@@ -183,6 +197,7 @@ def main() -> None:
             {
                 "meetings": meetings,
                 "calendarConfigured": True,
+                "calendarAvailable": True,
                 "checkedFrom": first_day.isoformat(),
                 "checkedThrough": today.isoformat(),
                 "preparedThrough": prepare_through.isoformat(),
