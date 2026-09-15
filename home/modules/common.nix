@@ -1,7 +1,7 @@
 { outputs, ... }:
 {
   imports = [
-    ./programs/ghostty.nix
+    ./programs/ghostty/default.nix
     ./programs/bat.nix
     ./programs/btop.nix
     ./programs/direnv.nix

@@ -1,17 +1,28 @@
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+  darwinConfig = "${config.home.homeDirectory}/Library/Application Support/com.mitchellh.ghostty/config";
+in
+{
   programs.ghostty = {
     enable = true;
+    package = lib.mkIf isDarwin null;
     enableFishIntegration = true;
-    installBatSyntax = true;
-    installVimSyntax = true;
+    installBatSyntax = !isDarwin;
+    installVimSyntax = !isDarwin;
     settings = {
-      command = "fish";
+      command = lib.getExe config.programs.fish.package;
 
       clipboard-paste-bracketed-safe = true;
       clipboard-paste-protection = true;
       clipboard-trim-trailing-spaces = true;
 
-      font-size = 14;
+      font-size = 16;
       font-feature = [
         "ss02"
         "ss03"
@@ -31,11 +42,18 @@
       window-colorspace = "display-p3";
       window-vsync = "true";
       window-theme = "ghostty";
-      window-decoration = "none";
+      window-decoration = "auto";
 
       cursor-style-blink = true;
-      cursor-invert-fg-bg = true;
+      cursor-text = lib.mkForce "cell-foreground";
+
+      custom-shader = [ "${./cursor_glide.glsl}" ];
+      custom-shader-animation = true;
+      alpha-blending = "linear-corrected";
+      cursor-opacity = 0;
     };
 
   };
+
+  xdg.configFile."ghostty/config".target = lib.mkIf isDarwin darwinConfig;
 }
