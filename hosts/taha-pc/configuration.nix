@@ -363,7 +363,13 @@
     ]
   );
 
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "client";
+    extraSetFlags = [
+      "--operator=taha"
+    ];
+  };
 
   services.sunshine = {
     enable = true;
