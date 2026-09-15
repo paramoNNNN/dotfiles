@@ -177,13 +177,10 @@ hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd([[dms ipc call brightness decre
 hl.bind(mainMod .. " + code:51", hl.dsp.exec_cmd("bitwarden"))
 hl.bind(mainMod .. " + F1", hl.dsp.exec_cmd("~/.config/hypr/gamemode.sh"))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("vicinae toggle"))
-hl.bind(
-	"CTRL + " .. mainMod .. " + C",
-	hl.dsp.exec_cmd("vicinae deeplink vicinae://extensions/vicinae/clipboard/history")
-)
+hl.bind("CTRL + " .. mainMod .. " + C", hl.dsp.exec_cmd("vicinae deeplink vicinae://launch/clipboard/history"))
 hl.bind(
 	"CTRL + " .. mainMod .. " + D",
-	hl.dsp.exec_cmd("vicinae deeplink vicinae://extensions/priithaamer/docker/container_list")
+	hl.dsp.exec_cmd("vicinae deeplink vicinae://launch/@priithaamer/store.raycast.docker/container_list")
 )
 
 hl.window_rule({
