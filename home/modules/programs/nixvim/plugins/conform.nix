@@ -1,5 +1,7 @@
-{ ... }:
+{ pkgs, ... }:
 {
+  programs.nixvim.extraPackagesAfter = [ pkgs.oxfmt ];
+
   programs.nixvim.plugins.conform-nvim = {
     enable = true;
     settings = {
@@ -11,30 +13,35 @@
           "black"
         ];
         json = [
+          "oxfmt"
           "biome"
           "prettierd"
           "prettier"
           "eslint_d"
         ];
         javascript = [
+          "oxfmt"
           "biome"
           "prettierd"
           "prettier"
           "eslint_d"
         ];
         typescript = [
+          "oxfmt"
           "biome"
           "prettierd"
           "prettier"
           "eslint_d"
         ];
         typescriptreact = [
+          "oxfmt"
           "biome"
           "prettierd"
           "prettier"
           "eslint_d"
         ];
         javascriptreact = [
+          "oxfmt"
           "biome"
           "prettierd"
           "prettier"
@@ -42,17 +49,25 @@
         ];
         fish = [ "fish_indent" ];
         sh = [ "shfmt" ];
-        css = [ "biome" ];
+        css = [
+          "oxfmt"
+          "biome"
+        ];
         vue = [
+          "oxfmt"
           "prettierd"
           "prettier"
         ];
         astro = [
+          "oxfmt"
           "prettierd"
           "prettier"
         ];
       };
       formatters = {
+        oxfmt = {
+          require_cwd = true;
+        };
         biome = {
           command = "biome";
           args = [
