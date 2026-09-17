@@ -129,6 +129,11 @@
           enable = true;
           packageFallback = true;
         };
+        oxlint = {
+          enable = true;
+          packageFallback = true;
+          settings.run = "onType";
+        };
         lua_ls = {
           enable = true;
           settings.telemetry.enable = false;
