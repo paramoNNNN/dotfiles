@@ -1,20 +1,18 @@
-{ ... }:
+{ lib, ... }:
 {
   imports = [
+    ../modules/aerospace.nix
     ../modules/common.nix
     ../modules/programs/obsidian.nix
   ];
 
-  # Enable home-manager
   programs.home-manager.enable = true;
 
-  # Ensure homebrew is in the PATH
-  home.sessionPath = [
-    "/opt/homebrew/bin/"
-  ];
-
-  # Nicely reload system units when changing configs
-  systemd.user.startServices = "sd-switch";
+  # Prefer Nix commands after the system Fish config runs brew shellenv.
+  programs.fish.interactiveShellInit = lib.mkAfter ''
+    fish_add_path --path --move "$HOME/.nix-profile/bin" \
+      "/etc/profiles/per-user/$USER/bin" /run/current-system/sw/bin
+  '';
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "24.11";

@@ -1,4 +1,10 @@
-{ outputs, ... }:
+{
+  config,
+  inputs,
+  lib,
+  outputs,
+  ...
+}:
 {
   imports = [
     ./programs/ghostty/default.nix
@@ -13,6 +19,10 @@
     ./home.nix
     ./theme.nix
   ];
+
+  programs.home-manager.path = "${inputs.home-manager}";
+  home.packages = lib.optional config.submoduleSupport.enable config.programs.home-manager.package;
+  news.display = "silent";
 
   # Nixpkgs configuration
   nixpkgs = {
