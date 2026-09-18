@@ -1,0 +1,100 @@
+# Hyprland workflow translated to macOS. Window actions and directional navigation use Cmd; numbered workspaces use Cmd; named workspaces use Alt.
+# AeroSpace is installed by hosts/taha-mac/homebrew.nix.
+config-version = 2
+start-at-login = true
+after-startup-command = ['exec-and-forget /usr/bin/open -a Ghostty']
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+accordion-padding = 15
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+automatically-unhide-macos-hidden-apps = false
+focus-follows-mouse.enabled = true
+
+[key-mapping]
+preset = 'qwerty'
+
+[gaps]
+# Hyprland gaps_in=5 contributes on both adjacent window edges.
+inner.horizontal = 10
+inner.vertical = 10
+outer.left = 10
+outer.right = 10
+outer.top = 10
+outer.bottom = 10
+
+[mode.main.binding]
+cmd-e = 'exec-and-forget /usr/bin/open -a Finder'
+cmd-f = 'fullscreen'
+# Closest equivalents to grouped windows and changing a dwindle split.
+ctrl-cmd-t = 'layout accordion tiles'
+cmd-p = 'layout tiles horizontal vertical'
+cmd-shift-x = 'exec-and-forget /usr/bin/open -a "Digital Color Meter"'
+ctrl-cmd-v = 'layout floating tiling'
+
+# Match the Hyprland screenshot and recording shortcuts.
+ctrl-cmd-r = 'exec-and-forget /usr/bin/open -g cleanshot://capture-area'
+ctrl-cmd-w = 'exec-and-forget /usr/bin/open -g cleanshot://capture-window'
+ctrl-cmd-f = 'exec-and-forget /usr/bin/open -g cleanshot://record-screen'
+
+cmd-left = 'focus left'
+cmd-right = 'focus right'
+cmd-up = 'focus up'
+cmd-down = 'focus down'
+cmd-shift-left = 'move left'
+cmd-shift-right = 'move right'
+cmd-shift-up = 'move up'
+cmd-shift-down = 'move down'
+cmd-ctrl-minus = 'resize smart -50'
+cmd-ctrl-equal = 'resize smart +50'
+cmd-ctrl-comma = 'workspace --wrap-around prev'
+cmd-ctrl-period = 'workspace --wrap-around next'
+cmd-shift-tab = 'workspace-back-and-forth'
+ctrl-cmd-tab = 'move-workspace-to-monitor --wrap-around next'
+
+cmd-1 = 'workspace 1'
+cmd-2 = 'workspace 2'
+cmd-3 = 'workspace 3'
+cmd-4 = 'workspace 4'
+cmd-5 = 'workspace 5'
+cmd-6 = 'workspace 6'
+cmd-7 = 'workspace 7'
+cmd-8 = 'workspace 8'
+cmd-9 = 'workspace 9'
+cmd-0 = 'workspace 10'
+cmd-shift-1 = 'move-node-to-workspace --focus-follows-window 1'
+cmd-shift-2 = 'move-node-to-workspace --focus-follows-window 2'
+cmd-shift-3 = 'move-node-to-workspace --focus-follows-window 3'
+cmd-shift-4 = 'move-node-to-workspace --focus-follows-window 4'
+cmd-shift-5 = 'move-node-to-workspace --focus-follows-window 5'
+cmd-shift-6 = 'move-node-to-workspace --focus-follows-window 6'
+cmd-shift-7 = 'move-node-to-workspace --focus-follows-window 7'
+cmd-shift-8 = 'move-node-to-workspace --focus-follows-window 8'
+cmd-shift-9 = 'move-node-to-workspace --focus-follows-window 9'
+cmd-shift-0 = 'move-node-to-workspace --focus-follows-window 10'
+
+[mode.resize.binding]
+left = 'resize width -50'
+right = 'resize width +50'
+up = 'resize height +50'
+down = 'resize height -50'
+enter = 'mode main'
+esc = 'mode main'
+
+[mode.service.binding]
+esc = ['reload-config', 'mode main']
+r = ['flatten-workspace-tree', 'mode main']
+b = ['balance-sizes', 'mode main']
+left = ['join-with left', 'mode main']
+right = ['join-with right', 'mode main']
+up = ['join-with up', 'mode main']
+down = ['join-with down', 'mode main']
+
+[[on-window-detected]]
+if.app-id = 'com.bitwarden.desktop'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.calculator'
+run = 'layout floating'
