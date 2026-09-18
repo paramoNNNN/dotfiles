@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   lib,
   pkgs,
   ...
@@ -23,14 +22,14 @@
       polarity = config.theme.variant;
       base16Scheme = "${pkgs.base16-schemes}/share/themes/flexoki-${config.theme.variant}.yaml";
 
-      icons = {
+      icons = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         enable = true;
         light = "rose-pine-dawn";
         dark = "rose-pine";
         package = pkgs.rose-pine-icon-theme;
       };
 
-      cursor = {
+      cursor = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         name = "Bibata-Modern-Classic";
         package = pkgs.bibata-cursors;
         size = 24;
