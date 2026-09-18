@@ -22,6 +22,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    aerospace-swipe = {
+      url = "github:acsandmann/aerospace-swipe";
+      flake = false;
+    };
+
     # Homebrew
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
 

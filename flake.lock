@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "aerospace-swipe": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784472497,
+        "narHash": "sha256-VsqhN5hUZk3ehVwShvL+4WClvLU+CJGGAnHyJKAwteo=",
+        "owner": "acsandmann",
+        "repo": "aerospace-swipe",
+        "rev": "16aad5a5ad678335a7593a2afaa473816c278c5f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "acsandmann",
+        "repo": "aerospace-swipe",
+        "type": "github"
+      }
+    },
     "apple-fonts": {
       "inputs": {
         "ci": "ci",
@@ -787,6 +803,7 @@
     },
     "root": {
       "inputs": {
+        "aerospace-swipe": "aerospace-swipe",
         "apple-fonts": "apple-fonts",
         "darwin": "darwin",
         "dms": "dms",
