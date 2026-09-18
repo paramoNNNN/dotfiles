@@ -1,13 +1,37 @@
 {
   pkgs,
   outputs,
+  inputs,
+  hostname,
   userConfig,
   ...
 }:
 {
-  system.primaryUser = "taha";
+  imports = [
+    ./defaults.nix
+    ./homebrew.nix
+  ];
+  system.primaryUser = userConfig.name;
+  networking.computerName = "Taha’s MacBook Pro";
+  networking.localHostName = "Tahas-MacBook-Pro-4";
+  time.timeZone = "Asia/Tehran";
 
-  # Add nix-homebrew configuration
+  home-manager = {
+    backupFileExtension = "before-nix";
+    extraSpecialArgs = {
+      inherit
+        inputs
+        outputs
+        hostname
+        userConfig
+        ;
+    };
+    users.${userConfig.name}.imports = [
+      inputs.stylix.homeModules.stylix
+      ../../home/taha/taha-mac.nix
+    ];
+  };
+
   nix-homebrew = {
     enable = true;
     enableRosetta = true;
@@ -15,7 +39,6 @@
     autoMigrate = true;
   };
 
-  # Nixpkgs configuration
   nixpkgs = {
     overlays = [ outputs.overlays.stable-packages ];
 
@@ -42,79 +65,40 @@
     options = "--delete-older-than 7d";
   };
 
-  # User configuration
   users.users.${userConfig.name} = {
     name = "${userConfig.name}";
     home = "/Users/${userConfig.name}";
   };
 
-  # Allow sudo to use Touch ID, including from tmux sessions.
   security.pam.services.sudo_local = {
     touchIdAuth = true;
     reattach = true;
   };
 
-  # System settings
-  # system = {
-  #   defaults = {
-  #     NSGlobalDomain = ;
-  #     LaunchServices = {
-  #       LSQuarantine = false;
-  #     };
-  #     trackpad = {
-  #       TrackpadRightClick = true;
-  #       TrackpadThreeFingerDrag = true;
-  #       Clicking = true;
-  #     };
-  #     finder = {
-  #       AppleShowAllFiles = true;
-  #       CreateDesktop = false;
-  #       FXDefaultSearchScope = "SCcf";
-  #       FXEnableExtensionChangeWarning = false;
-  #       FXPreferredViewStyle = "Nlsv";
-  #       QuitMenuItem = true;
-  #       ShowPathbar = true;
-  #       ShowStatusBar = true;
-  #       _FXShowPosixPathInTitle = true;
-  #       _FXSortFoldersFirst = true;
-  #     };
-  #     dock = {
-  #       autohide = true;
-  #       expose-animation-duration = 0.15;
-  #       show-recents = false;
-  #       showhidden = true;
-  #       persistent-apps = [
-  #         "/Applications/Brave Browser.app"
-  #         "${pkgs.alacritty}/Applications/Alacritty.app"
-  #         "${pkgs.telegram-desktop}/Applications/Telegram.app"
-  #       ];
-  #       tilesize = 30;
-  #       wvous-bl-corner = 1;
-  #       wvous-br-corner = 1;
-  #       wvous-tl-corner = 1;
-  #       wvous-tr-corner = 1;
-  #     };
-  #     screencapture = {
-  #       location = "/Users/${userConfig.name}/Downloads/temp";
-  #       type = "png";
-  #       disable-shadow = true;
-  #     };
-  #   };
-  #   keyboard = {
-  #     enableKeyMapping = true;
-  #     # swapLeftCtrlAndFn = true;
-  #     # Remap §± to ~
-  #     userKeyMapping = [
-  #       {
-  #         HIDKeyboardModifierMappingDst = 30064771125;
-  #         HIDKeyboardModifierMappingSrc = 30064771172;
-  #       }
-  #     ];
-  #   };
-  # };
-
-  # System packages
   environment.systemPackages = with pkgs; [
+    aria2
+    gh
+    glab
+    hyperfine
+    ncdu
+    tree
+    wget
+
+    bashInteractive
+    bitwarden-cli
+    cmake
+    gcc16
+    gnupg
+    gping
+    mkcert
+    nodejs_26
+    openvpn
+    pinentry_mac
+    proxychains-ng
+    python312
+    socat
+    wakeonlan
+
     bat
     delta
     eza
@@ -142,33 +126,13 @@
     '';
   };
 
-  # Shell configuration
   programs.zsh.enable = true;
   programs.fish.enable = true;
 
-  # Fonts configuration
   fonts.packages = with pkgs; [
     nerd-fonts.caskaydia-cove
     nerd-fonts.space-mono
   ];
-
-  homebrew = {
-    enable = true;
-
-    onActivation = {
-      autoUpdate = true;
-      upgrade = true;
-      cleanup = "none";
-    };
-
-    casks = [
-      "dozer"
-      "raycast"
-      "ghostty"
-      "ungoogled-chromium"
-      "mattermost"
-    ];
-  };
 
   # Used for backwards compatibility, please read the changelog before changing.
   system.stateVersion = 5;
