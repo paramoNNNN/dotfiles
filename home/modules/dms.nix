@@ -78,9 +78,17 @@ in
     # Doing this in the shared backend avoids clipping individual popouts.
     package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
       postInstall = (old.postInstall or "") + ''
-        substituteInPlace $out/share/quickshell/dms/Widgets/DankPopout.qml \
-          --replace-fail 'it.popupWidth = Qt.binding(() => root.popupWidth);' 'it.popupWidth = Qt.binding(() => root.popupWidth * 1.125);' \
-          --replace-fail 'it.popupHeight = Qt.binding(() => root.popupHeight);' 'it.popupHeight = Qt.binding(() => root.popupHeight * 1.125);'
+        substituteInPlace $out/share/quickshell/dms/Widgets/DankPopoutHost.qml \
+          --replace-fail 'property real popupWidth: popoutHandle.popupWidth' 'property real popupWidth: popoutHandle.popupWidth * 1.125' \
+          --replace-fail 'property real popupHeight: popoutHandle.popupHeight' 'property real popupHeight: popoutHandle.popupHeight * 1.125' \
+          --replace-fail 'parent: chromeLoader.item ? chromeLoader.item.contentWrapper : contentContainer
+                        anchors.fill: parent' 'parent: chromeLoader.item ? chromeLoader.item.contentWrapper : contentContainer
+                        anchors.left: parent.left
+                        anchors.top: parent.top
+                        width: parent.width / 1.125
+                        height: parent.height / 1.125
+                        scale: 1.125
+                        transformOrigin: Item.TopLeft'
         # The stock auto-hide dock uses a very stiff 200 ms spring. Use DMS's
         # softer 400 ms spring so reveal/hide motion resembles Hyprland's
         # smooth, critically damped transitions.
@@ -88,19 +96,15 @@ in
           --replace-fail 'Theme.springPreset("fast", Theme.shortDuration)' 'Theme.springPreset("default", Theme.mediumDuration)'
         # Match icon hover motion to the dock's softer timing instead of the
         # stock abrupt 200 ms acceleration.
-        substituteInPlace $out/share/quickshell/dms/Modules/Dock/DockAppButton.qml \
-          --replace-warn 'duration: Anims.durShort' 'duration: Theme.mediumDuration' \
+        substituteInPlace $out/share/quickshell/dms/Modules/Dock/DockHoverBounce.qml \
+          --replace-fail 'duration: Anims.durShort' 'duration: Theme.mediumDuration' \
           --replace-fail 'easing.bezierCurve: Anims.emphasizedAccel' 'easing.bezierCurve: Anims.standardDecel'
         # Keep the microphone OSD visible while its input is muted. Unmuting
         # restores the normal three-second timeout.
         substituteInPlace $out/share/quickshell/dms/Modules/OSD/MicVolumeOSD.qml \
-          --replace-fail 'autoHideInterval: 3000' 'autoHideInterval: AudioService.source?.audio?.muted ? 2147483647 : 3000' \
+          --replace-fail 'id: root' 'id: root
+            autoHideInterval: muted ? 2147483647 : 3000' \
           --replace-fail 'if (root.shouldBeVisible && SettingsData.osdMicVolumeEnabled)' 'if ((AudioService.source?.audio?.muted && SettingsData.osdMicMuteEnabled) || (root.shouldBeVisible && SettingsData.osdMicVolumeEnabled))'
-        chmod u+w $out/share/quickshell/dms/Widgets
-        for backend in DankPopoutStandalone.qml DankPopoutConnected.qml; do
-          sed -i '/id: contentLoader/{n;s|anchors.fill: parent|anchors.left: parent.left\n                            anchors.top: parent.top\n                            width: parent.width / 1.125\n                            height: parent.height / 1.125\n                            scale: 1.125\n                            transformOrigin: Item.TopLeft|;}' \
-            "$out/share/quickshell/dms/Widgets/$backend"
-        done
       '';
     });
 
@@ -142,6 +146,8 @@ in
     # GNOME Night Light-style automatic sunset/sunrise scheduling. DMS owns
     # gamma control, so Gammastep is intentionally not started alongside it.
     session = {
+      weatherLocation = "Tehran";
+      weatherCoordinates = "35.6892,51.3890";
       nightModeEnabled = true;
       nightModeTemperature = 4500;
       nightModeHighTemperature = 6500;
@@ -160,6 +166,7 @@ in
     # Keep application theming under Stylix. DMS still controls its own light
     # and dark appearance without overwriting the declarative GTK/Qt themes.
     settings = {
+      useAutoLocation = false;
       # Match the compact macOS menu-bar presentation.
       clockFormat = "24h";
       showSeconds = false;
