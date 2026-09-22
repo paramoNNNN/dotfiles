@@ -304,6 +304,7 @@
     android-tools
     platformio
     rclone
+    vulkan-tools
 
     kooha
     x264
@@ -502,4 +503,13 @@
     enable = true;
     withUWSM = true;
   };
+
+  services.ollama = {
+    enable = true;
+    package = pkgs.ollama-vulkan;
+
+    host = "0.0.0.0";
+    port = 11434;
+  };
+
 }

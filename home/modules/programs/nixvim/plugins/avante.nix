@@ -22,6 +22,18 @@ in
           auto_suggestions_provider = "codex";
           mode = "agentic";
 
+          providers.ollama = {
+            endpoint = "http://127.0.0.1:11434";
+            model = "qwen3.5:4b";
+            timeout = 30000;
+            use_ReAct_prompt = true;
+            extra_request_body.options = {
+              num_ctx = 4096;
+              temperature = 0.2;
+              keep_alive = "5m";
+            };
+          };
+
           acp_providers.codex = {
             command = "${avanteCodexAcp}/bin/codex-acp";
             args = [ ];
@@ -75,6 +87,11 @@ in
             __unkeyed-1 = "<leader>at";
             __unkeyed-2 = "<Cmd>AvanteToggle<CR>";
             desc = "Toggle Avante sidebar";
+          }
+          {
+            __unkeyed-1 = "<leader>ap";
+            __unkeyed-2 = "<Cmd>AvanteSwitchProvider<CR>";
+            desc = "Switch Avante provider (Codex/Ollama)";
           }
         ];
         mode = [ "n" ];
