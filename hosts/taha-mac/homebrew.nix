@@ -70,6 +70,7 @@ in
       "the-unarchiver"
       "tunnelblick"
       "ungoogled-chromium"
+      "sfm"
     ];
   };
 }
