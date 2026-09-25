@@ -36,7 +36,7 @@ in
   xdg.configFile."aerospace-swipe/config.json".text = builtins.toJSON {
     fingers = 3;
     haptic = false;
-    natural_swipe = false;
+    natural_swipe = true;
     skip_empty = true;
     wrap_around = false;
   };
