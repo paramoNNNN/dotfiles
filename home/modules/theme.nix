@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 {
@@ -38,6 +39,7 @@
       image = ../../assets/moon.jpg;
 
       targets = {
+        rofi.enable = false; # to silent the rofi deprecated warning
         nixvim = {
           transparentBackground = {
             main = true;

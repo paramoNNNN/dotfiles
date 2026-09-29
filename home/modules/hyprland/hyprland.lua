@@ -3,7 +3,7 @@
 local terminal = "ghostty"
 local fileManager = "nautilus"
 local browser = "firefox-devedition"
-local mainMod = "SUPER"
+local mainMod = "ALT"
 
 hl.monitor({
 	output = "",
@@ -120,12 +120,28 @@ hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
 hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exit())
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
+hl.bind(mainMod .. " + SHIFT + P", hl.dsp.window.pseudo())
+
+hl.bind("CTRL + " .. mainMod .. " + T", hl.dsp.exec_cmd("hyprctl dispatch layoutmsg togglesplit"))
+hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("hyprctl dispatch layoutmsg orientationnext"))
+hl.bind("CTRL + " .. mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
+
+for _, direction in ipairs({ "left", "right", "up", "down" }) do
+	hl.bind(
+		mainMod .. " + SHIFT + " .. direction,
+		hl.dsp.exec_cmd(
+			"hyprctl dispatch movewindow " .. ({ left = "l", right = "r", up = "u", down = "d" })[direction]
+		)
+	)
+end
+
+hl.bind("CTRL + " .. mainMod .. " + minus", hl.dsp.exec_cmd("hyprctl dispatch resizeactive -50 0"))
+hl.bind("CTRL + " .. mainMod .. " + equal", hl.dsp.exec_cmd("hyprctl dispatch resizeactive 50 0"))
 
 for i = 1, 10 do
 	local key = i % 10
@@ -171,15 +187,21 @@ hl.bind("F4", hl.dsp.exec_cmd("dms ipc call mic mute"), { locked = true })
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("dms ipc call mpris playPause"), { locked = true })
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("dms ipc call mpris next"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("dms ipc call mpris previous"), { locked = true })
+hl.bind("F7", hl.dsp.exec_cmd("dms ipc call mpris previous"), { locked = true })
+hl.bind("F8", hl.dsp.exec_cmd("dms ipc call mpris playPause"), { locked = true })
+hl.bind("F9", hl.dsp.exec_cmd("dms ipc call mpris next"), { locked = true })
+hl.bind("F10", hl.dsp.exec_cmd("dms ipc call audio mute"), { locked = true })
+hl.bind("F11", hl.dsp.exec_cmd("dms ipc call audio decrement 5"), { locked = true, repeating = true })
+hl.bind("F12", hl.dsp.exec_cmd("dms ipc call audio increment 5"), { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd([[dms ipc call brightness increment 10 ""]]), { locked = true })
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd([[dms ipc call brightness decrement 10 ""]]), { locked = true })
 
 hl.bind(mainMod .. " + code:51", hl.dsp.exec_cmd("bitwarden"))
 hl.bind(mainMod .. " + F1", hl.dsp.exec_cmd("~/.config/hypr/gamemode.sh"))
-hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("vicinae toggle"))
-hl.bind("CTRL + " .. mainMod .. " + C", hl.dsp.exec_cmd("vicinae deeplink vicinae://launch/clipboard/history"))
+hl.bind("SUPER + SPACE", hl.dsp.exec_cmd("vicinae toggle"))
+hl.bind("CTRL + SUPER + C", hl.dsp.exec_cmd("vicinae deeplink vicinae://launch/clipboard/history"))
 hl.bind(
-	"CTRL + " .. mainMod .. " + D",
+	"CTRL + SUPER + D",
 	hl.dsp.exec_cmd("vicinae deeplink vicinae://launch/@priithaamer/store.raycast.docker/container_list")
 )
 
