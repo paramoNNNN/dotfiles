@@ -193,6 +193,8 @@ hl.bind("F9", hl.dsp.exec_cmd("dms ipc call mpris next"), { locked = true })
 hl.bind("F10", hl.dsp.exec_cmd("dms ipc call audio mute"), { locked = true })
 hl.bind("F11", hl.dsp.exec_cmd("dms ipc call audio decrement 5"), { locked = true, repeating = true })
 hl.bind("F12", hl.dsp.exec_cmd("dms ipc call audio increment 5"), { locked = true, repeating = true })
+hl.bind("F1", hl.dsp.exec_cmd([[dms ipc call brightness decrement 10 ""]]), { locked = true, repeating = true })
+hl.bind("F2", hl.dsp.exec_cmd([[dms ipc call brightness increment 10 ""]]), { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd([[dms ipc call brightness increment 10 ""]]), { locked = true })
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd([[dms ipc call brightness decrement 10 ""]]), { locked = true })
 
