@@ -83,6 +83,7 @@
     ncdu
     tree
     wget
+    yt-dlp
 
     bashInteractive
     bitwarden-cli
