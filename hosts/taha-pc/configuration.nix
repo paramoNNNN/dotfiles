@@ -2,7 +2,8 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, ... }:
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -254,7 +255,6 @@
     lazygit
     lazydocker
     kubectl
-    pgadmin4-desktopmode
     postgresql
     delta
     stylua
@@ -502,14 +502,6 @@
   programs.hyprland = {
     enable = true;
     withUWSM = true;
-  };
-
-  services.ollama = {
-    enable = true;
-    package = pkgs.ollama-vulkan;
-
-    host = "0.0.0.0";
-    port = 11434;
   };
 
 }
