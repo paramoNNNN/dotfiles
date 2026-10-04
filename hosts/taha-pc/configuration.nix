@@ -20,7 +20,10 @@
 
   # AMD
   boot.initrd.kernelModules = [ "amdgpu" ];
-  systemd.tmpfiles.rules = [ "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}" ];
+  systemd.tmpfiles.rules = [
+    "d /opt/rocm 0755 root root -"
+    "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
+  ];
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -62,6 +65,7 @@
         DNSOverTLS = "false";
         DNSSEC = "false";
         Domains = [ "~." ];
+        DNS = [ "1.1.1.1" ];
         FallbackDNS = [
           "1.1.1.1#one.one.one.one"
           "1.0.0.1#one.one.one.one"
