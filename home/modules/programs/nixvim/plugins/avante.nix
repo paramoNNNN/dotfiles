@@ -40,7 +40,7 @@ in
             env.NODE_NO_WARNINGS = "1";
           };
 
-          instructions_file = "avante.md";
+          instructions_file = "AGENTS.md";
 
           windows = {
             position = "right";
@@ -91,7 +91,7 @@ in
           {
             __unkeyed-1 = "<leader>ap";
             __unkeyed-2 = "<Cmd>AvanteSwitchProvider<CR>";
-            desc = "Switch Avante provider (Codex/Ollama)";
+            desc = "Switch Avante provider (Codex)";
           }
         ];
         mode = [ "n" ];
