@@ -14,6 +14,7 @@
     ./programs/fish.nix
     ./programs/git.nix
     ./programs/lazygit.nix
+    ./programs/nh.nix
     ./programs/tmux.nix
     ./programs/nixvim/default.nix
     ./home.nix
