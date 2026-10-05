@@ -23,7 +23,7 @@
             __unkeyed-1 = "<leader>af";
             __unkeyed-2.__raw = ''
               function()
-                require("sidekick.cli").send({ msg = "{file}" })
+                require("sidekick.cli").send({ name = "codex", msg = "{file}", focus = true, submit = false })
               end
             '';
             desc = "Send file to Codex";
@@ -37,7 +37,7 @@
             __unkeyed-1 = "<leader>as";
             __unkeyed-2.__raw = ''
               function()
-                require("sidekick.cli").send({ msg = "{selection}" })
+                require("sidekick.cli").send({ name = "codex", msg = "{selection}", focus = true, submit = false })
               end
             '';
             desc = "Send selection to Codex";

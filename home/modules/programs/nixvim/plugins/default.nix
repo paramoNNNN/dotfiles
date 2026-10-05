@@ -2,7 +2,6 @@
 {
 
   imports = [
-    ./avante.nix
     ./cmp.nix
     ./conform.nix
     ./gitsigns.nix
@@ -20,6 +19,7 @@
     ./package-info.nix
     ./platformio.nix
     ./rainbow-delimiters.nix
+    ./sidekick.nix
     ./telescope.nix
     ./todo-comments.nix
     ./toggleterm.nix
@@ -30,6 +30,12 @@
     ./undotree.nix
     ./which-key.nix
   ];
+
+  programs.nixvim.opts.laststatus = 3;
+  programs.nixvim.plugins.render-markdown = {
+    enable = true;
+    settings.file_types = [ "markdown" ];
+  };
 
   programs.nixvim.extraPlugins = with pkgs.vimPlugins; [
     advanced-git-search-nvim
