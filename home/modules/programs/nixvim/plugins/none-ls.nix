@@ -2,8 +2,7 @@
   programs.nixvim.plugins.none-ls = {
     enable = true;
     settings = {
-      cmd = [ "bash -c nvim" ];
-      debug = true;
+      debug = false;
     };
     sources = {
       code_actions = {
@@ -15,13 +14,6 @@
         checkstyle.enable = true;
       };
       formatting = {
-        stylua.enable = true;
-        shfmt.enable = true;
-        nixpkgs_fmt.enable = true;
-        prettier = {
-          enable = true;
-          disableTsServerFormatter = true;
-        };
         black = {
           enable = true;
           settings = ''
