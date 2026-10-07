@@ -228,6 +228,7 @@
     spek
     ghostty
     nautilus
+    loupe
     haruna
     qalculate-gtk
     libreoffice
@@ -356,6 +357,40 @@
     gnomeExtensions.vicinae
     gnomeExtensions.brightness-control-using-ddcutil
   ];
+
+  environment.etc."xdg/mimeapps.list".text =
+    let
+      imageTypes = [
+        "image/apng"
+        "image/avif"
+        "image/bmp"
+        "image/gif"
+        "image/heic"
+        "image/jp2"
+        "image/jpeg"
+        "image/jxl"
+        "image/png"
+        "image/qoi"
+        "image/svg+xml"
+        "image/svg+xml-compressed"
+        "image/tiff"
+        "image/vnd.microsoft.icon"
+        "image/webp"
+        "image/x-dds"
+        "image/x-exr"
+        "image/x-portable-anymap"
+        "image/x-portable-bitmap"
+        "image/x-portable-graymap"
+        "image/x-portable-pixmap"
+        "image/x-qoi"
+        "image/x-tga"
+        "image/x-win-bitmap"
+        "image/x-xbitmap"
+        "image/x-xpixmap"
+      ];
+    in
+    "[Default Applications]\n"
+    + pkgs.lib.concatMapStrings (mime: "${mime}=org.gnome.Loupe.desktop;\n") imageTypes;
 
   environment.variables.GST_PLUGIN_SYSTEM_PATH_1_0 = pkgs.lib.mkForce (
     pkgs.lib.concatStringsSep ":" [
