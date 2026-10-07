@@ -24,8 +24,8 @@
           follow_current_file = {
             enabled = true;
           };
-          filtered-items = {
-            hide_dot_files = false;
+          filtered_items = {
+            hide_dotfiles = false;
             hide_gitignored = false;
           };
         };
