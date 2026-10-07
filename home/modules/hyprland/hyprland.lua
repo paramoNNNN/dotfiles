@@ -228,3 +228,15 @@ hl.window_rule({
 	size = "50% 60%",
 	center = true,
 })
+
+hl.window_rule({
+	name = "nautilus-float",
+	match = { class = "^org\\.gnome\\.Nautilus$" },
+	float = true,
+})
+
+hl.window_rule({
+	name = "loupe-float",
+	match = { class = "^org\\.gnome\\.Loupe$" },
+	float = true,
+})
