@@ -1,6 +1,12 @@
 { pkgs, ... }:
 {
-  programs.nixvim.extraPackagesAfter = [ pkgs.oxfmt ];
+  programs.nixvim.extraPackagesAfter = [
+    pkgs.oxfmt
+    pkgs.stylua
+    pkgs.shfmt
+    pkgs.nixfmt
+    pkgs.prettier
+  ];
 
   programs.nixvim.plugins.conform-nvim = {
     enable = true;
