@@ -5,12 +5,14 @@
       listener = [
         {
           timeout = 900; # 15 minutes
-          on-timeout = "loginctl lock-session";
-        }
-        {
-          timeout = 1200; # 20 minutes
-          on-timeout = "hyprctl dispatch dpms off";
-          on-resume = "hyprctl dispatch dpms on";
+          on-timeout = ''
+            loginctl lock-session
+            sleep 1
+            hyprctl dispatch dpms off || hyprctl dispatch 'hl.dsp.dpms({ action = "disable" })'
+          '';
+          on-resume = ''
+            hyprctl dispatch dpms on || hyprctl dispatch 'hl.dsp.dpms({ action = "enable" })'
+          '';
         }
       ];
     };
