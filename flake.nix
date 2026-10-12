@@ -7,6 +7,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
 
+    nixpkgs-n8n.url = "github:nixos/nixpkgs/a7868a727837f3c09cee2ce0ca671c76b1589fed";
+
     # Home manager
     home-manager = {
       url = "github:nix-community/home-manager";
