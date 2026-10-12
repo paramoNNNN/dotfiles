@@ -142,6 +142,11 @@ in
       src = ./dms-plugins/tailscale-accounts;
       settings.managed = true;
     };
+    plugins.xiaomiBulb = {
+      enable = true;
+      src = ./dms-plugins/xiaomi-bulb;
+      settings.managed = true;
+    };
 
     # GNOME Night Light-style automatic sunset/sunrise scheduling. DMS owns
     # gamma control, so Gammastep is intentionally not started alongside it.
@@ -310,6 +315,11 @@ in
           width = 50;
         }
         {
+          id = "plugin_xiaomiBulb";
+          enabled = true;
+          width = 50;
+        }
+        {
           id = "audioOutput";
           enabled = true;
           width = 50;
@@ -411,6 +421,8 @@ in
       ];
     };
   };
+
+  home.packages = [ (import ./dms-plugins/xiaomi-bulb/package.nix { inherit pkgs; }) ];
 
   systemd.user.services.dms-profile-image = {
     Unit = {
