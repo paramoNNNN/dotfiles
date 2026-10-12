@@ -1,0 +1,13 @@
+{
+  "id": "xiaomiBulb",
+  "name": "Xiaomi Bulb",
+  "description": "Power, brightness, white temperature and color for your Mi Smart LED Bulb.",
+  "version": "1.0.0",
+  "author": "Taha",
+  "type": "widget",
+  "capabilities": ["control-center"],
+  "component": "./XiaomiBulb.qml",
+  "icon": "lightbulb",
+  "dependencies": ["dms-xiaomi-bulb"],
+  "permissions": ["process"]
+}
