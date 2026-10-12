@@ -1,6 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 let
+  n8nPkgs = import inputs.nixpkgs-n8n {
+    inherit (pkgs.stdenv.hostPlatform) system;
+    config.allowUnfree = true;
+  };
   archiveObsidianNotes = pkgs.writeShellApplication {
     name = "archive-obsidian-notes";
     runtimeInputs = with pkgs; [
@@ -20,6 +24,7 @@ in
 {
   services.n8n = {
     enable = true;
+    package = n8nPkgs.n8n;
 
     environment = {
       DB_SQLITE_POOL_SIZE = "2";

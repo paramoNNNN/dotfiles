@@ -78,7 +78,7 @@ in
     # Doing this in the shared backend avoids clipping individual popouts.
     package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
       postInstall = (old.postInstall or "") + ''
-        substituteInPlace $out/share/quickshell/dms/Widgets/DankPopoutHost.qml \
+        substituteInPlace $out/share/quickshell/dms/Widgets/DPopoutHost.qml \
           --replace-fail 'property real popupWidth: popoutHandle.popupWidth' 'property real popupWidth: popoutHandle.popupWidth * 1.125' \
           --replace-fail 'property real popupHeight: popoutHandle.popupHeight' 'property real popupHeight: popoutHandle.popupHeight * 1.125' \
           --replace-fail 'parent: chromeLoader.item ? chromeLoader.item.contentWrapper : contentContainer
