@@ -59,7 +59,6 @@
     plugins.telescope = {
       enable = true;
       extensions = {
-        file-browser.enable = true;
         fzf-native.enable = true;
         live-grep-args.enable = true;
       };

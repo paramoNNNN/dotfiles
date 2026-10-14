@@ -23,53 +23,53 @@
             __unkeyed-2 = {
               __raw = ''
                 function()
-                  require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+                  vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR, float = true })
                 end
               '';
             };
-            desc = "Previous diagnostic";
+            desc = "Previous error";
           }
           {
             __unkeyed-1 = "]d";
             __unkeyed-2 = {
               __raw = ''
                 function()
-                  require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+                  vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR, float = true })
                 end
               '';
             };
-            desc = "Previous diagnostic";
+            desc = "Next error";
           }
           {
             __unkeyed-1 = "[w";
             __unkeyed-2 = {
               __raw = ''
                 function()
-                  require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.WARN })
+                  vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.WARN, float = true })
                 end
               '';
             };
-            desc = "Previous diagnostic";
+            desc = "Previous warning";
           }
           {
             __unkeyed-1 = "]w";
             __unkeyed-2 = {
               __raw = ''
                 function()
-                  require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.WARN })
+                  vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.WARN, float = true })
                 end
               '';
             };
-            desc = "Previous diagnostic";
+            desc = "Next warning";
           }
           {
             __unkeyed-1 = "K";
-            __unkeyed-2 = "<Cmd>Lspsaga hover_doc<CR>";
+            __unkeyed-2 = "<Cmd>lua vim.lsp.buf.hover()<CR>";
             desc = "View documentation";
           }
           {
             __unkeyed-1 = "<leader>ve";
-            __unkeyed-2 = "<Cmd>Lspsaga show_line_diagnostics<CR>";
+            __unkeyed-2 = ''<Cmd>lua vim.diagnostic.open_float({ scope = "line" })<CR>'';
             desc = "View line diagnostics";
           }
           {
@@ -94,17 +94,17 @@
           }
           {
             __unkeyed-1 = "<leader>vca";
-            __unkeyed-2 = "<Cmd>Lspsaga code_action<CR>";
+            __unkeyed-2 = "<Cmd>lua vim.lsp.buf.code_action()<CR>";
             desc = "View code actions";
           }
           {
             __unkeyed-1 = "<leader>vcc";
-            __unkeyed-2 = "<Cmd>Lspsaga incoming_calls<CR>";
+            __unkeyed-2 = "<Cmd>lua vim.lsp.buf.incoming_calls()<CR>";
             desc = "View incoming calls";
           }
           {
             __unkeyed-1 = "<leader>vrn";
-            __unkeyed-2 = "<Cmd>Lspsaga rename<CR>";
+            __unkeyed-2 = "<Cmd>lua vim.lsp.buf.rename()<CR>";
             desc = "Rename symbol";
           }
         ];
@@ -132,7 +132,7 @@
         oxlint = {
           enable = true;
           packageFallback = true;
-          settings.run = "onType";
+          settings.run = "onSave";
         };
         lua_ls = {
           enable = true;
@@ -141,18 +141,5 @@
       };
     };
 
-    lspsaga = {
-      enable = true;
-      settings = {
-        lightbulb.enable = false;
-        codeAction = {
-          showServerName = true;
-        };
-        implement.enable = false;
-        symbol_in_winbar.enable = false;
-      };
-    };
-
-    # typescript-tools = { enable = true; };
   };
 }

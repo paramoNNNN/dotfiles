@@ -34,6 +34,7 @@
 
     package-info = {
       enable = true;
+      lazyLoad.settings.ft = "json";
     };
   };
 }

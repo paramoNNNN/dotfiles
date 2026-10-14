@@ -76,7 +76,6 @@
     shellAliases = {
       ls = "eza --icons";
       go = "git open";
-      nvim = "nvim --listen /tmp/nvim-server-(tmux display-message -p '#S-#{window_index}').pipe";
       cat = "bat";
       nb = "sudo nixos-rebuild switch --flake ~/nixos#default";
     };
