@@ -9,6 +9,7 @@
     brave
     discord
     firefox-devedition
+    gram
     iina
     kitty
     moonlight-qt

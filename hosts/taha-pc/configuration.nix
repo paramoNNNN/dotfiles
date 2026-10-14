@@ -252,8 +252,7 @@
     deno
     bun
     vim
-    zed-editor
-    vscode
+    gram
     kitty
     tmux
     teamocil
