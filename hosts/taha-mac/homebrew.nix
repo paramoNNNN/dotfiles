@@ -1,10 +1,11 @@
-{ lib, ... }:
+{ config, lib, ... }:
 let
   syncOnActivation = false;
 in
 {
   system.activationScripts.homebrew.text = lib.mkIf (!syncOnActivation) (
     lib.mkForce ''
+      ${config.system.activationScripts.setup-homebrew.text}
       echo "Homebrew sync skipped (syncOnActivation = false in hosts/taha-mac/homebrew.nix)."
     ''
   );
