@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 {
   imports = [
     inputs.nixvim.homeModules.nixvim
@@ -12,19 +12,25 @@
     defaultEditor = true;
     luaLoader.enable = true;
 
+    extraConfigLua = ''
+      vim.env.SHELL = vim.o.shell
+    '';
+
     keymaps = [
       {
         key = "J";
+        mode = "x";
         action = ":m '>+1<CR>gv=gv";
         options = {
-          desc = "Move selected line up";
+          desc = "Move selected lines down";
         };
       }
       {
         key = "K";
-        action = ":m '>-2<CR>gv=gv";
+        mode = "x";
+        action = ":m '<-2<CR>gv=gv";
         options = {
-          desc = "Move selected line down";
+          desc = "Move selected lines up";
         };
       }
       {
@@ -54,6 +60,7 @@
     };
 
     opts = {
+      shell = "${pkgs.bash}/bin/bash";
       guicursor = "i:ver30-iCursor-blinkwait300-blinkon200-blinkoff150";
       cmdheight = 0;
 
@@ -80,12 +87,15 @@
       scrolloff = 8;
       signcolumn = "yes";
 
-      updatetime = 50;
+      updatetime = 300;
 
       foldcolumn = "0";
       foldlevel = 99;
       foldlevelstart = 99;
       foldenable = true;
+      foldmethod = "expr";
+      foldexpr = "v:lua.vim.treesitter.foldexpr()";
+      foldtext = "";
 
       spelllang = "en_us";
       spell = true;

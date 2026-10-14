@@ -36,7 +36,7 @@
           ];
         };
         snippets = {
-          preset = "luasnip";
+          preset = "default";
         };
       };
     };
