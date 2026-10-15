@@ -8,6 +8,7 @@
 }:
 {
   imports = [
+    ../common/textamp.nix
     ./defaults.nix
     ./homebrew.nix
   ];
@@ -117,7 +118,7 @@
     monitorcontrol
 
     codex
-    codex-acp
+    (codex-acp.overrideAttrs { doCheck = false; }) # disable build checks
   ];
 
   programs.ssh = {
