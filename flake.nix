@@ -37,6 +37,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    textamp.url = "git+ssh://git@github.com/paramoNNNN/terminal-music-player.git?ref=master";
+
     nixvim = {
       # pinning back to fca03f1 because of overlay issue https://github.com/nix-community/stylix/issues/2323#issuecomment-4529576643
       url = "github:nix-community/nixvim/fca03f175902fe899a87872228bf69c1b43a8543";
