@@ -1,0 +1,14 @@
+{
+  "id": "airpods",
+  "name": "AirPods",
+  "description": "Left, right, case and overall battery with ear detection status.",
+  "version": "1.0.0",
+  "author": "Taha",
+  "type": "widget",
+  "capabilities": ["control-center"],
+  "component": "./AirPods.qml",
+  "icon": "headphones",
+  "dependencies": ["airpods-cli"],
+  "permissions": ["process"],
+  "requires_dms": ">=1.7.0"
+}
