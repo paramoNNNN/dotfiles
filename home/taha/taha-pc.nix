@@ -1,6 +1,7 @@
 { inputs, ... }:
 {
   imports = [
+    ../modules/airpods.nix
     inputs.dms.homeModules.dank-material-shell
     ../modules/common.nix
     ../modules/calendar.nix

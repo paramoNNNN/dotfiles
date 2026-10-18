@@ -105,6 +105,14 @@ in
           --replace-fail 'id: root' 'id: root
             autoHideInterval: muted ? 2147483647 : 3000' \
           --replace-fail 'if (root.shouldBeVisible && SettingsData.osdMicVolumeEnabled)' 'if ((AudioService.source?.audio?.muted && SettingsData.osdMicMuteEnabled) || (root.shouldBeVisible && SettingsData.osdMicVolumeEnabled))'
+        # Keep a status instance alive even when the AirPods tile is absent,
+        # and remove disconnected AirPods from the packed grid entirely.
+        substituteInPlace $out/share/quickshell/dms/Modules/ControlCenter/Components/CcTileGrid.qml \
+          --replace-fail 'import qs.Modules.ControlCenter' 'import qs.Modules.ControlCenter
+        import qs.Modules.ControlCenter.Widgets' \
+          --replace-fail 'readonly property var savedWidgets:' 'PluginInstanceHost { id: airpodsVisibility; pluginId: "airpods" }
+            readonly property var savedWidgets:' \
+          --replace-fail 'WidgetUtils.isShown(widget) && model?.componentForWidget(widget)' 'WidgetUtils.isShown(widget) && (widget.id !== "plugin_airpods" || airpodsVisibility.instance?.connected === true) && model?.componentForWidget(widget)'
       '';
     });
 
@@ -135,6 +143,11 @@ in
     plugins.nextEvent = {
       enable = true;
       src = ./dms-plugins/next-event;
+      settings.managed = true;
+    };
+    plugins.airpods = {
+      enable = true;
+      src = ./dms-plugins/airpods;
       settings.managed = true;
     };
     plugins.tailscaleAccounts = {
@@ -301,6 +314,11 @@ in
         }
         {
           id = "bluetooth";
+          enabled = true;
+          width = 50;
+        }
+        {
+          id = "plugin_airpods";
           enabled = true;
           width = 50;
         }
