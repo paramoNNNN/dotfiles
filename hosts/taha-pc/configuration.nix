@@ -15,6 +15,10 @@
   boot.supportedFilesystems = [ "ntfs" ];
   services.gvfs.enable = true;
 
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="power_supply", KERNEL=="apple_mfi_fastcharge*", ATTR{charge_type}="Fast"
+  '';
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
