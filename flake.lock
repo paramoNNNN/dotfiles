@@ -1098,11 +1098,11 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1792414411,
-        "narHash": "sha256-+EDC80Cahn7XacSnW+DyrdCtUGqVhA/y4q2nbV5PkFc=",
+        "lastModified": 1793620490,
+        "narHash": "sha256-8NEYsVNKJjscI63cC7YUPEACxL/qTyixx4mKFWFoOwI=",
         "ref": "master",
-        "rev": "5a61f676790995cea3da022726411f41766f336a",
-        "revCount": 122,
+        "rev": "b6ffa1414c2217695fb1d4537798ce9f4965205c",
+        "revCount": 123,
         "type": "git",
         "url": "ssh://git@github.com/paramoNNNN/terminal-music-player-private.git"
       },
