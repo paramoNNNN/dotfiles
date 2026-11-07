@@ -62,8 +62,6 @@ in
   users.groups.obsidian-vault = { };
 
   systemd.tmpfiles.rules = [
-    # setgid makes files created by n8n and the bridge inherit the shared
-    # obsidian-vault group instead of either service's DynamicUser group.
     "d /var/lib/obsidian-vault 2770 root obsidian-vault -"
   ];
 
@@ -125,10 +123,15 @@ in
     description = "Repair shared permissions on the Obsidian filesystem mirror";
     wantedBy = [ "multi-user.target" ];
     before = [
-      "n8n.service"
+      "work-daily-brief.service"
+      "work-calendar-meetings.service"
+      "work-archive-notes.service"
       "obsidian-livesync-bridge.service"
     ];
-    serviceConfig.Type = "oneshot";
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
     script = ''
       ${pkgs.coreutils}/bin/chown -R root:obsidian-vault /var/lib/obsidian-vault
       ${pkgs.coreutils}/bin/chmod -R u+rwX,g+rwX,o-rwx /var/lib/obsidian-vault

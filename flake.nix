@@ -7,8 +7,6 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
 
-    nixpkgs-n8n.url = "github:nixos/nixpkgs/a7868a727837f3c09cee2ce0ca671c76b1589fed";
-
     # Home manager
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -81,6 +79,13 @@
     let
       inherit (self) outputs;
 
+      # Git flakes omit ignored files. Use --flake "path:$PWD#paranas" locally.
+      private =
+        if builtins.pathExists ./private.json then
+          builtins.fromJSON (builtins.readFile ./private.json)
+        else
+          throw "Missing private.json: copy private.example.json, fill it in, and use a path: flake (see docs/privacy.md).";
+
       # Define user configurations
       users = {
         taha = {
@@ -106,7 +111,12 @@
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
-            inherit inputs outputs hostname;
+            inherit
+              inputs
+              outputs
+              hostname
+              private
+              ;
             userConfig = users.${username};
           };
           modules = [ ./hosts/${hostname}/configuration.nix ];
@@ -118,7 +128,12 @@
         darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           specialArgs = {
-            inherit inputs outputs hostname;
+            inherit
+              inputs
+              outputs
+              hostname
+              private
+              ;
             userConfig = users.${username};
           };
           modules = [
@@ -134,7 +149,12 @@
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs { inherit system; };
           extraSpecialArgs = {
-            inherit inputs outputs hostname;
+            inherit
+              inputs
+              outputs
+              hostname
+              private
+              ;
             userConfig = users.${username};
           };
           modules = [

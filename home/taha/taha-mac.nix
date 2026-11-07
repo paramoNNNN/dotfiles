@@ -2,6 +2,7 @@
 {
   imports = [
     ../modules/aerospace.nix
+    ../modules/activity-capture
     ../modules/common.nix
     ../modules/programs/obsidian.nix
   ];

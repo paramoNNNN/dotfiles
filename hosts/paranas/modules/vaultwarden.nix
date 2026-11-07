@@ -1,10 +1,11 @@
+{ private, ... }:
 {
   services.vaultwarden = {
     enable = true;
     backupDir = "/storage/backups/vaultwarden/backup";
     environmentFile = "/var/lib/vaultwarden-secrets/environment";
     config = {
-      DOMAIN = "rick";
+      DOMAIN = "https://arkane.${private.legacyDomain}";
       SIGNUPS_ALLOWED = false;
 
       ROCKET_ADDRESS = "127.0.0.1";

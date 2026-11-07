@@ -113,18 +113,18 @@ def main() -> None:
         print(json.dumps({"meetings": [], "calendarConfigured": False}))
         return
 
-    request = urllib.request.Request(url, headers={"User-Agent": "n8n-calendar/1"})
+    request = urllib.request.Request(url, headers={"User-Agent": "work-calendar/1"})
     try:
         with urllib.request.urlopen(request, timeout=30) as response:
             content = response.read().decode("utf-8-sig")
-    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as error:
+    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError):
         print(
             json.dumps(
                 {
                     "meetings": [],
                     "calendarConfigured": False,
                     "calendarAvailable": False,
-                    "calendarError": str(error),
+                    "calendarError": "Calendar feed unavailable",
                 }
             )
         )

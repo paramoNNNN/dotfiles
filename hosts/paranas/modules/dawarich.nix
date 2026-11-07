@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ private, pkgs, ... }:
 
 let
   network = "dawarich";
@@ -10,7 +10,7 @@ let
     DATABASE_PORT = "5432";
     DATABASE_USERNAME = "postgres";
     DATABASE_NAME = "dawarich_development";
-    APPLICATION_HOSTS = "dawarich.dummy,localhost,127.0.0.1";
+    APPLICATION_HOSTS = "dawarich.${private.domain},localhost,127.0.0.1";
     APPLICATION_PROTOCOL = "https";
     TIME_ZONE = "Asia/Tehran";
     PROMETHEUS_EXPORTER_ENABLED = "false";

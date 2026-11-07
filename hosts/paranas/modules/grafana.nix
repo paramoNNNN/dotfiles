@@ -1,14 +1,29 @@
-{ lib, pkgs, ... }:
+{
+  private,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
+  networkTrafficDescription = direction: nginxMetric: trafficLabel: ''
+    ${trafficLabel} traffic has exceeded 2 MB/s for 10 minutes. Current 5-minute average: {{ $value | humanize1024 }}B/s.
+    {{ with printf "topk(1, sum by (service) (rate(service_network_bytes_total{job=\"node\",instance=%q,direction=\"${direction}\"}[5m]) and on (instance) (time() - service_network_collector_timestamp_seconds < 90))) > 0" $labels.instance | query }}{{ range . }}Busiest measured service: {{ .Labels.service }} ({{ .Value | humanize1024 }}B/s).{{ end }}{{ else }}Busiest measured service: unavailable (no recent attributed traffic).{{ end }}
+    {{ with printf "topk(1, sum by (service, vhost, network) (rate(service_nginx_http_${nginxMetric}_size_bytes{job=\"nginx-traffic\",node_instance=%q}[5m]) and on (instance) (up{job=\"nginx-traffic\"} == 1))) > 0" $labels.instance | query }}{{ range . }}Busiest completed nginx route: {{ .Labels.service }} via {{ .Labels.vhost }} / {{ .Labels.network }} ({{ .Value | humanize1024 }}B/s).{{ end }}{{ else }}Busiest completed nginx route: unavailable (no recent completed requests).{{ end }}
+    Service counters cover client-facing ports; nginx route bytes appear after requests close. These measurements overlap.
+  '';
+
   observabilityDashboards = pkgs.runCommand "grafana-observability-dashboards" { } ''
     mkdir -p $out
     cp ${./grafana/navidrome.json} $out/navidrome.json
     cp ${./grafana/navidrome-observability.json} $out/navidrome-observability.json
     cp ${./grafana/node-exporter-full.json} $out/node-exporter-full.json
+    cp ${./grafana/service-network.json} $out/service-network.json
   '';
 in
 {
+  imports = [ ./network-observability.nix ];
+
   services.prometheus.exporters.node = {
     enable = true;
     port = 9100;
@@ -122,7 +137,8 @@ in
                 labels.severity = "warning";
                 annotations = {
                   summary = "High inbound network traffic on {{ $labels.instance }}";
-                  description = "Inbound traffic has exceeded 2 MB/s for 10 minutes.";
+                  description = networkTrafficDescription "receive" "request" "Inbound";
+                  dashboard_url = "https://grafana.${private.domain}/d/service-network";
                 };
               }
               {
@@ -132,7 +148,8 @@ in
                 labels.severity = "warning";
                 annotations = {
                   summary = "High outbound network traffic on {{ $labels.instance }}";
-                  description = "Outbound traffic has exceeded 2 MB/s for 10 minutes.";
+                  description = networkTrafficDescription "transmit" "response" "Outbound";
+                  dashboard_url = "https://grafana.${private.domain}/d/service-network";
                 };
               }
             ];
@@ -145,11 +162,10 @@ in
   services.prometheus.alertmanager = {
     enable = true;
     listenAddress = "127.0.0.1";
-    environmentFile = "/var/lib/prometheus-alertmanager-secrets/telegram.env";
     configuration = {
       global.resolve_timeout = "5m";
       route = {
-        receiver = "telegram";
+        receiver = "gotify";
         group_by = [
           "alertname"
           "instance"
@@ -160,20 +176,11 @@ in
       };
       receivers = [
         {
-          name = "telegram";
-          telegram_configs = [
+          name = "gotify";
+          webhook_configs = [
             {
-              bot_token = "$TELEGRAM_BOT_TOKEN";
-              chat_id = 516036245;
+              url = "http://127.0.0.1:8042/gotify_webhook";
               send_resolved = true;
-              parse_mode = "HTML";
-              message = ''
-                {{ if eq .Status "firing" }}🔥 <b>FIRING</b>{{ else }}✅ <b>RESOLVED</b>{{ end }}
-                {{ range .Alerts }}
-                <b>{{ .Annotations.summary }}</b>
-                {{ .Annotations.description }}
-                {{ end }}
-              '';
             }
           ];
         }
@@ -183,6 +190,8 @@ in
 
   services.grafana = {
     enable = true;
+    # Prometheus is distributed separately from Grafana's core plugins.
+    declarativePlugins = [ pkgs.grafanaPlugins.prometheus ];
 
     provision = {
       enable = true;
@@ -238,6 +247,8 @@ in
       server = {
         http_addr = "0.0.0.0";
         http_port = 3000;
+        domain = "grafana.${private.domain}";
+        root_url = "https://grafana.${private.domain}/";
       };
       security = {
         admin_user = "admin";
@@ -258,6 +269,5 @@ in
   };
   systemd.tmpfiles.rules = [
     "d /var/lib/grafana-secrets 0750 root grafana -"
-    "d /var/lib/prometheus-alertmanager-secrets 0700 root root -"
   ];
 }

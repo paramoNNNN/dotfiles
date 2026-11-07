@@ -13,7 +13,7 @@ let
     dontUnpack = true;
     installPhase = ''
       runHook preInstall
-      install -Dm444 "$src" "$out/share/audiomuseai.ndp"
+      install -Dm444 "$src" "$out/share/plugins/audiomuseai.ndp"
       runHook postInstall
     '';
 
@@ -30,11 +30,12 @@ in
 {
   services.navidrome = {
     enable = true;
-    plugins = with pkgs.navidromePlugins; [
-      apple-music
+    withPlugins = p: [
+      p.apple-music
       audiomuseaiV10
     ];
     settings = {
+      Address = "0.0.0.0";
       Plugins.Enabled = true;
       Plugins.AutoReload = true;
       Plugins.LogLevel = "debug";
@@ -43,13 +44,14 @@ in
       EnableSharing = true;
       CoverArtQuality = 100;
 
-      Agents = "audiomuseai,lastfm,listenbrainz";
+      Agents = "audiomuseai,apple-music,lastfm,listenbrainz";
       LastFM.ScrobbleFirstArtistOnly = true;
 
       Prometheus.Enabled = true;
       Prometheus.MetricsPath = "/metrics_navi";
     };
   };
+  networking.firewall.allowedTCPPorts = [ 4533 ];
   systemd.services.navidrome.serviceConfig = {
     EnvironmentFile = "/var/lib/navidrome-secrets/environment";
     BindReadOnlyPaths = [

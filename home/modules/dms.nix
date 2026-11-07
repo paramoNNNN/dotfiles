@@ -140,6 +140,11 @@ in
       src = ./dms-plugins/language-label;
       settings.managed = true;
     };
+    plugins.memoryPressure = {
+      enable = true;
+      src = ./dms-plugins/memory-pressure;
+      settings.managed = true;
+    };
     plugins.nextEvent = {
       enable = true;
       src = ./dms-plugins/next-event;
@@ -376,6 +381,10 @@ in
           leftWidgets = [
             {
               id = "workspaceSwitcher";
+              enabled = true;
+            }
+            {
+              id = "memoryPressure";
               enabled = true;
             }
           ];

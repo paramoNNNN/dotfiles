@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   programs.nixvim.plugins = {
     which-key.settings.spec = [
@@ -115,8 +116,12 @@
     lsp = {
       enable = true;
       servers = {
-        # tsgo.enable = true;
-        ts_ls.enable = true;
+        tsgo = {
+          enable = true;
+          package = pkgs.typescript;
+          cmd = [ "${pkgs.typescript}/bin/tsc" "--lsp" "--stdio" ];
+        };
+        # ts_ls.enable = true;
         nil_ls.enable = true;
         cssls.enable = true;
         html.enable = true;

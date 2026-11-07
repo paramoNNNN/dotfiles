@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  private,
+  config,
+  pkgs,
+  ...
+}:
 let
   editFile = pkgs.writeShellScript "lazygit-edit" ''
     filename=$1
@@ -33,7 +38,7 @@ in
         editInTerminal = true;
       };
       services = {
-        "gitlab.example.com" = "gitlab:gitlab.example.com";
+        "${private.workDomain}" = "gitlab:${private.workDomain}";
       };
     };
   };

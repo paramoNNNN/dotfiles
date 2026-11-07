@@ -1,0 +1,16 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use JSON::PP qw(decode_json);
+
+# Check the index, including files that were staged before this hook was installed.
+open my $file, '<', 'private.json' or die "Missing private.json; see docs/privacy.md\n";
+my $private = decode_json(do { local $/; <$file> });
+for my $value (values %$private) {
+    next unless defined($value) && length($value);
+    system('git', 'grep', '--cached', '--quiet', '--fixed-strings', '--ignore-case', '-e', $value, '--');
+    if ($? == 0) {
+        die "Commit blocked: a value from private.json is staged. Use the private config instead.\n";
+    }
+    die "Could not check staged files\n" unless $? == 256;
+}

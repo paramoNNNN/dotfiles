@@ -1,0 +1,12 @@
+{
+  "id": "memoryPressure",
+  "name": "Memory Pressure",
+  "description": "Memory use and pressure with warning and critical colors.",
+  "version": "1.0.0",
+  "author": "Taha",
+  "type": "widget",
+  "capabilities": ["dankbar-widget"],
+  "component": "./MemoryPressure.qml",
+  "icon": "memory",
+  "requires_dms": ">=1.7.0"
+}

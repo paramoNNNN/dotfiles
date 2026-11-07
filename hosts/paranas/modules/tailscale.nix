@@ -1,14 +1,89 @@
-{ inputs, ... }:
+{
+  private,
+  inputs,
+  pkgs,
+  ...
+}:
 {
   imports = [ inputs.headscale.nixosModules.default ];
 
   services.headscale = {
-    enable = false;
+    # Headscale 0.29 does not expose Tailscale's UseWithExitNode DNS flag.
+    # Opt only this router into it; keep the rest of the resolver policy intact.
+    package = pkgs.headscale.overrideAttrs (old: {
+      postPatch = (old.postPatch or "") + ''
+        substituteInPlace hscontrol/types/config.go \
+          --replace-fail 'Addr: nsStr,' 'Addr: nsStr, UseWithExitNode: nsStr == "100.64.0.8",'
+        cat > hscontrol/types/openwrt_dns_test.go <<'EOF'
+        package types
+        import "testing"
+        func TestOpenWrtExitNodeDNS(t *testing.T) {
+          var d DNSConfig
+          d.Nameservers.Global = []string{"100.64.0.8", "1.1.1.1"}
+          resolvers := d.globalResolvers()
+          if len(resolvers) != 2 || resolvers[0].Addr != "100.64.0.8" || !resolvers[0].UseWithExitNode || resolvers[1].UseWithExitNode {
+            t.Fatalf("unexpected exit-node DNS resolver policy: %+v", resolvers)
+          }
+        }
+        EOF
+      '';
+      checkPhase = ''
+        runHook preCheck
+        go test -trimpath=false -mod=vendor -short ./hscontrol/types -run '^TestOpenWrtExitNodeDNS$'
+        runHook postCheck
+      '';
+    });
+    enable = true;
     address = "0.0.0.0";
     port = 8080;
 
     settings = {
-      server_url = "https://hs.example.org";
+      server_url = "https://hs.${private.domain}";
+
+      policy = {
+        mode = "file";
+        path = builtins.toFile "headscale-policy.json" (
+          builtins.toJSON {
+            groups."group:admins" = [
+              "taha@"
+              "saeed@"
+            ];
+
+            grants = [
+              {
+                src = [ "autogroup:member" ];
+                dst = [ "100.64.0.8" ];
+                ip = [
+                  "udp:53"
+                  "tcp:53"
+                ];
+              }
+              {
+                src = [ "group:admins" ];
+                dst = [ "*" ];
+                ip = [ "*" ];
+              }
+              {
+                src = [ "autogroup:member" ];
+                dst = [
+                  "autogroup:self"
+                  "autogroup:tagged"
+                  # Allow exit-node traffic, including through OpenWrt.
+                  "autogroup:internet"
+                ];
+                ip = [ "*" ];
+              }
+            ];
+
+            nodeAttrs = [
+              {
+                target = [ "100.64.0.3/32" ];
+                attr = [ "disable-linux-cgnat-drop-rule" ];
+              }
+            ];
+          }
+        );
+      };
 
       prefixes = {
         v4 = "100.64.0.0/10";
@@ -18,12 +93,11 @@
 
       dns = {
         magic_dns = true;
-        base_domain = "tn.example.org";
-        override_local_dns = false;
+        base_domain = "tn.${private.domain}";
+        override_local_dns = true;
         nameservers = {
           global = [
-            "1.1.1.1"
-            "8.8.8.8"
+            "100.64.0.8"
           ];
         };
       };
@@ -34,6 +108,8 @@
         server = {
           enabled = true;
           region_id = 999;
+          region_code = "paranas";
+          region_name = "Paranas DERP";
           stun_listen_addr = "0.0.0.0:3478";
         };
       };

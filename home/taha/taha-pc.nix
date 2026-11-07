@@ -5,6 +5,9 @@
     inputs.dms.homeModules.dank-material-shell
     ../modules/common.nix
     ../modules/calendar.nix
+    ../modules/room-monitor
+    ../modules/activity-capture
+    ../modules/memory-pressure.nix
     ../modules/dms.nix
     ../modules/hyprland/hyprland.nix
     ../modules/gnome/gnome.nix

@@ -1,4 +1,9 @@
-{ pkgs, config, ... }:
+{
+  private,
+  pkgs,
+  config,
+  ...
+}:
 {
   services.nextcloud = {
     enable = true;
@@ -11,10 +16,9 @@
         ;
     };
 
-    hostName = "roll";
+    hostName = "nc.${private.domain}";
     https = true;
 
-    config.adminpassFile = "/var/lib/nextcloud-secrets/admin-password";
     config.dbtype = "sqlite";
   };
 

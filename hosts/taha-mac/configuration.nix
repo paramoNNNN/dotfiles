@@ -1,4 +1,5 @@
 {
+  private,
   pkgs,
   outputs,
   inputs,
@@ -21,6 +22,7 @@
     backupFileExtension = "before-nix";
     extraSpecialArgs = {
       inherit
+        private
         inputs
         outputs
         hostname

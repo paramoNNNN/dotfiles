@@ -6,7 +6,6 @@
     android-tools
     bitwarden-desktop
     blender
-    brave
     discord
     firefox-devedition
     gram

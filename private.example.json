@@ -1,0 +1,5 @@
+{
+  "domain": "example.org",
+  "legacyDomain": "example.net",
+  "workDomain": "gitlab.example.com"
+}

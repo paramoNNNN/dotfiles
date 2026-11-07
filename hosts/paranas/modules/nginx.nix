@@ -1,4 +1,4 @@
-{ config, ... }:
+{ private, config, ... }:
 {
   services.nginx = {
     enable = true;
@@ -23,40 +23,47 @@
       };
     };
 
-    virtualHosts."arkane.dummy" = {
-      useACMEHost = "dummy";
+    virtualHosts."arkane.${private.legacyDomain}" = {
+      useACMEHost = "${private.legacyDomain}";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}";
       };
     };
-    virtualHosts."arkane.dummy" = {
-      useACMEHost = "dummy";
+    virtualHosts."arkane.${private.domain}" = {
+      useACMEHost = "${private.domain}";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}";
       };
     };
 
-    virtualHosts."nc.dummy" = {
-      useACMEHost = "dummy";
+    virtualHosts."nc.${private.legacyDomain}" = {
+      useACMEHost = "${private.legacyDomain}";
       forceSSL = true;
     };
-    virtualHosts."nc.dummy" = {
-      useACMEHost = "dummy";
+    virtualHosts."nc.${private.domain}" = {
+      useACMEHost = "${private.domain}";
       forceSSL = true;
     };
 
-    virtualHosts."obs.dummy" = {
-      useACMEHost = "dummy";
+    virtualHosts."obs.${private.legacyDomain}" = {
+      useACMEHost = "${private.legacyDomain}";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://localhost:5984";
+      };
+    };
+    virtualHosts."obs.${private.domain}" = {
+      useACMEHost = "${private.domain}";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://localhost:5984";
       };
     };
 
-    virtualHosts."photos.dummy" = {
-      useACMEHost = "dummy";
+    virtualHosts."photos.${private.legacyDomain}" = {
+      useACMEHost = "${private.legacyDomain}";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://localhost:2283";
@@ -70,8 +77,8 @@
         '';
       };
     };
-    virtualHosts."photos.dummy" = {
-      useACMEHost = "dummy";
+    virtualHosts."photos.${private.domain}" = {
+      useACMEHost = "${private.domain}";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://localhost:2283";
@@ -86,8 +93,8 @@
       };
     };
 
-    virtualHosts."hs.dummy" = {
-      useACMEHost = "dummy";
+    virtualHosts."hs.${private.domain}" = {
+      useACMEHost = "${private.domain}";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://localhost:8080";
@@ -95,8 +102,8 @@
       };
     };
 
-    virtualHosts."tv.dummy" = {
-      useACMEHost = "dummy";
+    virtualHosts."tv.${private.domain}" = {
+      useACMEHost = "${private.domain}";
       forceSSL = true;
       extraConfig = ''
         client_max_body_size 20M;
@@ -120,8 +127,8 @@
         proxyWebsockets = true;
       };
     };
-    virtualHosts."navi.dummy" = {
-      useACMEHost = "dummy";
+    virtualHosts."navi.${private.domain}" = {
+      useACMEHost = "${private.domain}";
       forceSSL = true;
       extraConfig = ''
         proxy_set_header Host $host;
@@ -137,21 +144,8 @@
       };
     };
 
-    virtualHosts."n8n.dummy" = {
-      useACMEHost = "dummy";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:5678";
-        proxyWebsockets = true;
-        extraConfig = ''
-          proxy_read_timeout 300s;
-          proxy_send_timeout 300s;
-        '';
-      };
-    };
-
-    virtualHosts."grafana.dummy" = {
-      useACMEHost = "dummy";
+    virtualHosts."grafana.${private.domain}" = {
+      useACMEHost = "${private.domain}";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://127.0.0.1:3000";
@@ -159,22 +153,8 @@
       };
     };
 
-    virtualHosts."endurain.dummy" = {
-      useACMEHost = "dummy";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:8020";
-        proxyWebsockets = true;
-        extraConfig = ''
-          client_max_body_size 100M;
-          proxy_read_timeout 300s;
-          proxy_send_timeout 300s;
-        '';
-      };
-    };
-
-    virtualHosts."dawarich.dummy" = {
-      useACMEHost = "dummy";
+    virtualHosts."dawarich.${private.domain}" = {
+      useACMEHost = "${private.domain}";
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://127.0.0.1:8030";
@@ -187,8 +167,8 @@
       };
     };
 
-    virtualHosts."ch.example.org" = {
-      useACMEHost = "example.org";
+    virtualHosts."ch.${private.domain}" = {
+      useACMEHost = "${private.domain}";
       forceSSL = true;
       extraConfig = ''
         proxy_set_header Host $host;
@@ -227,35 +207,33 @@
     acceptTerms = true;
     defaults.email = "paramoNNN@proton.me";
     certs = {
-      "dummy" = {
+      "${private.legacyDomain}" = {
         extraDomainNames = [
-          "tv.dummy"
-          "obs.dummy"
-          "nc.dummy"
-          "arkane.dummy"
-          "photos.dummy"
+          "tv.${private.legacyDomain}"
+          "obs.${private.legacyDomain}"
+          "nc.${private.legacyDomain}"
+          "arkane.${private.legacyDomain}"
+          "photos.${private.legacyDomain}"
         ];
         group = "nginx";
         dnsProvider = "cloudflare";
         dnsResolver = "1.1.1.1:53";
         environmentFile = "/var/lib/acme-secrets/cloudflare.env";
       };
-      "dummy" = {
+      "${private.domain}" = {
         extraDomainNames = [
-          "tv.dummy"
-          "navi.dummy"
-          "obs.dummy"
-          "nc.dummy"
-          "hs.dummy"
-          "tn.dummy"
-          "ch.dummy"
-          "elm.dummy"
-          "arkane.dummy"
-          "photos.dummy"
-          "n8n.dummy"
-          "grafana.dummy"
-          "endurain.dummy"
-          "dawarich.dummy"
+          "tv.${private.domain}"
+          "navi.${private.domain}"
+          "obs.${private.domain}"
+          "nc.${private.domain}"
+          "hs.${private.domain}"
+          "tn.${private.domain}"
+          "ch.${private.domain}"
+          "elm.${private.domain}"
+          "arkane.${private.domain}"
+          "photos.${private.domain}"
+          "grafana.${private.domain}"
+          "dawarich.${private.domain}"
         ];
         group = "nginx";
         dnsProvider = "arvancloud";

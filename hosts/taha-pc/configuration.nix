@@ -11,6 +11,13 @@
     inputs.home-manager.nixosModules.default
   ];
 
+  # Keep kernel/OOM evidence through reboots and reduce the unwritten tail.
+  services.journald.settings.Journal = {
+    Storage = "persistent";
+    SystemMaxUse = "1G";
+    SyncIntervalSec = "15s";
+  };
+
   # NTFS
   boot.supportedFilesystems = [ "ntfs" ];
   services.gvfs.enable = true;
@@ -413,6 +420,7 @@
     autoStart = true;
     capSysAdmin = true;
     openFirewall = false;
+    settings.capture = "wlr";
     settings.csrf_allowed_origins = "https://100.64.0.1:47990";
   };
   networking.firewall.interfaces."tailscale0" = {

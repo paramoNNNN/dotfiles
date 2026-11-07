@@ -1,5 +1,7 @@
 {
   imports = [
+    ./pihole.nix
+    ./activity-capture.nix
     ./nextcloud.nix
     ./nginx.nix
     ./plex.nix
@@ -10,12 +12,20 @@
     ./immich.nix
     ./jellyfin.nix
     ./navidrome.nix
-    ./n8n.nix
+    ./music-services.nix
+    ./notifications.nix
+    ./igotify.nix
+    ./homepage.nix
+    ./ps5upload.nix
+    ./readeck.nix
+    ./forgejo.nix
+    ./syncthing.nix
+    ./clipboard.nix
+    ./work-automation.nix
     ./obsidian-bridge.nix
     # ./matrix.nix
     ./teamspeak.nix
     ./grafana.nix
-    ./endurain.nix
     ./dawarich.nix
   ];
 }
