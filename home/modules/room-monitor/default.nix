@@ -19,11 +19,12 @@ in
       ExecStart = "${pkgs.systemd}/bin/systemd-inhibit --what=sleep --mode=block --why=Room-monitor-is-armed ${monitor}/bin/room-monitor run";
       ExecStopPost = "${monitor}/bin/room-monitor clear-reference";
       UMask = "0077";
+      KillMode = "mixed";
       TimeoutStopSec = 10;
     };
   };
   systemd.user.services.room-monitor-cleanup = {
-    Unit.Description = "Remove room-monitor photos older than 24 hours";
+    Unit.Description = "Remove room-monitor photos and videos older than 24 hours";
     Service = {
       Type = "oneshot";
       ExecStart = "${monitor}/bin/room-monitor cleanup";
@@ -31,7 +32,7 @@ in
     };
   };
   systemd.user.timers.room-monitor-cleanup = {
-    Unit.Description = "Expire room-monitor photos, including while disarmed";
+    Unit.Description = "Expire room-monitor photos and videos, including while disarmed";
     Timer = {
       OnStartupSec = "1m";
       OnUnitActiveSec = "5m";
@@ -55,6 +56,12 @@ in
     name = "Room Monitor Photos";
     exec = "${monitor}/bin/room-monitor photos";
     icon = "folder-pictures";
+    categories = [ "Utility" ];
+  };
+  xdg.desktopEntries.room-monitor-videos = {
+    name = "Room Monitor Videos";
+    exec = "${monitor}/bin/room-monitor videos";
+    icon = "folder-videos";
     categories = [ "Utility" ];
   };
 }
