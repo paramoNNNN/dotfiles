@@ -137,6 +137,11 @@
     "nix-command"
     "flakes"
   ];
+  # Allow this sudo administrator to upload locally built system closures.
+  nix.settings.trusted-users = [
+    "root"
+    "paranas"
+  ];
 
   virtualisation.containers.enable = true;
   virtualisation.docker = {

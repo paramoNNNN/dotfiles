@@ -2,8 +2,22 @@
   private,
   inputs,
   pkgs,
+  config,
+  lib,
   ...
 }:
+let
+  # MagicDNS extra records are exact names, not wildcard DNS rules.
+  # Derive service names so new nginx services also work away from the LAN.
+  serviceNames = lib.filter (
+    name:
+    name != "hs.${private.domain}"
+    && lib.any (domain: name == domain || lib.hasSuffix ".${domain}" name) [
+      private.domain
+      private.legacyDomain
+    ]
+  ) (builtins.attrNames config.services.nginx.virtualHosts);
+in
 {
   imports = [ inputs.headscale.nixosModules.default ];
 
@@ -95,6 +109,22 @@
         magic_dns = true;
         base_domain = "tn.${private.domain}";
         override_local_dns = true;
+        extra_records =
+          map
+            (name: {
+              inherit name;
+              type = "A";
+              value = "100.64.0.3";
+            })
+            (
+              lib.unique (
+                [
+                  private.domain
+                  private.legacyDomain
+                ]
+                ++ serviceNames
+              )
+            );
         nameservers = {
           global = [
             "100.64.0.8"

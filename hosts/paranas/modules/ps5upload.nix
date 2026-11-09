@@ -90,11 +90,4 @@ in
     };
   };
   security.acme.certs."${private.domain}".extraDomainNames = [ "ps5.${private.domain}" ];
-  services.headscale.settings.dns.extra_records = [
-    {
-      name = "ps5.${private.domain}";
-      type = "A";
-      value = tailscaleIPv4;
-    }
-  ];
 }

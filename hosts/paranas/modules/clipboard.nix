@@ -113,11 +113,4 @@ in
     };
   };
   security.acme.certs."${private.domain}".extraDomainNames = [ "clipboard.${private.domain}" ];
-  services.headscale.settings.dns.extra_records = [
-    {
-      name = "clipboard.${private.domain}";
-      type = "A";
-      value = tailscaleIPv4;
-    }
-  ];
 }
