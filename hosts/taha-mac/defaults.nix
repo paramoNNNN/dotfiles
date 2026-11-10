@@ -1,4 +1,4 @@
-# Preferences observed on taha-mac on 2026-09-16. Omitted keys were not explicitly set.
+# Preferences observed on taha-mac, plus explicit motion and transparency reductions.
 { pkgs, ... }:
 {
   system.defaults = {
@@ -14,6 +14,7 @@
       "NSAutomaticPeriodSubstitutionEnabled" = false;
       "NSAutomaticQuoteSubstitutionEnabled" = true;
       "NSAutomaticSpellingCorrectionEnabled" = false;
+      "NSAutomaticWindowAnimationsEnabled" = false;
       "NSTableViewDefaultSizeMode" = 2;
       "InitialKeyRepeat" = 15;
       "KeyRepeat" = 2;
@@ -34,6 +35,11 @@
     dock = {
       "autohide" = true;
       "autohide-delay" = 0.0;
+      "autohide-time-modifier" = 0.0;
+      "expose-animation-duration" = 0.0;
+      "launchanim" = false;
+      "magnification" = false;
+      "mineffect" = "scale";
       # AeroSpace's off-screen workspace windows otherwise confuse Mission Control.
       "expose-group-apps" = true;
       "mru-spaces" = false;
@@ -48,8 +54,11 @@
         "/Applications/Ghostty.app"
         "/Applications/Mattermost.app"
         "${pkgs.obsidian}/Applications/Obsidian.app"
-        "/Applications/Feishin.app"
       ];
+    };
+    universalaccess = {
+      reduceMotion = true;
+      reduceTransparency = true;
     };
     finder = {
       "FXPreferredViewStyle" = "Nlsv";
