@@ -203,6 +203,12 @@
       };
     };
   };
+  # Passwall redirects DNS, so use recursive TXT propagation checks.
+  systemd.services."acme-order-renew-${private.domain}".environment.LEGO_DNS_PROPAGATION_DISABLE_ANS =
+    "true";
+  systemd.services."acme-order-renew-${private.legacyDomain}".environment.LEGO_DNS_PROPAGATION_DISABLE_ANS =
+    "true";
+
   security.acme = {
     acceptTerms = true;
     defaults.email = "paramoNNN@proton.me";

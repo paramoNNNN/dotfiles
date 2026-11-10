@@ -1,5 +1,6 @@
 {
   imports = [
+    ./rendercv.nix
     ./pihole.nix
     ./activity-capture.nix
     ./nextcloud.nix

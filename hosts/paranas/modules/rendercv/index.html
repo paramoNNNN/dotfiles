@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CV Studio</title>
+<style>
+  :root { color-scheme: light; font-family: system-ui, sans-serif; color: #172c3e; background: #edf1f4 }
+  * { box-sizing: border-box }
+  body { margin: 0 }
+  header { padding: 18px 24px; background: white; border-bottom: 1px solid #d3dce3; display: flex; align-items: center; gap: 18px; flex-wrap: wrap }
+  h1 { font-size: 20px; margin: 0 auto 0 0; font-weight: 650 }
+  h1 span { color: #768593; font-weight: 400; font-size: 14px; margin-left: 12px }
+  button, a { font: inherit; font-size: 14px; border-radius: 7px; padding: 10px 15px }
+  button { border: 0; background: #004f90; color: white; cursor: pointer }
+  button:disabled { opacity: .5; cursor: wait }
+  a { color: #004f90; text-decoration: none; border: 1px solid #d3dce3 }
+  main { display: grid; grid-template-columns: 1fr 1fr; height: calc(100dvh - 83px) }
+  section { display: flex; flex-direction: column; min-width: 0; min-height: 0 }
+  label, .preview-label { padding: 12px 24px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: #596e7f }
+  textarea { flex: 1; resize: none; border: 0; border-right: 1px solid #d3dce3; padding: 20px 24px; font: 13px/1.65 ui-monospace, monospace; tab-size: 2; outline-offset: -3px; color: #24394c; background: #fff }
+  iframe { flex: 1; width: 100%; border: 0; background: #dce3e9 }
+  #empty { padding: 40px; color: #596e7f; text-align: center }
+  #status { padding: 10px 24px; font-size: 13px; margin: 0; background: #f8fafb }
+  #error { white-space: pre-wrap; max-height: 35vh; overflow: auto; color: #922e28; background: #fff2ef; padding: 16px 24px; margin: 0; font-size: 12px }
+  [hidden] { display: none !important }
+  @media(max-width: 760px) { main { grid-template-columns: 1fr; height: auto } textarea { min-height: 55vh } iframe { min-height: 75vh } h1 span { display: none } header { gap: 8px; padding: 12px } }
+</style>
+<header>
+  <h1>CV Studio <span>Powered by RenderCV</span></h1>
+  <a id="yaml-download" href="/cv.yaml" download="Taha_Ojari_CV.yaml">Saved YAML</a>
+  <a id="pdf-download" href="/cv.pdf" download="Taha_Ojari_CV.pdf" hidden>Download PDF</a>
+  <button id="render" disabled>Save & render</button>
+</header>
+<main>
+  <section>
+    <label for="yaml">Your CV · YAML</label>
+    <textarea id="yaml" spellcheck="false" aria-describedby="status"></textarea>
+    <p id="status" role="status">Loading your CV…</p>
+    <pre id="error" role="alert" hidden></pre>
+  </section>
+  <section>
+    <div class="preview-label">PDF preview</div>
+    <p id="empty">Click “Save & render” to create your PDF.</p>
+    <iframe id="preview" title="Rendered CV preview" hidden></iframe>
+  </section>
+</main>
+<script>
+  const editor = document.querySelector('#yaml');
+  const button = document.querySelector('#render');
+  const status = document.querySelector('#status');
+  const error = document.querySelector('#error');
+  const preview = document.querySelector('#preview');
+  let saved = '', busy = false;
+  function showPDF() {
+    preview.src = '/cv.pdf?v=' + Date.now();
+    preview.hidden = false;
+    document.querySelector('#empty').hidden = true;
+    document.querySelector('#pdf-download').hidden = false;
+  }
+  async function render() {
+    if (busy) return;
+    busy = true; button.disabled = true; error.hidden = true;
+    status.textContent = 'Rendering…';
+    const submitted = editor.value;
+    try {
+      const response = await fetch('/api/render', { method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-RenderCV-Editor': '1' },
+        body: JSON.stringify({ yaml: submitted }) });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Render failed.');
+      saved = submitted;
+      status.textContent = editor.value === saved ? 'Saved. Your PDF is ready.' : 'PDF ready. You have newer unsaved edits.';
+      showPDF();
+    } catch (e) {
+      status.textContent = 'Render failed. Your last saved CV is preserved.';
+      error.textContent = e.message; error.hidden = false;
+    } finally { busy = false; button.disabled = false; }
+  }
+  button.addEventListener('click', render);
+  editor.addEventListener('input', () => { status.textContent = editor.value === saved ? 'Saved.' : 'Unsaved changes'; });
+  editor.addEventListener('keydown', e => {
+    if (e.key === 'Tab') { e.preventDefault(); const p = editor.selectionStart; editor.setRangeText('  ', p, editor.selectionEnd, 'end'); editor.dispatchEvent(new Event('input')); }
+    if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); render(); }
+  });
+  window.addEventListener('beforeunload', e => { if (editor.value !== saved) { e.preventDefault(); e.returnValue = ''; } });
+  (async () => {
+    try {
+      const response = await fetch('/api/cv');
+      if (!response.ok) throw new Error('Could not load saved CV. Reload to try again.');
+      const result = await response.json();
+      saved = editor.value = result.yaml;
+      button.disabled = false; status.textContent = 'Ready. Edit your YAML, then save & render. Ctrl/Cmd+S also works.';
+      if ((await fetch('/cv.pdf')).ok) showPDF();
+    } catch (e) { status.textContent = e.message; }
+  })();
+</script>
+</html>
