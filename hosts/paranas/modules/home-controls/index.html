@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111512">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Paranas Home">
+<link rel="icon" href="/tv/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/tv/apple-touch-icon.png">
+<link rel="stylesheet" href="/tv/styles.css">
+<script src="/tv/app.js" defer></script>
+<title>Paranas Home · Living room</title>
+</head>
+<body>
+<main>
+  <header><a class="brand" href="/">PARANAS <span>HOME</span></a><div class="connection" id="connection"><i></i><span>Connecting</span></div></header>
+  <section id="unlock" class="card unlock" hidden>
+    <div class="eyebrow">YOUR HOME, PRIVATELY</div><h1>Welcome home.</h1>
+    <p>Open your private access link, or paste it below to unlock the TV controls.</p>
+    <form id="unlockForm"><label for="accessLink">Private link or access code</label><input id="accessLink" type="password" autocomplete="off" spellcheck="false" required><button class="primary" type="submit">Unlock controls</button></form>
+  </section>
+  <div id="controls" hidden>
+    <section class="intro"><div><p class="eyebrow">LIVING ROOM</p><h1>Settle in.</h1><p class="subtitle" id="watching">LG QNED · Your screen, your way.</p></div><button id="power" class="power" aria-label="TV power"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v9m-6-6a8 8 0 1 0 12 0"/></svg><span>Power</span></button></section>
+    <div class="quick-actions">
+      <button class="quick music" id="music"><span class="quick-icon">♫</span><strong>Music mode</strong><small>AirPlay, screen off</small></button>
+      <button class="quick" id="screen"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/></svg><strong id="screenLabel">Screen off</strong><small>Keep sound playing</small></button>
+    </div>
+    <p id="musicHelp" class="music-help" hidden>On your iPhone, open the AirPlay picker and choose the LG TV. Music mode keeps the screen dark.</p>
+    <div class="layout">
+      <section class="card picture">
+        <div class="card-heading"><h2>Picture</h2><span class="pill" id="inputBadge">TV</span></div>
+        <div class="brightness-heading"><label for="brightness">Screen brightness</label><output id="brightnessValue" for="brightness">—<small>%</small></output></div>
+        <input id="brightness" type="range" min="0" max="100" step="1" disabled><div class="range-labels"><span>Dim</span><span>Bright</span></div>
+        <label class="field-label" for="pictureMode">Picture mode</label><select id="pictureMode" disabled><option value="">Unavailable</option></select>
+        <p class="hint" id="pictureHint">Picture modes follow the current input and HDR signal.</p>
+      </section>
+      <section class="card remote">
+        <div class="card-heading"><h2>Remote</h2><button class="text-button" data-key="HOME">Home</button></div>
+        <div class="dpad" role="group" aria-label="TV navigation">
+          <button class="up" data-key="UP" aria-label="Up">⌃</button><button class="left" data-key="LEFT" aria-label="Left">‹</button><button class="ok" data-key="ENTER" aria-label="Select">OK</button><button class="right" data-key="RIGHT" aria-label="Right">›</button><button class="down" data-key="DOWN" aria-label="Down">⌄</button>
+        </div>
+        <div class="remote-bottom"><button data-key="BACK">↶ <span>Back</span></button><button data-op="play" aria-label="Play">▶</button><button data-op="pause" aria-label="Pause">Ⅱ</button></div>
+        <div class="volume" role="group" aria-label="Speaker volume"><button data-op="volume-down" aria-label="Volume down">−</button><button id="mute" aria-label="Mute"><span id="volumeLabel">Speakers</span><small id="muteLabel">Mute</small></button><button data-op="volume-up" aria-label="Volume up">+</button></div>
+        <p class="hint" id="volumeHint">Edifier volume needs the Magic Remote awake and pointed at the speakers.</p>
+      </section>
+      <section class="card sources"><div class="card-heading"><h2>Watch &amp; listen</h2></div><div class="source-grid" id="sources"><button data-launch="airplay"><span class="app-icon">◉</span><span>AirPlay</span></button></div><p class="hint">AirPlay starts from the picker on your iPhone. Opening AirPlay here shows the TV’s receiver.</p></section>
+      <section class="card inputs"><div class="card-heading"><h2>Inputs</h2></div><div id="inputs" class="input-list"></div></section>
+    </div>
+  </div>
+  <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+  <footer><button class="text-button" id="refresh">Refresh</button><span>·</span><a href="/">All services</a><span>·</span><button class="text-button" id="lock">Lock</button><p>Safari → Share → Add to Home Screen</p></footer>
+</main>
+</body>
+</html>

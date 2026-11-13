@@ -17,6 +17,7 @@
     ./notifications.nix
     ./igotify.nix
     ./homepage.nix
+    ./home-controls.nix
     ./ps5upload.nix
     ./readeck.nix
     ./forgejo.nix
