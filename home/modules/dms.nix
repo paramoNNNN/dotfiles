@@ -169,6 +169,8 @@ in
     # GNOME Night Light-style automatic sunset/sunrise scheduling. DMS owns
     # gamma control, so Gammastep is intentionally not started alongside it.
     session = {
+      isLightMode = config.theme.variant == "light";
+      themeModeAutoEnabled = false;
       weatherLocation = "Tehran";
       weatherCoordinates = "35.6892,51.3890";
       nightModeEnabled = true;
@@ -186,8 +188,7 @@ in
       ];
     };
 
-    # Keep application theming under Stylix. DMS still controls its own light
-    # and dark appearance without overwriting the declarative GTK/Qt themes.
+    # Keep application theming and DMS's light/dark mode under Nix.
     settings = {
       useAutoLocation = false;
       # Match the compact macOS menu-bar presentation.
@@ -217,34 +218,41 @@ in
       systemTrayIconTintMode = "primary";
       soundNewNotification = false;
 
-      # Bottom application dock. These values mirror the configuration made
-      # in the DMS settings UI; keeping them here makes it survive rebuilds.
-      showDock = true;
-      dockAutoHide = false;
-      dockSmartAutoHide = true;
-      dockUseOverlayLayer = true;
-      dockShowOnFullscreen = true;
-      dockGroupByApp = true;
-      dockSeparatePinnedAndRunningApps = false;
-      dockRestoreSpecialWorkspaceOnClick = false;
-      dockOpenOnOverview = false;
-      dockPosition = 1; # Bottom.
-      dockSpacing = 12;
-      dockBottomGap = 0;
-      dockMargin = 8;
-      dockIconSize = 86;
-      dockIndicatorStyle = "circle";
-      dockBorderEnabled = true;
-      dockBorderColor = "secondary";
-      dockBorderOpacity = 0.19;
-      dockBorderThickness = 1;
-      dockIsolateDisplays = false;
-      dockLauncherEnabled = false;
-      dockMaxVisibleApps = 0;
-      dockMaxVisibleRunningApps = 0;
-      dockShowOverflowBadge = true;
-      dockShowTrash = false;
-      dockTransparency = lib.mkForce 0.85;
+      # DMS uses per-dock configs; legacy showDock/dock* keys are ignored.
+      dockConfigs = [
+        {
+          id = "dock";
+          name = "Dock";
+          enabled = true;
+          screenPreferences = [ "all" ];
+          showOnLastDisplay = true;
+          autoHide = true;
+          smartAutoHide = true;
+          useOverlayLayer = true;
+          showOnFullscreen = true;
+          groupByApp = true;
+          separatePinnedAndRunningApps = false;
+          restoreSpecialWorkspaceOnClick = false;
+          openOnOverview = false;
+          position = 1; # Bottom.
+          spacing = 12;
+          bottomGap = 0;
+          margin = 8;
+          iconSize = 86;
+          indicatorStyle = "circle";
+          borderEnabled = true;
+          borderColor = "secondary";
+          borderOpacity = 0.19;
+          borderThickness = 1;
+          isolateDisplays = false;
+          launcherEnabled = false;
+          maxVisibleApps = 0;
+          maxVisibleRunningApps = 0;
+          showOverflowBadge = true;
+          showTrash = false;
+          transparency = 0.85;
+        }
+      ];
 
       # Keep every shell surface flat and opaque. Hyprland owns the only
       # remaining animations: windows and workspaces.
