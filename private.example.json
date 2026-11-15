@@ -1,5 +1,12 @@
 {
   "domain": "example.org",
   "legacyDomain": "example.net",
-  "workDomain": "gitlab.example.com"
+  "workDomain": "gitlab.example.com",
+  "codex": {
+    "sentryHost": "sentry.example.com",
+    "gitlabUrl": "https://gitlab.example.com/api/v4/mcp",
+    "affineUrl": "https://affine.example.com/api/workspaces/WORKSPACE_ID/mcp",
+    "planeBaseUrl": "https://plane.example.com",
+    "planeWorkspaceSlug": "example"
+  }
 }

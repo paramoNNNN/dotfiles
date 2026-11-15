@@ -10,6 +10,7 @@
     ./programs/ghostty/default.nix
     ./programs/bat.nix
     ./programs/btop.nix
+    ./programs/codex.nix
     ./programs/direnv.nix
     ./programs/fish.nix
     ./programs/git.nix
