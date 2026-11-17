@@ -179,11 +179,11 @@ in
       nightModeAutoEnabled = true;
       nightModeAutoMode = "location";
       nightModeUseIPLocation = true;
-      pinnedApps = [
+      dockPins.dock = [
         "firefox"
         "com.mitchellh.ghostty"
         "Mattermost"
-        "obsidian"
+        "md.obsidian.Obsidian"
         "feishin"
       ];
     };
@@ -284,7 +284,7 @@ in
         }
         {
           pattern = "md.Obsidian";
-          replacement = "obsidian";
+          replacement = "md.obsidian.Obsidian";
           type = "exact";
         }
       ];
