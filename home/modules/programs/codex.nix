@@ -11,6 +11,17 @@ let
   affineHeaders = pkgs.writeShellScript "codex-affine-headers" ''
     exec ${pkgs.python313}/bin/python3 ${./codex-affine-auth.py} ${lib.escapeShellArg affineTokenFile}
   '';
+  grafanaTokenFile = "${config.xdg.configHome}/codex/grafana-token";
+  grafanaMcp = pkgs.writeShellScript "codex-grafana-mcp" ''
+    set -eu
+    token_file=${lib.escapeShellArg grafanaTokenFile}
+    if [ ! -r "$token_file" ] || [ ! -s "$token_file" ]; then
+      echo "Grafana token unavailable. Save your service account token to $token_file with mode 600." >&2
+      exit 1
+    fi
+    export GRAFANA_SERVICE_ACCOUNT_TOKEN="$( ${pkgs.coreutils}/bin/cat "$token_file" )"
+    exec ${pkgs.mcp-grafana}/bin/mcp-grafana "$@"
+  '';
   codexConfigHome =
     if config.home.preferXdgDirectories then
       "${config.xdg.configHome}/codex"
@@ -65,6 +76,17 @@ in
         };
 
         Gitlab.url = private.codex.gitlabUrl;
+
+        grafana = {
+          command = "${grafanaMcp}";
+          args = [
+            "-t"
+            "stdio"
+          ];
+          env.GRAFANA_URL = private.codex.grafanaUrl;
+          # Explicitly clear the old allowlist in Codex's mutable settings.
+          env_vars = [ ];
+        };
 
         affine = {
           url = private.codex.affineUrl;

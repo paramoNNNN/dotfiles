@@ -3,6 +3,7 @@
   "legacyDomain": "example.net",
   "workDomain": "gitlab.example.com",
   "codex": {
+    "grafanaUrl": "https://grafana.example.org",
     "sentryHost": "sentry.example.com",
     "gitlabUrl": "https://gitlab.example.com/api/v4/mcp",
     "affineUrl": "https://affine.example.com/api/workspaces/WORKSPACE_ID/mcp",
