@@ -22,6 +22,17 @@ let
     export GRAFANA_SERVICE_ACCOUNT_TOKEN="$( ${pkgs.coreutils}/bin/cat "$token_file" )"
     exec ${pkgs.mcp-grafana}/bin/mcp-grafana "$@"
   '';
+  planeTokenFile = "${config.xdg.configHome}/codex/plane-token";
+  planeMcp = pkgs.writeShellScript "codex-plane-mcp" ''
+    set -eu
+    token_file=${lib.escapeShellArg planeTokenFile}
+    if [ ! -r "$token_file" ] || [ ! -s "$token_file" ]; then
+      echo "Plane token unavailable. Save your API token to $token_file with mode 600." >&2
+      exit 1
+    fi
+    export PLANE_API_KEY="$( ${pkgs.coreutils}/bin/cat "$token_file" )"
+    exec ${pkgs.uv}/bin/uvx "$@"
+  '';
   codexConfigHome =
     if config.home.preferXdgDirectories then
       "${config.xdg.configHome}/codex"
@@ -94,7 +105,7 @@ in
         };
 
         plane = {
-          command = "${pkgs.uv}/bin/uvx";
+          command = "${planeMcp}";
           args = [
             "--python"
             "${pkgs.python313}/bin/python3"
@@ -107,7 +118,8 @@ in
             PLANE_BASE_URL = private.codex.planeBaseUrl;
             PLANE_WORKSPACE_SLUG = private.codex.planeWorkspaceSlug;
           };
-          env_vars = [ "PLANE_API_KEY" ];
+          # Explicitly clear the old allowlist in Codex's mutable settings.
+          env_vars = [ ];
         };
       };
     };
