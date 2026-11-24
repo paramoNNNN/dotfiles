@@ -89,16 +89,14 @@ in
                         height: parent.height / 1.125
                         scale: 1.125
                         transformOrigin: Item.TopLeft'
-        # The stock auto-hide dock uses a very stiff 200 ms spring. Use DMS's
-        # softer 400 ms spring so reveal/hide motion resembles Hyprland's
-        # smooth, critically damped transitions.
+        # Use the softer spatial spring for reveal/hide motion in both dock
+        # chrome modes. springBounce = 0 supplies the restrained damping.
         substituteInPlace $out/share/quickshell/dms/Modules/Dock/DockBody.qml \
-          --replace-fail 'Theme.springPreset("fast", Theme.shortDuration)' 'Theme.springPreset("default", Theme.mediumDuration)'
-        # Match icon hover motion to the dock's softer timing instead of the
-        # stock abrupt 200 ms acceleration.
+          --replace-fail 'Theme.springPreset(dock.usesConnectedFrameChrome ? "defaultSpatial" : "fastSpatial")' 'Theme.springPreset("defaultSpatial")'
+        # Keep icon hover motion at 400 ms with a decelerating curve.
         substituteInPlace $out/share/quickshell/dms/Modules/Dock/DockHoverBounce.qml \
-          --replace-fail 'duration: Anims.durShort' 'duration: Theme.mediumDuration' \
-          --replace-fail 'easing.bezierCurve: Anims.emphasizedAccel' 'easing.bezierCurve: Anims.standardDecel'
+          --replace-fail 'duration: Theme.expressiveDurations.expressiveFastSpatial' 'duration: Theme.motionMs(400)' \
+          --replace-fail 'easing.bezierCurve: Theme.expressiveCurves.expressiveFastSpatial' 'easing.bezierCurve: [0, 0, 0, 1, 1, 1]'
         # Keep the microphone OSD visible while its input is muted. Unmuting
         # restores the normal three-second timeout.
         substituteInPlace $out/share/quickshell/dms/Modules/OSD/MicVolumeOSD.qml \
@@ -110,8 +108,8 @@ in
         substituteInPlace $out/share/quickshell/dms/Modules/ControlCenter/Components/CcTileGrid.qml \
           --replace-fail 'import qs.Modules.ControlCenter' 'import qs.Modules.ControlCenter
         import qs.Modules.ControlCenter.Widgets' \
-          --replace-fail 'readonly property var savedWidgets:' 'PluginInstanceHost { id: airpodsVisibility; pluginId: "airpods" }
-            readonly property var savedWidgets:' \
+          --replace-fail '    property var savedWidgets:' '    PluginInstanceHost { id: airpodsVisibility; pluginId: "airpods" }
+            property var savedWidgets:' \
           --replace-fail 'WidgetUtils.isShown(widget) && model?.componentForWidget(widget)' 'WidgetUtils.isShown(widget) && (widget.id !== "plugin_airpods" || airpodsVisibility.instance?.connected === true) && model?.componentForWidget(widget)'
       '';
     });

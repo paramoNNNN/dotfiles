@@ -11,7 +11,6 @@
       betterSettings.enable = true;
       colorSighted.enable = true;
       fakeNitro.enable = true;
-      fixYoutubeEmbeds.enable = true;
       memberCount.enable = true;
       messageLatency.enable = true;
       betterFolders = {
