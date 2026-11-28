@@ -50,7 +50,6 @@ let
     "slskd"
     "homepage-dashboard"
     "readeck"
-    "docker-yubal"
     "docker-dawarich"
     "docker-dawarich-sidekiq"
     "docker-dawarich-db"

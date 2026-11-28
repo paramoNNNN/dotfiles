@@ -28,7 +28,9 @@ let
       udp = [ ];
     };
     headscale = {
-      tcp = [ config.services.headscale.port ];
+      tcp = [
+        (lib.toInt (lib.last (lib.splitString ":" config.services.headscale.settings.listen_addr)))
+      ];
       udp = [ 3478 ];
     };
     jellyfin = {
@@ -189,7 +191,6 @@ in
       ~^navi\. navidrome;
       ~^grafana\. grafana;
       ~^slskd\. slskd;
-      ~^yubal\. yubal;
       ~^notify\. gotify;
       ~^home\. homepage;
       ~^read\. readeck;

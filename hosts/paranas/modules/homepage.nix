@@ -14,7 +14,7 @@
       layout = {
         Media = {
           style = "row";
-          columns = 4;
+          columns = 3;
         };
         Personal = {
           style = "row";
@@ -48,12 +48,6 @@
               href = "https://slskd.${private.domain}";
               icon = "slskd.svg";
               description = "Search and download music";
-            };
-          }
-          {
-            Yubal = {
-              href = "https://yubal.${private.domain}";
-              description = "YouTube Music playlist sync";
             };
           }
         ];
@@ -92,6 +86,12 @@
               href = "https://read.${private.domain}";
               icon = "readeck.svg";
               description = "Save articles and read later";
+            };
+          }
+          {
+            FreshRSS = {
+              href = "https://rss.${private.domain}";
+              description = "News, blogs, and channel updates";
             };
           }
           {
